@@ -1,2 +1,2 @@
 # text_wrapper
-Text wrapper helper app
+Windows desktop application written in Delphi 12. It is meant to be a helper app that can wrap given text within set prefixes and suffixes. There is also option to put static line and the start and end of text. It can convert to and from double quotas (useful in changing between Delphi code and SQL scripts). There is also an option to 'align' output by filling endline with spaces so that suffix is added on the same position for all lines.
