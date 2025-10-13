@@ -21,30 +21,16 @@ object FormTextWrapper: TFormTextWrapper
     Width = 839
     Height = 29
     Caption = 'ToolBar1'
+    Color = clActiveCaption
+    ParentColor = False
     TabOrder = 0
-    ExplicitTop = -6
-    object Button1: TButton
+    object btnClose: TButton
       Left = 0
       Top = 0
-      Width = 75
+      Width = 60
       Height = 22
       Action = actClose
       TabOrder = 0
-    end
-    object ToolButton1: TToolButton
-      Left = 75
-      Top = 0
-      Width = 14
-      Caption = 'ToolButton1'
-      Style = tbsSeparator
-    end
-    object Button2: TButton
-      Left = 89
-      Top = 0
-      Width = 75
-      Height = 22
-      Action = actConvert
-      TabOrder = 1
     end
   end
   object PageControl1: TPageControl
@@ -52,16 +38,16 @@ object FormTextWrapper: TFormTextWrapper
     Top = 29
     Width = 839
     Height = 557
-    ActivePage = tsSettings
+    ActivePage = tsWrapper
     Align = alClient
     TabOrder = 1
     object tsWrapper: TTabSheet
       Caption = 'Wrapper'
       object gpWrapper: TGridPanel
         Left = 0
-        Top = 0
+        Top = 41
         Width = 831
-        Height = 527
+        Height = 486
         Align = alClient
         ColumnCollection = <
           item
@@ -78,6 +64,12 @@ object FormTextWrapper: TFormTextWrapper
             Control = pnlOut
             Row = 1
           end>
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clInactiveCaption
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         RowCollection = <
           item
             Value = 50.000000000000000000
@@ -89,26 +81,37 @@ object FormTextWrapper: TFormTextWrapper
             SizeStyle = ssAuto
           end>
         TabOrder = 0
+        ExplicitTop = 0
+        ExplicitHeight = 527
         object pnlIn: TPanel
           Left = 1
           Top = 1
           Width = 829
-          Height = 262
+          Height = 242
           Align = alClient
+          Color = clSkyBlue
+          ParentBackground = False
           TabOrder = 0
+          ExplicitHeight = 262
           object lblIn: TLabel
             Left = 16
             Top = 8
             Width = 12
             Height = 15
             Caption = 'IN'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBtnText
+            Font.Height = -12
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
           end
           object redtIn: TRichEdit
             AlignWithMargins = True
             Left = 31
             Top = 31
             Width = 767
-            Height = 200
+            Height = 180
             Margins.Left = 30
             Margins.Top = 30
             Margins.Right = 30
@@ -121,28 +124,39 @@ object FormTextWrapper: TFormTextWrapper
             Font.Style = []
             ParentFont = False
             TabOrder = 0
+            ExplicitHeight = 200
           end
         end
         object pnlOut: TPanel
           Left = 1
-          Top = 263
+          Top = 243
           Width = 829
-          Height = 263
+          Height = 242
           Align = alClient
+          Color = clActiveCaption
+          ParentBackground = False
           TabOrder = 1
+          ExplicitTop = 263
+          ExplicitHeight = 263
           object lblOut: TLabel
             Left = 16
             Top = 8
             Width = 23
             Height = 15
             Caption = 'OUT'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBtnText
+            Font.Height = -12
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
           end
           object redtOut: TRichEdit
             AlignWithMargins = True
             Left = 31
             Top = 31
             Width = 767
-            Height = 201
+            Height = 180
             Margins.Left = 30
             Margins.Top = 30
             Margins.Right = 30
@@ -155,7 +169,60 @@ object FormTextWrapper: TFormTextWrapper
             Font.Style = []
             ParentFont = False
             TabOrder = 0
+            ExplicitHeight = 201
           end
+        end
+      end
+      object pnlMenu: TPanel
+        Left = 0
+        Top = 0
+        Width = 831
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
+        Color = clGradientActiveCaption
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitLeft = 464
+        ExplicitTop = 8
+        ExplicitWidth = 185
+        object btnConvert: TButton
+          Left = 17
+          Top = 5
+          Width = 75
+          Height = 30
+          Action = actConvert
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+        end
+        object btnClipboard: TButton
+          Left = 413
+          Top = 6
+          Width = 75
+          Height = 30
+          Action = actClipboard
+          TabOrder = 1
+        end
+        object btnClear: TButton
+          Left = 517
+          Top = 5
+          Width = 75
+          Height = 30
+          Action = actClear
+          TabOrder = 2
+        end
+        object Button1: TButton
+          Left = 637
+          Top = 5
+          Width = 75
+          Height = 30
+          Action = actFullProcess
+          TabOrder = 3
         end
       end
     end
@@ -171,30 +238,30 @@ object FormTextWrapper: TFormTextWrapper
         BevelOuter = bvNone
         TabOrder = 0
         object lblPrefix: TLabel
-          Left = 152
-          Top = 184
+          Left = 55
+          Top = 152
           Width = 30
           Height = 15
           Caption = 'Prefix'
         end
         object lblSuffix: TLabel
-          Left = 440
-          Top = 184
+          Left = 304
+          Top = 152
           Width = 30
           Height = 15
           Caption = 'Suffix'
         end
         object lblStartLine: TLabel
-          Left = 188
-          Top = 123
+          Left = 22
+          Top = 91
           Width = 63
           Height = 15
           Hint = 'Line added at the start of the text'
           Caption = 'Starting line'
         end
         object lblEndLine: TLabel
-          Left = 198
-          Top = 253
+          Left = 26
+          Top = 205
           Width = 59
           Height = 15
           Hint = 'Line added at the end of text'
@@ -208,39 +275,41 @@ object FormTextWrapper: TFormTextWrapper
           Caption = 'Mode'
         end
         object chbCodeAlign: TCheckBox
-          Left = 24
-          Top = 56
+          Left = 8
+          Top = 24
           Width = 97
           Height = 17
           Hint = 'Fill with spaces'
+          BiDiMode = bdRightToLeft
           Caption = 'Align code'
+          ParentBiDiMode = False
           TabOrder = 0
         end
         object edtPrefix: TEdit
-          Left = 188
-          Top = 181
+          Left = 91
+          Top = 149
           Width = 155
-          Height = 23
-          TabOrder = 1
-        end
-        object edtSuffix: TEdit
-          Left = 476
-          Top = 181
-          Width = 157
           Height = 23
           TabOrder = 2
         end
-        object edtStartLine: TEdit
-          Left = 257
-          Top = 120
-          Width = 376
+        object edtSuffix: TEdit
+          Left = 340
+          Top = 149
+          Width = 157
           Height = 23
           TabOrder = 3
         end
+        object edtStartLine: TEdit
+          Left = 91
+          Top = 88
+          Width = 406
+          Height = 23
+          TabOrder = 1
+        end
         object edtEndLine: TEdit
-          Left = 257
-          Top = 250
-          Width = 376
+          Left = 91
+          Top = 202
+          Width = 406
           Height = 23
           TabOrder = 4
         end
@@ -345,10 +414,12 @@ object FormTextWrapper: TFormTextWrapper
     end
     object actClear: TAction
       Caption = 'Clear'
+      Hint = 'Clear input and output boxes'
       OnExecute = actClearExecute
     end
     object actClipboard: TAction
-      Caption = 'Copy to clipboard'
+      Caption = 'To clipboard'
+      Hint = 'Copy output to clipboard'
       OnExecute = actClipboardExecute
     end
     object actConvert: TAction
@@ -360,7 +431,8 @@ object FormTextWrapper: TFormTextWrapper
       OnExecute = actAutoRecogExecute
     end
     object actFullProcess: TAction
-      Caption = 'actFullProcess'
+      Caption = 'Full process'
+      Hint = 'Clpbrd to IN > Convert > Clpbrd from OUT'
       OnExecute = actFullProcessExecute
     end
     object actTextWrap: TAction

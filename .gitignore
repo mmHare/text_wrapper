@@ -1,1 +1,6 @@
 *.dcu
+/__history
+/Win32
+*.local
+*.identcache
+Wrapper.res

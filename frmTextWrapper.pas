@@ -13,7 +13,7 @@ type
     ActionManager1: TActionManager;
     actClose: TAction;
     ToolBar1: TToolBar;
-    Button1: TButton;
+    btnClose: TButton;
     PageControl1: TPageControl;
     tsWrapper: TTabSheet;
     tsSettings: TTabSheet;
@@ -47,8 +47,11 @@ type
     redtAbout: TRichEdit;
     cmbMode: TComboBox;
     actTextWrap: TAction;
-    Button2: TButton;
-    ToolButton1: TToolButton;
+    pnlMenu: TPanel;
+    btnConvert: TButton;
+    btnClipboard: TButton;
+    btnClear: TButton;
+    Button1: TButton;
     procedure actCloseExecute(Sender: TObject);
     procedure actToCodeExecute(Sender: TObject);
     procedure actToSQLExecute(Sender: TObject);
@@ -112,8 +115,8 @@ end;
 procedure TFormTextWrapper.actConvertExecute(Sender: TObject);
 begin
   case cmbMode.ItemIndex of
-    0: actTextWrap.Execute;
-    1: actAutoRecog.Execute;
+//    0: actTextWrap.Execute;
+    0, 1: actAutoRecog.Execute;
     2: actToCode.Execute;
     3: actToSQL.Execute;
   end;

@@ -2,13 +2,14 @@ program Wrapper;
 
 uses
   Vcl.Forms,
-  frmMain in 'frmMain.pas' {Form1};
+  frmTextWrapper in 'frmTextWrapper.pas' {FormTextWrapper};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.Title := 'Text Wrapper';
+  Application.CreateForm(TFormTextWrapper, FormTextWrapper);
   Application.Run;
 end.
