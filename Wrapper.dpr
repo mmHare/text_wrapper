@@ -2,7 +2,8 @@ program Wrapper;
 
 uses
   Vcl.Forms,
-  frmTextWrapper in 'frmTextWrapper.pas' {FormTextWrapper};
+  frmTextWrapper in 'frmTextWrapper.pas' {FormTextWrapper},
+  frmAbout in 'source\frmAbout.pas' {FormAbout};
 
 {$R *.res}
 

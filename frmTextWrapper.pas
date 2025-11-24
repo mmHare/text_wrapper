@@ -15,8 +15,6 @@ type
     tsWrapper: TTabSheet;
     tsSettings: TTabSheet;
     pnlSettings: TPanel;
-    tsAbout: TTabSheet;
-    pnlAbout: TPanel;
     gpWrapper: TGridPanel;
     pnlIn: TPanel;
     redtIn: TRichEdit;
@@ -24,12 +22,9 @@ type
     pnlOut: TPanel;
     lblOut: TLabel;
     redtOut: TRichEdit;
-    actToCode: TAction;
-    actToSQL: TAction;
     actClear: TAction;
     actClipboard: TAction;
     actConvert: TAction;
-    actAutoRecog: TAction;
     actFullProcess: TAction;
     chbCodeAlign: TCheckBox;
     lblStartLine: TLabel;
@@ -37,9 +32,7 @@ type
     edtStartLine: TEdit;
     edtEndLine: TEdit;
     lblMode: TLabel;
-    redtAbout: TRichEdit;
     cmbMode: TComboBox;
-    actTextWrap: TAction;
     pnlMenu: TPanel;
     btnConvert: TButton;
     btnClipboard: TButton;
@@ -49,28 +42,23 @@ type
     lblSuffix: TLabel;
     edtPrefix: TEdit;
     edtSuffix: TEdit;
-    lblProgramVersion: TLabel;
-    procedure actToCodeExecute(Sender: TObject);
-    procedure actToSQLExecute(Sender: TObject);
+    btnAbout: TButton;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
-    procedure actAutoRecogExecute(Sender: TObject);
     procedure actFullProcessExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure actTextWrapExecute(Sender: TObject);
+    procedure btnAboutClick(Sender: TObject);
 
   private
     function GetPrefix : string;
     function GetSuffix : string;
+
+    procedure PerformAddMode;
+    procedure PerformRemoveMode;
   public
     { Public declarations }
   end;
-
-
-const
-  PROGRAM_NAME = 'Text Wrapper';
-  program_VERSION = '1.0';
 
 
 var
@@ -79,23 +67,18 @@ var
 implementation
 
 uses
-  StrUtils;
+  StrUtils, frmAbout;
 
 {$R *.dfm}
 
-
-
-procedure TFormTextWrapper.actAutoRecogExecute(Sender: TObject);
-var line : string;
+function TFormTextWrapper.GetPrefix: string;
 begin
-  for line in redtIn.Lines do begin
-    if (line <> '') and (line.Contains(edtStartLine.Text) or line.Contains(GetPrefix)) then
-    begin
-      actToSQL.Execute;
-      Exit;
-    end;
-  end;
-  actToCode.Execute;
+  Result := edtPrefix.Text;
+end;
+
+function TFormTextWrapper.GetSuffix: string;
+begin
+  Result := edtSuffix.Text;
 end;
 
 procedure TFormTextWrapper.actClearExecute(Sender: TObject);
@@ -113,12 +96,8 @@ end;
 procedure TFormTextWrapper.actConvertExecute(Sender: TObject);
 begin
   case cmbMode.ItemIndex of
-//    0: actTextWrap.Execute;
-//    0, 1: actAutoRecog.Execute;
-//    2: actToCode.Execute;
-//    3: actToSQL.Execute;
-    0: actToCode.Execute; //ADD
-    1: actToSQL.Execute; //REMOVE
+    0: PerformAddMode;
+    1: PerformRemoveMode;
   end;
 end;
 
@@ -126,18 +105,19 @@ procedure TFormTextWrapper.actFullProcessExecute(Sender: TObject);
 begin
   actClear.Execute;
   redtIn.PasteFromClipboard;
-  actAutoRecog.Execute;
+  actConvert.Execute;
   actClipboard.Execute;
 end;
 
-procedure TFormTextWrapper.actTextWrapExecute(Sender: TObject);
+procedure TFormTextWrapper.btnAboutClick(Sender: TObject);
 begin
-//
+  if FormAbout = nil then FormAbout := TFormAbout.Create(Self);
+  FormAbout.ShowModal;
 end;
 
-procedure TFormTextWrapper.actToCodeExecute(Sender: TObject);
+procedure TFormTextWrapper.PerformAddMode;
 var strList : TStringList;
-    I, lineLength, x : Integer;
+    lineLength, x : Integer;
     S : string;
 begin
   if redtIn.Lines.Count = 0 then Exit;
@@ -149,9 +129,9 @@ begin
   try
     strList.Assign(redtIn.Lines);
 
-    for I := 0 to strList.Count - 1 do begin
+    for var I := 0 to strList.Count - 1 do begin
       S := strList[I];
-      S := StringReplace(S, '''', '''''', [rfReplaceAll]);
+//      S := StringReplace(S, '''', '''''', [rfReplaceAll]);  //doubled single quotas  //TODO: add cmb option
 
       if chbCodeAlign.Checked then  begin  //fill with spaces
         x := lineLength - Length(S);
@@ -165,16 +145,14 @@ begin
     if edtStartLine.Text <> '' then strList.Insert(0, edtStartLine.Text);
     if edtEndLine.Text <> '' then  strList.Add(edtEndLine.Text);
 
-
     redtOut.Lines.Assign(strList);
   finally
     strList.Free;
   end;
 end;
 
-procedure TFormTextWrapper.actToSQLExecute(Sender: TObject);
+procedure TFormTextWrapper.PerformRemoveMode;
 var strList : TStringList;
-    I : Integer;
     S : string;
 begin
   if redtIn.Lines.Count = 0 then Exit;
@@ -183,24 +161,27 @@ begin
   try
     strList.Assign(redtIn.Lines);
 
-    //delete empty lines at the start and end and Begin/EndUpdate
-    for I := strList.Count - 1 downto 0 do begin
-      if (Trim(strList[I]) = '') or strList[I].Contains(edtEndLine.Text)
-      then strList.Delete(strList.Count-1)
-      else Break;
-    end;
-    for I := strList.Count - 1 downto 0 do begin
-      if (Trim(strList[I]) = '') or strList[I].Contains(edtStartLine.Text)
-      then strList.Delete(I)
-      else Break;
-    end;
+    //TODO: add option or abandon?
+//    for var I := strList.Count - 1 downto 0 do begin
+//      if (Trim(strList[I]) = '') then strList.Delete(I)
+//      else if strList[I] = edtEndLine.Text then begin   //delete ending line
+//        strList.Delete(I);
+//        Break
+//      end;
+//    end;
+//    for var I := 0 to strList.Count - 1 do begin
+//      if strList[I] = edtStartLine.Text then begin
+//        for var J := I downto 0 do strList.Delete(J);     //delete beginning line
+//        Break;
+//      end;
+//    end;
 
-    for I := 0 to strList.Count - 1 do begin
+    for var I := 0 to strList.Count - 1 do begin
       S := Trim(strList[I]);
 
       if StartsStr(Trim(GetPrefix), S) then Delete(S, 1, Length(Trim(GetPrefix)));
       if EndsStr(GetSuffix, S) then Delete(S, Length(S) - Length(GetSuffix) + 1, Length(GetSuffix));
-      S := StringReplace(S, '''''', '''', [rfReplaceAll]);
+//      S := StringReplace(S, '''''', '''', [rfReplaceAll]);  //un-double single quotas   //TODO: add cmb option
 
       S := TrimRight(S);
       strList[I] := S;
@@ -217,19 +198,7 @@ begin
   chbCodeAlign.Checked := True;
   cmbMode.ItemIndex := 0;
 
-  lblProgramVersion.Caption := Format('%s v%s', [PROGRAM_NAME, PROGRAM_VERSION]);
-
   PageControl1.ActivePage := tsWrapper;
-end;
-
-function TFormTextWrapper.GetPrefix: string;
-begin
-  Result := edtPrefix.Text;
-end;
-
-function TFormTextWrapper.GetSuffix: string;
-begin
-  Result := edtSuffix.Text;
 end;
 
 end.

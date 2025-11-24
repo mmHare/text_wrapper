@@ -30,7 +30,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsSettings
+    ActivePage = tsWrapper
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -315,6 +315,25 @@ object FormTextWrapper: TFormTextWrapper
           MaxLength = 50
           TabOrder = 5
         end
+        object btnAbout: TButton
+          Left = 3
+          Top = 8
+          Width = 45
+          Height = 45
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = '?'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -18
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 6
+          OnClick = btnAboutClick
+        end
       end
     end
     object tsSettings: TTabSheet
@@ -391,6 +410,7 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
+          StyleElements = [seFont, seClient]
         end
         object edtStartLine: TEdit
           Left = 137
@@ -425,7 +445,7 @@ object FormTextWrapper: TFormTextWrapper
         object cmbMode: TComboBox
           Left = 137
           Top = 21
-          Width = 218
+          Width = 175
           Height = 33
           Hint = 'Add/Remove prefix & suffix'
           Margins.Left = 5
@@ -444,71 +464,6 @@ object FormTextWrapper: TFormTextWrapper
         end
       end
     end
-    object tsAbout: TTabSheet
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Caption = 'About'
-      ImageIndex = 2
-      object pnlAbout: TPanel
-        Left = 0
-        Top = 0
-        Width = 1142
-        Height = 760
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Align = alClient
-        BevelOuter = bvNone
-        TabOrder = 0
-        object lblProgramVersion: TLabel
-          Left = 86
-          Top = 48
-          Width = 219
-          Height = 37
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'lblProgramVersion'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -27
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-        end
-        object redtAbout: TRichEdit
-          AlignWithMargins = True
-          Left = 86
-          Top = 98
-          Width = 899
-          Height = 359
-          Margins.Left = 38
-          Margins.Top = 38
-          Margins.Right = 75
-          Margins.Bottom = 75
-          BorderStyle = bsNone
-          Enabled = False
-          Font.Charset = EASTEUROPE_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -18
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          Lines.Strings = (
-            'by Wojciech Zaj'#261'c (GitHub: mmHare)'
-            ''
-            
-              'This little helper program converts text by adding/removing give' +
-              'n prefixes and suffixes from input lines. ')
-          ParentFont = False
-          TabOrder = 0
-          Transparent = True
-        end
-      end
-    end
   end
   object ActionManager1: TActionManager
     ActionBars = <
@@ -519,14 +474,6 @@ object FormTextWrapper: TFormTextWrapper
     Left = 548
     Top = 8
     StyleName = 'Platform Default'
-    object actToCode: TAction
-      Caption = '-> Code'
-      OnExecute = actToCodeExecute
-    end
-    object actToSQL: TAction
-      Caption = '-> SQL'
-      OnExecute = actToSQLExecute
-    end
     object actClear: TAction
       Caption = 'Clear'
       Hint = 'Clear input and output boxes'
@@ -541,10 +488,6 @@ object FormTextWrapper: TFormTextWrapper
       Caption = 'Convert'
       OnExecute = actConvertExecute
     end
-    object actAutoRecog: TAction
-      Caption = 'Auto recognition'
-      OnExecute = actAutoRecogExecute
-    end
     object actFullProcess: TAction
       Caption = 'Full process'
       Hint = 
@@ -552,10 +495,6 @@ object FormTextWrapper: TFormTextWrapper
         's the text with the given settings'#13#10'3. Copies the result into th' +
         'e clipboard'
       OnExecute = actFullProcessExecute
-    end
-    object actTextWrap: TAction
-      Caption = 'Text wrap'
-      OnExecute = actTextWrapExecute
     end
   end
 end

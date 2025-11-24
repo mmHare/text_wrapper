@@ -4,3 +4,4 @@
 *.local
 *.identcache
 Wrapper.res
+/source/__history
