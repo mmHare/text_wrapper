@@ -11,9 +11,6 @@ uses
 type
   TFormTextWrapper = class(TForm)
     ActionManager1: TActionManager;
-    actClose: TAction;
-    ToolBar1: TToolBar;
-    btnClose: TButton;
     PageControl1: TPageControl;
     tsWrapper: TTabSheet;
     tsSettings: TTabSheet;
@@ -35,10 +32,6 @@ type
     actAutoRecog: TAction;
     actFullProcess: TAction;
     chbCodeAlign: TCheckBox;
-    lblPrefix: TLabel;
-    lblSuffix: TLabel;
-    edtPrefix: TEdit;
-    edtSuffix: TEdit;
     lblStartLine: TLabel;
     lblEndLine: TLabel;
     edtStartLine: TEdit;
@@ -52,7 +45,11 @@ type
     btnClipboard: TButton;
     btnClear: TButton;
     Button1: TButton;
-    procedure actCloseExecute(Sender: TObject);
+    lblPrefix: TLabel;
+    lblSuffix: TLabel;
+    edtPrefix: TEdit;
+    edtSuffix: TEdit;
+    lblProgramVersion: TLabel;
     procedure actToCodeExecute(Sender: TObject);
     procedure actToSQLExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
@@ -69,6 +66,12 @@ type
   public
     { Public declarations }
   end;
+
+
+const
+  PROGRAM_NAME = 'Text Wrapper';
+  program_VERSION = '1.0';
+
 
 var
   FormTextWrapper: TFormTextWrapper;
@@ -107,18 +110,15 @@ begin
   redtOut.CopyToClipboard;
 end;
 
-procedure TFormTextWrapper.actCloseExecute(Sender: TObject);
-begin
-  Self.Close;
-end;
-
 procedure TFormTextWrapper.actConvertExecute(Sender: TObject);
 begin
   case cmbMode.ItemIndex of
 //    0: actTextWrap.Execute;
-    0, 1: actAutoRecog.Execute;
-    2: actToCode.Execute;
-    3: actToSQL.Execute;
+//    0, 1: actAutoRecog.Execute;
+//    2: actToCode.Execute;
+//    3: actToSQL.Execute;
+    0: actToCode.Execute; //ADD
+    1: actToSQL.Execute; //REMOVE
   end;
 end;
 
@@ -217,10 +217,9 @@ begin
   chbCodeAlign.Checked := True;
   cmbMode.ItemIndex := 0;
 
-  PageControl1.ActivePage := tsWrapper;
+  lblProgramVersion.Caption := Format('%s v%s', [PROGRAM_NAME, PROGRAM_VERSION]);
 
-  Self.Constraints.MinHeight := 500;
-  Self.Constraints.MinWidth := 750;
+  PageControl1.ActivePage := tsWrapper;
 end;
 
 function TFormTextWrapper.GetPrefix: string;

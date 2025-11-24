@@ -1,53 +1,53 @@
 object FormTextWrapper: TFormTextWrapper
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   Anchors = [akLeft]
   Caption = 'Text Wrapper'
-  ClientHeight = 586
-  ClientWidth = 839
+  ClientHeight = 800
+  ClientWidth = 1150
   Color = clBtnFace
-  Constraints.MinHeight = 500
-  Constraints.MinWidth = 700
+  Constraints.MinHeight = 800
+  Constraints.MinWidth = 1150
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
+  Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
-  TextHeight = 15
-  object ToolBar1: TToolBar
-    Left = 0
-    Top = 0
-    Width = 839
-    Height = 29
-    Caption = 'ToolBar1'
-    Color = clActiveCaption
-    ParentColor = False
-    TabOrder = 0
-    object btnClose: TButton
-      Left = 0
-      Top = 0
-      Width = 60
-      Height = 22
-      Action = actClose
-      TabOrder = 0
-    end
-  end
+  PixelsPerInch = 144
+  TextHeight = 25
   object PageControl1: TPageControl
     Left = 0
-    Top = 29
-    Width = 839
-    Height = 557
-    ActivePage = tsWrapper
+    Top = 0
+    Width = 1150
+    Height = 800
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ActivePage = tsSettings
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     object tsWrapper: TTabSheet
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Wrapper'
       object gpWrapper: TGridPanel
         Left = 0
-        Top = 41
-        Width = 831
-        Height = 486
+        Top = 120
+        Width = 1142
+        Height = 640
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Align = alClient
         ColumnCollection = <
           item
@@ -66,7 +66,7 @@ object FormTextWrapper: TFormTextWrapper
           end>
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clInactiveCaption
-        Font.Height = -12
+        Font.Height = -18
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
@@ -81,309 +81,428 @@ object FormTextWrapper: TFormTextWrapper
             SizeStyle = ssAuto
           end>
         TabOrder = 0
-        ExplicitTop = 0
-        ExplicitHeight = 527
         object pnlIn: TPanel
           Left = 1
           Top = 1
-          Width = 829
-          Height = 242
+          Width = 1140
+          Height = 319
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Align = alClient
           Color = clSkyBlue
           ParentBackground = False
           TabOrder = 0
-          ExplicitHeight = 262
           object lblIn: TLabel
-            Left = 16
-            Top = 8
-            Width = 12
-            Height = 15
+            Left = 24
+            Top = 12
+            Width = 18
+            Height = 25
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
             Caption = 'IN'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -12
+            Font.Height = -18
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
           end
           object redtIn: TRichEdit
             AlignWithMargins = True
-            Left = 31
-            Top = 31
-            Width = 767
-            Height = 180
-            Margins.Left = 30
-            Margins.Top = 30
-            Margins.Right = 30
-            Margins.Bottom = 30
+            Left = 61
+            Top = 46
+            Width = 1033
+            Height = 227
+            Margins.Left = 60
+            Margins.Top = 45
+            Margins.Right = 45
+            Margins.Bottom = 45
             Align = alClient
             Font.Charset = EASTEUROPE_CHARSET
             Font.Color = clWindowText
-            Font.Height = -12
-            Font.Name = 'Segoe UI'
+            Font.Height = -18
+            Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
             TabOrder = 0
-            ExplicitHeight = 200
+            WantTabs = True
           end
         end
         object pnlOut: TPanel
           Left = 1
-          Top = 243
-          Width = 829
-          Height = 242
+          Top = 320
+          Width = 1140
+          Height = 319
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Align = alClient
           Color = clActiveCaption
           ParentBackground = False
           TabOrder = 1
-          ExplicitTop = 263
-          ExplicitHeight = 263
           object lblOut: TLabel
-            Left = 16
-            Top = 8
-            Width = 23
-            Height = 15
+            Left = 24
+            Top = 12
+            Width = 35
+            Height = 25
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
             Caption = 'OUT'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -12
+            Font.Height = -18
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
           end
           object redtOut: TRichEdit
             AlignWithMargins = True
-            Left = 31
-            Top = 31
-            Width = 767
-            Height = 180
-            Margins.Left = 30
-            Margins.Top = 30
-            Margins.Right = 30
-            Margins.Bottom = 30
+            Left = 61
+            Top = 46
+            Width = 1033
+            Height = 227
+            Margins.Left = 60
+            Margins.Top = 45
+            Margins.Right = 45
+            Margins.Bottom = 45
             Align = alClient
             Font.Charset = EASTEUROPE_CHARSET
             Font.Color = clWindowText
-            Font.Height = -12
-            Font.Name = 'Segoe UI'
+            Font.Height = -18
+            Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
             TabOrder = 0
-            ExplicitHeight = 201
+            WantTabs = True
           end
         end
       end
       object pnlMenu: TPanel
         Left = 0
         Top = 0
-        Width = 831
-        Height = 41
+        Width = 1142
+        Height = 120
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Align = alTop
         BevelOuter = bvNone
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitLeft = 464
-        ExplicitTop = 8
-        ExplicitWidth = 185
+        DesignSize = (
+          1142
+          120)
+        object lblPrefix: TLabel
+          Left = 12
+          Top = 68
+          Width = 43
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Prefix'
+        end
+        object lblSuffix: TLabel
+          Left = 599
+          Top = 68
+          Width = 44
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Anchors = [akTop, akRight]
+          Caption = 'Suffix'
+        end
         object btnConvert: TButton
-          Left = 17
-          Top = 5
-          Width = 75
-          Height = 30
+          Left = 62
+          Top = 8
+          Width = 112
+          Height = 45
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Action = actConvert
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -18
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
         end
         object btnClipboard: TButton
-          Left = 413
-          Top = 6
-          Width = 75
-          Height = 30
+          Left = 653
+          Top = 9
+          Width = 112
+          Height = 45
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Action = actClipboard
+          Anchors = [akTop, akRight]
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
         end
         object btnClear: TButton
-          Left = 517
-          Top = 5
-          Width = 75
-          Height = 30
+          Left = 809
+          Top = 8
+          Width = 112
+          Height = 45
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Action = actClear
+          Anchors = [akTop, akRight]
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 2
         end
         object Button1: TButton
-          Left = 637
-          Top = 5
-          Width = 75
-          Height = 30
+          Left = 989
+          Top = 8
+          Width = 112
+          Height = 45
+          Hint = 
+            '1. Paste from the clipboard into the Input box'#13#10'2. Convert'#13#10'3. C' +
+            'opy result into the clipboard'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Action = actFullProcess
+          Anchors = [akTop, akRight]
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
+        end
+        object edtPrefix: TEdit
+          Left = 62
+          Top = 63
+          Width = 450
+          Height = 33
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          MaxLength = 50
+          TabOrder = 4
+        end
+        object edtSuffix: TEdit
+          Left = 653
+          Top = 63
+          Width = 450
+          Height = 33
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Anchors = [akTop, akRight]
+          MaxLength = 50
+          TabOrder = 5
         end
       end
     end
     object tsSettings: TTabSheet
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Settings'
       ImageIndex = 1
       object pnlSettings: TPanel
         Left = 0
         Top = 0
-        Width = 831
-        Height = 527
+        Width = 1142
+        Height = 760
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        object lblPrefix: TLabel
-          Left = 55
-          Top = 152
-          Width = 30
-          Height = 15
-          Caption = 'Prefix'
-        end
-        object lblSuffix: TLabel
-          Left = 304
-          Top = 152
-          Width = 30
-          Height = 15
-          Caption = 'Suffix'
-        end
         object lblStartLine: TLabel
-          Left = 22
-          Top = 91
-          Width = 63
-          Height = 15
+          Left = 33
+          Top = 137
+          Width = 93
+          Height = 25
           Hint = 'Line added at the start of the text'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Starting line'
+          ParentShowHint = False
+          ShowHint = True
         end
         object lblEndLine: TLabel
-          Left = 26
-          Top = 205
-          Width = 59
-          Height = 15
+          Left = 39
+          Top = 190
+          Width = 87
+          Height = 25
           Hint = 'Line added at the end of text'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Ending line'
+          ParentShowHint = False
+          ShowHint = True
         end
         object lblMode: TLabel
-          Left = 312
+          Left = 79
           Top = 24
-          Width = 31
-          Height = 15
+          Width = 47
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Mode'
         end
         object chbCodeAlign: TCheckBox
-          Left = 8
-          Top = 24
-          Width = 97
-          Height = 17
-          Hint = 'Fill with spaces'
+          Left = 12
+          Top = 84
+          Width = 146
+          Height = 26
+          Hint = 'Fill with trailing spaces before suffix'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           BiDiMode = bdRightToLeft
           Caption = 'Align code'
           ParentBiDiMode = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
         end
-        object edtPrefix: TEdit
-          Left = 91
-          Top = 149
-          Width = 155
-          Height = 23
-          TabOrder = 2
-        end
-        object edtSuffix: TEdit
-          Left = 340
-          Top = 149
-          Width = 157
-          Height = 23
-          TabOrder = 3
-        end
         object edtStartLine: TEdit
-          Left = 91
-          Top = 88
-          Width = 406
-          Height = 23
+          Left = 137
+          Top = 132
+          Width = 609
+          Height = 33
+          Hint = 'Line will be added before the converted text'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          MaxLength = 255
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
         end
         object edtEndLine: TEdit
-          Left = 91
-          Top = 202
-          Width = 406
-          Height = 23
-          TabOrder = 4
+          Left = 137
+          Top = 185
+          Width = 609
+          Height = 33
+          Hint = 'Line will be added after the converted text'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          MaxLength = 255
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
         end
         object cmbMode: TComboBox
-          Left = 360
+          Left = 137
           Top = 21
-          Width = 145
-          Height = 23
+          Width = 218
+          Height = 33
+          Hint = 'Add/Remove prefix & suffix'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 5
-          Text = 'TEXT'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Text = 'ADD'
           Items.Strings = (
-            'TEXT'
-            'AUTO SQL'
-            'SQL -> CODE'
-            'CODE -> SQL')
+            'ADD'
+            'REMOVE')
         end
       end
     end
     object tsAbout: TTabSheet
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'About'
       ImageIndex = 2
       object pnlAbout: TPanel
         Left = 0
         Top = 0
-        Width = 831
-        Height = 527
+        Width = 1142
+        Height = 760
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        object lblProgramVersion: TLabel
+          Left = 86
+          Top = 48
+          Width = 219
+          Height = 37
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'lblProgramVersion'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -27
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+        end
         object redtAbout: TRichEdit
           AlignWithMargins = True
-          Left = 25
-          Top = 25
-          Width = 756
-          Height = 452
-          Margins.Left = 25
-          Margins.Top = 25
-          Margins.Right = 50
-          Margins.Bottom = 50
-          Align = alClient
+          Left = 86
+          Top = 98
+          Width = 899
+          Height = 359
+          Margins.Left = 38
+          Margins.Top = 38
+          Margins.Right = 75
+          Margins.Bottom = 75
+          BorderStyle = bsNone
           Enabled = False
           Font.Charset = EASTEUROPE_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -18
           Font.Name = 'Segoe UI'
           Font.Style = []
           Lines.Strings = (
-            'Text Wrapper'
-            'ver. 1.0.0.0'
-            ''
-            'by'
+            'by Wojciech Zaj'#261'c (GitHub: mmHare)'
             ''
             
               'This little helper program converts text by adding/removing give' +
-              'n prefixes and suffixes from input lines. '
-            
-              'Optionally it can align output by filling with spaces at the end' +
-              ' of the lines up to the longest line so the suffixes will be add' +
-              'ed at the same '
-            'position.'
-            
-              'Also a line at the start of the text as well as at the end can b' +
-              'e added.'
-            
-              'By selecting SQL <-> CODE mode the quotas will be changed into d' +
-              'ouble quotas and reverse, so it will be converted to fit into De' +
-              'lphi code or '
-            'SQL script. '
-            ''
-            'Full-Process action goes through these steps:'
-            '1. Pastes text from the clipboard into the Input box'
-            '2. Converts the text with the given settings'
-            '3. Copies the result into the clipboard')
+              'n prefixes and suffixes from input lines. ')
           ParentFont = False
           TabOrder = 0
           Transparent = True
@@ -397,13 +516,9 @@ object FormTextWrapper: TFormTextWrapper
       end
       item
       end>
-    Left = 776
+    Left = 548
     Top = 8
     StyleName = 'Platform Default'
-    object actClose: TAction
-      Caption = 'Close'
-      OnExecute = actCloseExecute
-    end
     object actToCode: TAction
       Caption = '-> Code'
       OnExecute = actToCodeExecute
@@ -432,7 +547,10 @@ object FormTextWrapper: TFormTextWrapper
     end
     object actFullProcess: TAction
       Caption = 'Full process'
-      Hint = 'Clpbrd to IN > Convert > Clpbrd from OUT'
+      Hint = 
+        '1. Pastes text from the clipboard into the Input box'#13#10'2. Convert' +
+        's the text with the given settings'#13#10'3. Copies the result into th' +
+        'e clipboard'
       OnExecute = actFullProcessExecute
     end
     object actTextWrap: TAction
