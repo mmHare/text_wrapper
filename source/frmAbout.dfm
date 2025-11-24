@@ -33,10 +33,6 @@ object FormAbout: TFormAbout
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -204
-    ExplicitTop = -96
-    ExplicitWidth = 1142
-    ExplicitHeight = 760
     object pnlHeader: TPanel
       Left = 0
       Top = 0
@@ -49,7 +45,6 @@ object FormAbout: TFormAbout
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 651
       object lblProgramVersion: TLabel
         AlignWithMargins = True
         Left = 38
@@ -68,10 +63,8 @@ object FormAbout: TFormAbout
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        ExplicitLeft = 60
-        ExplicitTop = 10
-        ExplicitWidth = 878
-        ExplicitHeight = 77
+        ExplicitWidth = 330
+        ExplicitHeight = 55
       end
     end
     object redtAbout: TRichEdit
@@ -102,9 +95,6 @@ object FormAbout: TFormAbout
       ParentFont = False
       TabOrder = 1
       Transparent = True
-      ExplicitTop = 15
-      ExplicitWidth = 575
-      ExplicitHeight = 388
     end
     object btnOk: TButton
       AlignWithMargins = True
@@ -120,9 +110,6 @@ object FormAbout: TFormAbout
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 2
-      ExplicitLeft = 100
-      ExplicitTop = 398
-      ExplicitWidth = 451
     end
   end
 end

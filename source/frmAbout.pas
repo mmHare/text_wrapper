@@ -25,7 +25,7 @@ type
 
 const
   PROGRAM_NAME = 'Text Wrapper';
-  program_VERSION = '1.0';
+  program_VERSION = '0.1.0';
 
 
 var
