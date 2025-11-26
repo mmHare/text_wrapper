@@ -31,7 +31,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsSettings
+    ActivePage = tsWrapper
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet

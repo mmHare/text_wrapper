@@ -3,7 +3,7 @@ unit cConfigManager;
 interface
 
 uses
-  cTypes;
+  Generics.Collections, cUtils, cSettingsPreset;
 
 const
   CONFIG_FILE_NAME = 'settings.json';
@@ -11,16 +11,19 @@ const
 type
   TConfigManager = class
     private
-      FSettingsPreset : RSettingsPreset;
+//      FSettingsPreset : TSettingsPreset;
 
-
+      FPresetList : TList<TSettingsPreset>;
+      FPresetNumber : Integer;
     public
-      property SettingsPreset : RSettingsPreset read FSettingsPreset write FSettingsPreset;
+//      property SettingsPreset : TSettingsPreset read FSettingsPreset write FSettingsPreset;
+      property PresetList : TList<TSettingsPreset> read FPresetList write FPresetList;
 
       procedure SetDefault;
       procedure SaveConfigToFile;
       procedure LoadConfigFromFile;
 
+      destructor Destroy; override;
       constructor Create;
   end;
 
@@ -33,15 +36,26 @@ uses
 
 constructor TConfigManager.Create;
 begin
+  FPresetList := TList<TSettingsPreset>.Create;
+  FPresetNumber := 3;
+
   SetDefault;
 
   LoadConfigFromFile;
 end;
 
+destructor TConfigManager.Destroy;
+begin
+  FreeAndNil(FPresetList);
+
+  inherited;
+end;
+
 procedure TConfigManager.LoadConfigFromFile;
 var RootObject, tmpObject : TJSONObject;
-    presetList : TJSONArray;
+    presetListTmp : TJSONArray;
     jsonStr : string;
+    presetTmp : TSettingsPreset;
 begin
   try
     if not FileExists(CONFIG_FILE_NAME) then begin
@@ -52,13 +66,19 @@ begin
     jsonStr := TFile.ReadAllText(CONFIG_FILE_NAME, TEncoding.UTF8);
     RootObject := TJSONObject.ParseJSONValue(jsonStr) as TJSONObject;
 
+    //TODO: file data validation
+
     try
-      presetList := RootObject.GetValue<TJSONArray>('presets');
+      presetListTmp := RootObject.GetValue<TJSONArray>('presets');
 
-      for var I := 0 to presetList.Count - 1 do begin
-        tmpObject := presetList.Items[I] as TJSONObject;
+      FPresetList.Clear;
+      for var I := 0 to presetListTmp.Count - 1 do begin
+        if I > FPresetNumber then Break;
 
-        with FSettingsPreset do begin
+        tmpObject := presetListTmp.Items[I] as TJSONObject;
+
+        presetTmp := TSettingsPreset.Create;
+        with presetTmp do begin
           Prefix      := tmpObject.GetValue<string>('prefix');
           Suffix      := tmpObject.GetValue<string>('suffix');
           Mode        := TWrapModeType(tmpObject.GetValue<Integer>('mode'));
@@ -66,6 +86,7 @@ begin
           StartLine   := tmpObject.GetValue<string>('start_line');
           EndLine     := tmpObject.GetValue<string>('end_line');
         end;
+        FPresetList.Add(presetTmp);
       end;
     finally
       RootObject.Free;
@@ -87,22 +108,24 @@ begin
     try
       tmpArray := TJSONArray.Create;
 
-      tmpObject := TJSONObject.Create;
-//      tmpObject.AddPair('name', 'preset_0');
-      tmpObject.AddPair('prefix', FSettingsPreset.Prefix);
-      tmpObject.AddPair('suffix', FSettingsPreset.Suffix);
-      tmpObject.AddPair('mode', Ord(FSettingsPreset.Mode));
-      tmpObject.AddPair('code_align', FSettingsPreset.IsCodeAlign);
-      tmpObject.AddPair('start_line', FSettingsPreset.StartLine);
-      tmpObject.AddPair('end_line', FSettingsPreset.EndLine);
+      for var I := 0 to FPresetList.Count - 1 do begin
 
-      tmpArray.AddElement(tmpObject);
+        tmpObject := TJSONObject.Create;
+        tmpObject.AddPair('prefix', FPresetList[I].Prefix);
+        tmpObject.AddPair('suffix', FPresetList[I].Suffix);
+        tmpObject.AddPair('mode', Ord(FPresetList[I].Mode));
+        tmpObject.AddPair('code_align', FPresetList[I].IsCodeAlign);
+        tmpObject.AddPair('start_line', FPresetList[I].StartLine);
+        tmpObject.AddPair('end_line', FPresetList[I].EndLine);
 
-//      RootObject.AddPair('preset_0', tmpObject);
+        tmpArray.AddElement(tmpObject);
+      end;
 
       RootObject.AddPair('presets', tmpArray);
 
       jsonStr := RootObject.Format();
+
+      //TODO: file data validation
 
       TFile.WriteAllText(CONFIG_FILE_NAME, JsonStr, TEncoding.UTF8);
     except
@@ -116,14 +139,17 @@ begin
 end;
 
 procedure TConfigManager.SetDefault;
+var tmpPreset : TSettingsPreset;
 begin
-  with FSettingsPreset do begin
-    Prefix      := '';
-    Suffix      := '';
-    Mode        := wmtAdd;
-    IsCodeAlign := False;
-    StartLine   := '';
-    EndLine     := '';
+  try
+    FPresetList.Clear;
+    for var I := 0 to FPresetNumber do begin //includes current, working settings
+      FPresetList.Add(TSettingsPreset.Create)
+    end;
+  except
+    on E: Exception do begin
+      SaveToLog('Error while setting default values: ' + E.Message);
+    end;
   end;
 end;
 

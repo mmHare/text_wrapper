@@ -1,18 +1,9 @@
-unit cTypes;
+unit cUtils;
 
 interface
 
 type
   TWrapModeType = (wmtAdd, wmtRemove);
-
-  RSettingsPreset = record
-    Prefix      : string;
-    Suffix      : string;
-    Mode        : TWrapModeType;
-    IsCodeAlign : Boolean;
-    StartLine   : string;
-    EndLine     : string;
-  end;
 
 function SaveToLog(pMessage : string) : Boolean;
 

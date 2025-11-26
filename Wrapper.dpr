@@ -3,7 +3,10 @@ program Wrapper;
 uses
   Vcl.Forms,
   frmTextWrapper in 'frmTextWrapper.pas' {FormTextWrapper},
-  frmAbout in 'source\frmAbout.pas' {FormAbout};
+  frmAbout in 'source\frmAbout.pas' {FormAbout},
+  cConfigManager in 'source\cConfigManager.pas',
+  cUtils in 'source\cUtils.pas',
+  cSettingsPreset in 'source\cSettingsPreset.pas';
 
 {$R *.res}
 

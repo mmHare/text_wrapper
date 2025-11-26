@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls,
-  cConfigManager, cTypes;
+  cConfigManager, cUtils, cSettingsPreset;
 
 type
   TFormTextWrapper = class(TForm)
@@ -56,7 +56,7 @@ type
     FConfigManager : TConfigManager;
 
     procedure SetControls;
-    function GetSettingsValues : RSettingsPreset;
+    procedure GetSettingsValues(pPreset: TSettingsPreset);
 
     function GetPrefix : string;
     function GetSuffix : string;
@@ -200,9 +200,11 @@ begin
   end;
 end;
 
-function TFormTextWrapper.GetSettingsValues : RSettingsPreset;
+procedure TFormTextWrapper.GetSettingsValues(pPreset: TSettingsPreset);
 begin
-  with Result do begin
+  if not Assigned(pPreset) then Exit;
+
+  with pPreset do begin
     Prefix      := edtPrefix.Text;
     Suffix      := edtSuffix.Text;
     Mode        := TWrapModeType(cmbMode.ItemIndex);
@@ -216,7 +218,7 @@ procedure TFormTextWrapper.SetControls;
 begin
   if not Assigned(FConfigManager) then Exit;
 
-  with FConfigManager.SettingsPreset do begin
+  with FConfigManager.PresetList[0] do begin
     edtPrefix.Text       := Prefix;
     edtSuffix.Text       := Suffix;
     cmbMode.ItemIndex    := Ord(Mode);
@@ -228,7 +230,7 @@ end;
 
 procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  FConfigManager.SettingsPreset := GetSettingsValues;
+  GetSettingsValues(FConfigManager.PresetList[0]);
   FConfigManager.SaveConfigToFile;
 end;
 
