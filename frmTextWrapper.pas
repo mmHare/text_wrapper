@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
-  Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls;
+  Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls,
+  cConfigManager, cTypes;
 
 type
   TFormTextWrapper = class(TForm)
@@ -49,8 +50,14 @@ type
     procedure actFullProcessExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnAboutClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
   private
+    FConfigManager : TConfigManager;
+
+    procedure SetControls;
+    function GetSettingsValues : RSettingsPreset;
+
     function GetPrefix : string;
     function GetSuffix : string;
 
@@ -95,9 +102,9 @@ end;
 
 procedure TFormTextWrapper.actConvertExecute(Sender: TObject);
 begin
-  case cmbMode.ItemIndex of
-    0: PerformAddMode;
-    1: PerformRemoveMode;
+  case TWrapModeType(cmbMode.ItemIndex) of
+       wmtAdd : PerformAddMode;
+    wmtRemove : PerformRemoveMode;
   end;
 end;
 
@@ -193,10 +200,43 @@ begin
   end;
 end;
 
+function TFormTextWrapper.GetSettingsValues : RSettingsPreset;
+begin
+  with Result do begin
+    Prefix      := edtPrefix.Text;
+    Suffix      := edtSuffix.Text;
+    Mode        := TWrapModeType(cmbMode.ItemIndex);
+    IsCodeAlign := chbCodeAlign.Checked;
+    StartLine   := edtStartLine.Text;
+    EndLine     := edtEndLine.Text;
+  end;
+end;
+
+procedure TFormTextWrapper.SetControls;
+begin
+  if not Assigned(FConfigManager) then Exit;
+
+  with FConfigManager.SettingsPreset do begin
+    edtPrefix.Text       := Prefix;
+    edtSuffix.Text       := Suffix;
+    cmbMode.ItemIndex    := Ord(Mode);
+    chbCodeAlign.Checked := IsCodeAlign;
+    edtStartLine.Text    := StartLine;
+    edtEndLine.Text      := EndLine;
+  end;
+end;
+
+procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FConfigManager.SettingsPreset := GetSettingsValues;
+  FConfigManager.SaveConfigToFile;
+end;
+
 procedure TFormTextWrapper.FormCreate(Sender: TObject);
 begin
-  chbCodeAlign.Checked := True;
-  cmbMode.ItemIndex := 0;
+  FConfigManager := TConfigManager.Create;
+
+  SetControls;
 
   PageControl1.ActivePage := tsWrapper;
 end;

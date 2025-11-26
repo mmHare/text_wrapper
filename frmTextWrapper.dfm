@@ -18,6 +18,7 @@ object FormTextWrapper: TFormTextWrapper
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 144
   TextHeight = 25
@@ -30,7 +31,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsWrapper
+    ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -354,6 +355,8 @@ object FormTextWrapper: TFormTextWrapper
         Margins.Bottom = 5
         Align = alClient
         BevelOuter = bvNone
+        Color = clGradientActiveCaption
+        ParentBackground = False
         TabOrder = 0
         object lblStartLine: TLabel
           Left = 33
