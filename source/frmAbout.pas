@@ -23,15 +23,13 @@ type
     { Public declarations }
   end;
 
-const
-  PROGRAM_NAME = 'Text Wrapper';
-  program_VERSION = '0.1.0';
-
-
 var
   FormAbout: TFormAbout;
 
 implementation
+
+uses
+  cUtils;
 
 {$R *.dfm}
 

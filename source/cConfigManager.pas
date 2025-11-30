@@ -100,6 +100,7 @@ begin
     try
       tmpArray := TJSONArray.Create;
 
+      FPresetList[0].PresetName := ''; //working settings have no name
       for var I := 0 to FPresetList.Count - 1 do begin
         FPresetList[I].Id := I;
 

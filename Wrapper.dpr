@@ -6,7 +6,8 @@ uses
   frmAbout in 'source\frmAbout.pas' {FormAbout},
   cConfigManager in 'source\cConfigManager.pas',
   cUtils in 'source\cUtils.pas',
-  cSettingsPreset in 'source\cSettingsPreset.pas';
+  cSettingsPreset in 'source\cSettingsPreset.pas',
+  framPreset in 'source\framPreset.pas' {FramePreset: TFrame};
 
 {$R *.res}
 
