@@ -44,10 +44,11 @@ begin
 end;
 
 procedure TConfigManager.LoadConfigFromFile;
-var RootObject, tmpObject : TJSONObject;
-    presetListTmp : TJSONArray;
-    jsonStr : string;
-    Serializer: TJsonSerializer;
+var
+  RootObject, tmpObject : TJSONObject;
+  presetListTmp : TJSONArray;
+  jsonStr : string;
+  Serializer: TJsonSerializer;
 begin
 
   Serializer := TJsonSerializer.Create;
@@ -73,6 +74,7 @@ begin
         tmpObject := presetListTmp.Items[I] as TJSONObject;
 
         FPresetList.Add(Serializer.Deserialize<TSettingsPreset>(tmpObject.ToJSON));
+        FPresetList[I].Id := I;
       end;
     finally
       RootObject.Free;
@@ -86,10 +88,11 @@ begin
 end;
 
 procedure TConfigManager.SaveConfigToFile;
-var RootObject, tmpObject : TJSONObject;
-    tmpArray : TJSONArray;
-    strTmp : string;
-    Serializer: TJsonSerializer;
+var
+  RootObject, tmpObject : TJSONObject;
+  tmpArray : TJSONArray;
+  strTmp : string;
+  Serializer: TJsonSerializer;
 begin
   Serializer := TJsonSerializer.Create;
   RootObject := TJSONObject.Create;
@@ -98,6 +101,8 @@ begin
       tmpArray := TJSONArray.Create;
 
       for var I := 0 to FPresetList.Count - 1 do begin
+        FPresetList[I].Id := I;
+
         strTmp := Serializer.Serialize(FPresetList[I]);
         tmpObject := TJSONObject.ParseJSONValue(strTmp) as TJSONObject;
         tmpArray.AddElement(tmpObject);

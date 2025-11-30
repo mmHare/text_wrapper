@@ -6,8 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
-  Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls,
-  cConfigManager, cUtils, cSettingsPreset;
+  Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
+  cConfigManager, cUtils, cSettingsPreset, framPreset;
 
 type
   TFormTextWrapper = class(TForm)
@@ -44,6 +44,10 @@ type
     edtPrefix: TEdit;
     edtSuffix: TEdit;
     btnAbout: TButton;
+    scrlbxPresets: TScrollBox;
+    actSavePreset: TAction;
+    actLoadPreset: TAction;
+    lblPresets: TLabel;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -51,11 +55,17 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnAboutClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
+    procedure actSavePresetExecute(Sender: TObject);
+    procedure actLoadPresetExecute(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
+    FFramePresetList : TObjectList<TFramePreset>;
 
-    procedure SetControls;
+    procedure PrepareFrames;
+
+    procedure SetControls(pPreset: TSettingsPreset);
     procedure GetSettingsValues(pPreset: TSettingsPreset);
 
     function GetPrefix : string;
@@ -116,6 +126,26 @@ begin
   actClipboard.Execute;
 end;
 
+procedure TFormTextWrapper.actLoadPresetExecute(Sender: TObject);
+var
+  btn: TButton;
+  idTmp: Integer;
+begin
+  btn := (Sender as TAction).ActionComponent as TButton;
+  idTmp := btn.Tag;
+  SetControls(FConfigManager.PresetList[idTmp]);
+end;
+
+procedure TFormTextWrapper.actSavePresetExecute(Sender: TObject);
+var
+  btn: TButton;
+  idTmp: Integer;
+begin
+  btn := (Sender as TAction).ActionComponent as TButton;
+  idTmp := btn.Tag;
+  GetSettingsValues(FConfigManager.PresetList[idTmp]);
+end;
+
 procedure TFormTextWrapper.btnAboutClick(Sender: TObject);
 begin
   if FormAbout = nil then FormAbout := TFormAbout.Create(Self);
@@ -123,9 +153,10 @@ begin
 end;
 
 procedure TFormTextWrapper.PerformAddMode;
-var strList : TStringList;
-    lineLength, x : Integer;
-    S : string;
+var
+  strList : TStringList;
+  lineLength, x : Integer;
+  S : string;
 begin
   if redtIn.Lines.Count = 0 then Exit;
 
@@ -200,6 +231,30 @@ begin
   end;
 end;
 
+procedure TFormTextWrapper.PrepareFrames;
+var
+  frameTmp : TFramePreset;
+begin
+  if FConfigManager.PresetList.Count < 1 then Exit;
+
+  FFramePresetList.Clear;
+  try
+    for var I := 1 to FConfigManager.PresetList.Count - 1 do begin
+      frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
+      frameTmp.Name := 'FramePreset_' + IntToStr(I);
+      frameTmp.Parent := scrlbxPresets;
+      frameTmp.btnSave.Action := actSavePreset;
+      frameTmp.btnLoad.Action := actLoadPreset;
+
+      FFramePresetList.Add(frameTmp);
+    end;
+  except
+    on E: Exception do begin
+      SaveToLog('Error while loading preset forms: ' + E.Message);
+    end;
+  end;
+end;
+
 procedure TFormTextWrapper.GetSettingsValues(pPreset: TSettingsPreset);
 begin
   if not Assigned(pPreset) then Exit;
@@ -214,11 +269,14 @@ begin
   end;
 end;
 
-procedure TFormTextWrapper.SetControls;
+procedure TFormTextWrapper.SetControls(pPreset: TSettingsPreset);
 begin
   if not Assigned(FConfigManager) then Exit;
+  if not Assigned(pPreset) then Exit;
 
-  with FConfigManager.PresetList[0] do begin
+  FConfigManager.PresetList[0].AssignValues(pPreset);
+
+  with pPreset do begin
     edtPrefix.Text       := Prefix;
     edtSuffix.Text       := Suffix;
     cmbMode.ItemIndex    := Ord(Mode);
@@ -237,10 +295,18 @@ end;
 procedure TFormTextWrapper.FormCreate(Sender: TObject);
 begin
   FConfigManager := TConfigManager.Create;
+  FFramePresetList := TObjectList<TFramePreset>.Create;
+  PrepareFrames;
 
-  SetControls;
+  SetControls(FConfigManager.PresetList[0]);
 
   PageControl1.ActivePage := tsWrapper;
+end;
+
+procedure TFormTextWrapper.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(FConfigManager);
+  FreeAndNil(FFramePresetList);
 end;
 
 end.

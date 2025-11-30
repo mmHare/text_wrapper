@@ -20,6 +20,7 @@ object FormTextWrapper: TFormTextWrapper
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 144
   TextHeight = 25
   object PageControl1: TPageControl
@@ -31,7 +32,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsWrapper
+    ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -397,6 +398,17 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Caption = 'Mode'
         end
+        object lblPresets: TLabel
+          Left = 12
+          Top = 445
+          Width = 118
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Setting presets'
+        end
         object chbCodeAlign: TCheckBox
           Left = 12
           Top = 84
@@ -465,6 +477,21 @@ object FormTextWrapper: TFormTextWrapper
             'ADD'
             'REMOVE')
         end
+        object scrlbxPresets: TScrollBox
+          Left = 0
+          Top = 480
+          Width = 1142
+          Height = 280
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Align = alBottom
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          TabOrder = 4
+        end
       end
     end
   end
@@ -498,6 +525,14 @@ object FormTextWrapper: TFormTextWrapper
         's the text with the given settings'#13#10'3. Copies the result into th' +
         'e clipboard'
       OnExecute = actFullProcessExecute
+    end
+    object actSavePreset: TAction
+      Caption = 'Save'
+      OnExecute = actSavePresetExecute
+    end
+    object actLoadPreset: TAction
+      Caption = 'Load'
+      OnExecute = actLoadPresetExecute
     end
   end
 end
