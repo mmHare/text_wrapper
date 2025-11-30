@@ -59,12 +59,12 @@ object FormAbout: TFormAbout
         Caption = 'lblProgramVersion'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -41
-        Font.Name = 'Segoe UI'
+        Font.Height = -48
+        Font.Name = 'Calibri'
         Font.Style = []
         ParentFont = False
-        ExplicitWidth = 330
-        ExplicitHeight = 55
+        ExplicitWidth = 358
+        ExplicitHeight = 59
       end
     end
     object redtAbout: TRichEdit

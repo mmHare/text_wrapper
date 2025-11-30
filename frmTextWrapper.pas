@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
-  cConfigManager, cUtils, cSettingsPreset, framPreset;
+  cConfigManager, cUtils, cSettingsPreset, framPreset,
+  Vcl.ImgList, System.ImageList;
 
 type
   TFormTextWrapper = class(TForm)
@@ -36,7 +37,7 @@ type
     btnConvert: TButton;
     btnClipboard: TButton;
     btnClear: TButton;
-    Button1: TButton;
+    btnFullProcess: TButton;
     lblPrefix: TLabel;
     lblSuffix: TLabel;
     edtPrefix: TEdit;
@@ -48,6 +49,10 @@ type
     lblPresets: TLabel;
     chbStartLine: TCheckBox;
     chbEndLine: TCheckBox;
+    pnlLeft: TPanel;
+    ImageList1: TImageList;
+    actMoveUp: TAction;
+    btnMoveUp: TButton;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -58,6 +63,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure actSavePresetExecute(Sender: TObject);
     procedure actLoadPresetExecute(Sender: TObject);
+    procedure actMoveUpExecute(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
@@ -134,6 +140,12 @@ begin
   btn := (Sender as TAction).ActionComponent as TButton;
   idTmp := btn.Tag;
   SetControls(FConfigManager.PresetList[idTmp]);
+end;
+
+procedure TFormTextWrapper.actMoveUpExecute(Sender: TObject);
+begin
+  if Trim(redtOut.Lines.Text) <> '' then redtIn.Lines := redtOut.Lines;
+  redtOut.Lines.Clear;
 end;
 
 procedure TFormTextWrapper.actSavePresetExecute(Sender: TObject);
