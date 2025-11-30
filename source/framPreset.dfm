@@ -61,6 +61,8 @@ object FramePreset: TFramePreset
       Margins.Right = 5
       Margins.Bottom = 5
       Caption = 'Save'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 1
     end
     object btnLoad: TButton
@@ -73,6 +75,8 @@ object FramePreset: TFramePreset
       Margins.Right = 5
       Margins.Bottom = 5
       Caption = 'Load'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
     end
   end

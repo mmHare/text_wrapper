@@ -18,6 +18,7 @@ object FormTextWrapper: TFormTextWrapper
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  ShowHint = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -359,36 +360,8 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 0
-        object lblStartLine: TLabel
-          Left = 33
-          Top = 137
-          Width = 93
-          Height = 25
-          Hint = 'Line added at the start of the text'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Starting line'
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object lblEndLine: TLabel
-          Left = 39
-          Top = 190
-          Width = 87
-          Height = 25
-          Hint = 'Line added at the end of text'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Ending line'
-          ParentShowHint = False
-          ShowHint = True
-        end
         object lblMode: TLabel
-          Left = 79
+          Left = 113
           Top = 24
           Width = 47
           Height = 25
@@ -410,7 +383,7 @@ object FormTextWrapper: TFormTextWrapper
           Caption = 'Setting presets'
         end
         object chbCodeAlign: TCheckBox
-          Left = 12
+          Left = 46
           Top = 84
           Width = 146
           Height = 26
@@ -428,7 +401,7 @@ object FormTextWrapper: TFormTextWrapper
           StyleElements = [seFont, seClient]
         end
         object edtStartLine: TEdit
-          Left = 137
+          Left = 202
           Top = 132
           Width = 609
           Height = 33
@@ -443,8 +416,8 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 1
         end
         object edtEndLine: TEdit
-          Left = 137
-          Top = 185
+          Left = 202
+          Top = 175
           Width = 609
           Height = 33
           Hint = 'Line will be added after the converted text'
@@ -458,7 +431,7 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 2
         end
         object cmbMode: TComboBox
-          Left = 137
+          Left = 171
           Top = 21
           Width = 175
           Height = 33
@@ -491,6 +464,40 @@ object FormTextWrapper: TFormTextWrapper
           BevelOuter = bvNone
           BorderStyle = bsNone
           TabOrder = 4
+        end
+        object chbStartLine: TCheckBox
+          Left = 64
+          Top = 136
+          Width = 128
+          Height = 26
+          Hint = 'Enable starting line'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          BiDiMode = bdRightToLeft
+          Caption = 'Starting line'
+          ParentBiDiMode = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 5
+        end
+        object chbEndLine: TCheckBox
+          Left = 46
+          Top = 179
+          Width = 146
+          Height = 26
+          Hint = 'Enable ending line'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          BiDiMode = bdRightToLeft
+          Caption = 'Ending line'
+          ParentBiDiMode = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 6
         end
       end
     end
@@ -528,10 +535,12 @@ object FormTextWrapper: TFormTextWrapper
     end
     object actSavePreset: TAction
       Caption = 'Save'
+      Hint = 'Save current settings'
       OnExecute = actSavePresetExecute
     end
     object actLoadPreset: TAction
       Caption = 'Load'
+      Hint = 'Load preset settings'
       OnExecute = actLoadPresetExecute
     end
   end

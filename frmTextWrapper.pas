@@ -28,8 +28,6 @@ type
     actConvert: TAction;
     actFullProcess: TAction;
     chbCodeAlign: TCheckBox;
-    lblStartLine: TLabel;
-    lblEndLine: TLabel;
     edtStartLine: TEdit;
     edtEndLine: TEdit;
     lblMode: TLabel;
@@ -48,6 +46,8 @@ type
     actSavePreset: TAction;
     actLoadPreset: TAction;
     lblPresets: TLabel;
+    chbStartLine: TCheckBox;
+    chbEndLine: TCheckBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -180,8 +180,8 @@ begin
     end;
 
      //add starting and finishing lines
-    if edtStartLine.Text <> '' then strList.Insert(0, edtStartLine.Text);
-    if edtEndLine.Text <> '' then  strList.Add(edtEndLine.Text);
+    if chbStartLine.Checked and (edtStartLine.Text <> '') then strList.Insert(0, edtStartLine.Text);
+    if chbEndLine.Checked   and (edtEndLine.Text <> '')   then strList.Add(edtEndLine.Text);
 
     redtOut.Lines.Assign(strList);
   finally
@@ -215,7 +215,8 @@ begin
 //    end;
 
     for var I := 0 to strList.Count - 1 do begin
-      S := Trim(strList[I]);
+      S := strList[I];
+      if StartsStr(Trim(GetPrefix), Trim(S)) then S := Trim(S);
 
       if StartsStr(Trim(GetPrefix), S) then Delete(S, 1, Length(Trim(GetPrefix)));
       if EndsStr(GetSuffix, S) then Delete(S, Length(S) - Length(GetSuffix) + 1, Length(GetSuffix));
@@ -260,12 +261,14 @@ begin
   if not Assigned(pPreset) then Exit;
 
   with pPreset do begin
-    Prefix      := edtPrefix.Text;
-    Suffix      := edtSuffix.Text;
-    Mode        := TWrapModeType(cmbMode.ItemIndex);
-    IsCodeAlign := chbCodeAlign.Checked;
-    StartLine   := edtStartLine.Text;
-    EndLine     := edtEndLine.Text;
+    Prefix             := edtPrefix.Text;
+    Suffix             := edtSuffix.Text;
+    Mode               := TWrapModeType(cmbMode.ItemIndex);
+    IsCodeAlign        := chbCodeAlign.Checked;
+    StartLine          := edtStartLine.Text;
+    IsStartLineEnabled := chbStartLine.Checked;
+    EndLine            := edtEndLine.Text;
+    IsEndLineEnabled   := chbEndLine.Checked;
   end;
 end;
 
@@ -277,19 +280,15 @@ begin
   FConfigManager.PresetList[0].AssignValues(pPreset);
 
   with pPreset do begin
-    edtPrefix.Text       := Prefix;
-    edtSuffix.Text       := Suffix;
-    cmbMode.ItemIndex    := Ord(Mode);
-    chbCodeAlign.Checked := IsCodeAlign;
-    edtStartLine.Text    := StartLine;
-    edtEndLine.Text      := EndLine;
+    edtPrefix.Text         := Prefix;
+    edtSuffix.Text         := Suffix;
+    cmbMode.ItemIndex      := Ord(Mode);
+    chbCodeAlign.Checked   := IsCodeAlign;
+    edtStartLine.Text      := StartLine;
+    chbStartLine.Checked   := IsStartLineEnabled;
+    edtEndLine.Text        := EndLine;
+    chbEndLine.Checked     := IsEndLineEnabled;
   end;
-end;
-
-procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  GetSettingsValues(FConfigManager.PresetList[0]);
-  FConfigManager.SaveConfigToFile;
 end;
 
 procedure TFormTextWrapper.FormCreate(Sender: TObject);
@@ -301,6 +300,12 @@ begin
   SetControls(FConfigManager.PresetList[0]);
 
   PageControl1.ActivePage := tsWrapper;
+end;
+
+procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  GetSettingsValues(FConfigManager.PresetList[0]);
+  FConfigManager.SaveConfigToFile;
 end;
 
 procedure TFormTextWrapper.FormDestroy(Sender: TObject);
