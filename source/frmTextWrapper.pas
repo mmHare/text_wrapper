@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
-  cConfigManager, cUtils, cSettingsPreset, framPreset,
+  cConfigManager, cSettingsPreset, framPreset,
   Vcl.ImgList, System.ImageList;
 
 type
@@ -53,6 +53,8 @@ type
     ImageList1: TImageList;
     actMoveUp: TAction;
     btnMoveUp: TButton;
+    lblTrim: TLabel;
+    cmbTrim: TComboBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -90,7 +92,7 @@ var
 implementation
 
 uses
-  StrUtils, frmAbout;
+  StrUtils, cUtils, cTypes, frmAbout;
 
 {$R *.dfm}
 
@@ -281,6 +283,7 @@ begin
     IsStartLineEnabled := chbStartLine.Checked;
     EndLine            := edtEndLine.Text;
     IsEndLineEnabled   := chbEndLine.Checked;
+    TrimMode           := TTrimModeType(cmbTrim.ItemIndex);
   end;
 end;
 
@@ -300,6 +303,7 @@ begin
     chbStartLine.Checked   := IsStartLineEnabled;
     edtEndLine.Text        := EndLine;
     chbEndLine.Checked     := IsEndLineEnabled;
+    cmbTrim.ItemIndex      := Ord(TrimMode);
   end;
 end;
 

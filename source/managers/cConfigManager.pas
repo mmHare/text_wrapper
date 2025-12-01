@@ -3,7 +3,7 @@ unit cConfigManager;
 interface
 
 uses
-  Generics.Collections, cUtils, cSettingsPreset;
+  Generics.Collections, cSettingsPreset;
 
 type
   TConfigManager = class
@@ -23,7 +23,7 @@ type
 implementation
 
 uses
-  JSON, SysUtils, IOUtils, JSON.Serializers;
+  JSON, SysUtils, IOUtils, JSON.Serializers, cUtils, cConst;
 
 { TConfigManager }
 

@@ -29,7 +29,7 @@ var
 implementation
 
 uses
-  cUtils;
+  cConst;
 
 {$R *.dfm}
 

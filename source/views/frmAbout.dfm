@@ -49,8 +49,8 @@ object FormAbout: TFormAbout
         AlignWithMargins = True
         Left = 38
         Top = 15
-        Width = 555
-        Height = 72
+        Width = 358
+        Height = 59
         Margins.Left = 38
         Margins.Top = 15
         Margins.Right = 8
@@ -63,8 +63,6 @@ object FormAbout: TFormAbout
         Font.Name = 'Calibri'
         Font.Style = []
         ParentFont = False
-        ExplicitWidth = 358
-        ExplicitHeight = 59
       end
     end
     object redtAbout: TRichEdit

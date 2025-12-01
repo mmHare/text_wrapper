@@ -2,12 +2,14 @@ program Wrapper;
 
 uses
   Vcl.Forms,
-  frmTextWrapper in 'frmTextWrapper.pas' {FormTextWrapper},
-  frmAbout in 'source\frmAbout.pas' {FormAbout},
-  cConfigManager in 'source\cConfigManager.pas',
-  cUtils in 'source\cUtils.pas',
-  cSettingsPreset in 'source\cSettingsPreset.pas',
-  framPreset in 'source\framPreset.pas' {FramePreset: TFrame};
+  frmTextWrapper in 'source\frmTextWrapper.pas' {FormTextWrapper},
+  framPreset in 'source\views\framPreset.pas' {FramePreset: TFrame},
+  frmAbout in 'source\views\frmAbout.pas' {FormAbout},
+  cConfigManager in 'source\managers\cConfigManager.pas',
+  cSettingsPreset in 'source\classes\cSettingsPreset.pas',
+  cUtils in 'source\units\cUtils.pas',
+  cConst in 'source\units\cConst.pas',
+  cTypes in 'source\units\cTypes.pas';
 
 {$R *.res}
 

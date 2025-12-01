@@ -33,7 +33,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsWrapper
+    ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -417,6 +417,17 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Caption = 'Setting presets'
         end
+        object lblTrim: TLabel
+          Left = 504
+          Top = 24
+          Width = 33
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Trim'
+        end
         object chbCodeAlign: TCheckBox
           Left = 46
           Top = 84
@@ -533,6 +544,25 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 6
+        end
+        object cmbTrim: TComboBox
+          Left = 547
+          Top = 21
+          Width = 218
+          Height = 33
+          Hint = 'Removes whitespaces'
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          ItemIndex = 0
+          TabOrder = 7
+          Text = 'NONE'
+          Items.Strings = (
+            'NONE'
+            'LEFT'
+            'RIGHT'
+            'BOTH')
         end
       end
     end

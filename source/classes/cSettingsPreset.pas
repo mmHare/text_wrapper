@@ -3,7 +3,7 @@
 interface
 
 uses
-  cUtils;
+  cTypes;
 
 type
   TSettingsPreset = class
@@ -19,6 +19,7 @@ type
       enable_start_line : Boolean;
       end_line          : string;
       enable_end_line   : Boolean;
+      trim_mode         : TTrimModeType;
     public
       property Id                 : Integer          read preset_id         write preset_id;
       property PresetName         : string           read preset_name       write preset_name;
@@ -30,6 +31,7 @@ type
       property IsStartLineEnabled : Boolean          read enable_start_line write enable_start_line;
       property EndLine            : string           read end_line          write end_line;
       property IsEndLineEnabled   : Boolean          read enable_end_line   write enable_end_line;
+      property TrimMode           : TTrimModeType    read trim_mode         write trim_mode;
 
       procedure SetDefault;
       procedure AssignValues(pSource : TSettingsPreset);
@@ -53,6 +55,7 @@ begin
   enable_start_line := pSource.IsStartLineEnabled;
   end_line          := pSource.EndLine;
   enable_end_line   := pSource.IsEndLineEnabled;
+  trim_mode         := pSource.TrimMode;
 end;
 
 constructor TSettingsPreset.Create;
@@ -74,6 +77,7 @@ begin
   enable_start_line := True;
   end_line          := '';
   enable_end_line   := True;
+  trim_mode         := tmtNone;
 end;
 
 end.

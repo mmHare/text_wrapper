@@ -1,7 +1,8 @@
 *.dcu
-/__history
+**/__history/
+**/__recovery/
 /Win32
 *.local
 *.identcache
 Wrapper.res
-/source/__history
+/bin

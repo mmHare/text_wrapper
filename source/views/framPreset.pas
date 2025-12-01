@@ -18,7 +18,7 @@ type
   private
     FPreset: TSettingsPreset;
   public
-    constructor Create(AOwner: TComponent; APreset: TSettingsPreset); overload;
+    constructor Create(AOwner: TComponent; APreset: TSettingsPreset); reintroduce;
   end;
 
 implementation
