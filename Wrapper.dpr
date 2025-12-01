@@ -9,7 +9,8 @@ uses
   cSettingsPreset in 'source\classes\cSettingsPreset.pas',
   cUtils in 'source\units\cUtils.pas',
   cConst in 'source\units\cConst.pas',
-  cTypes in 'source\units\cTypes.pas';
+  cTypes in 'source\units\cTypes.pas',
+  cWrapManager in 'source\managers\cWrapManager.pas';
 
 {$R *.res}
 

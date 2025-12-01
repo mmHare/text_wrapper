@@ -166,6 +166,7 @@
         <DCCReference Include="source\units\cUtils.pas"/>
         <DCCReference Include="source\units\cConst.pas"/>
         <DCCReference Include="source\units\cTypes.pas"/>
+        <DCCReference Include="source\managers\cWrapManager.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -192,13 +193,13 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="4">
-                <DeployFile LocalName="Win32\Debug\Wrapper.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Release\Wrapper.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Wrapper.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Release\Wrapper.exe" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="bin\Debug\Wrapper.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Wrapper.exe</RemoteName>
                         <Overwrite>true</Overwrite>
