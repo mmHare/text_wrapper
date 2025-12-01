@@ -82,8 +82,8 @@ begin
     end;
   except
     on E: Exception do begin
-        SaveToLog('Error while reading config file: ' + E.Message);
-      end;
+      SaveToLog('Error while reading config file: ' + E.Message);
+    end;
   end;
 end;
 

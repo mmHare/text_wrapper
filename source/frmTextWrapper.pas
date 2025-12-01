@@ -73,14 +73,9 @@ type
 
     procedure PrepareFrames;
 
-    procedure SetControls(pPreset: TSettingsPreset);
+    procedure SetSettingsValues(pPreset: TSettingsPreset);
     procedure GetSettingsValues(pPreset: TSettingsPreset);
 
-    function GetPrefix : string;
-    function GetSuffix : string;
-
-    procedure PerformAddMode;
-    procedure PerformRemoveMode;
   public
     { Public declarations }
   end;
@@ -92,19 +87,9 @@ var
 implementation
 
 uses
-  StrUtils, cUtils, cTypes, frmAbout;
+  StrUtils, cUtils, cTypes, frmAbout, cWrapManager;
 
 {$R *.dfm}
-
-function TFormTextWrapper.GetPrefix: string;
-begin
-  Result := edtPrefix.Text;
-end;
-
-function TFormTextWrapper.GetSuffix: string;
-begin
-  Result := edtSuffix.Text;
-end;
 
 procedure TFormTextWrapper.actClearExecute(Sender: TObject);
 begin
@@ -119,10 +104,21 @@ begin
 end;
 
 procedure TFormTextWrapper.actConvertExecute(Sender: TObject);
+var
+  presetTmp : TSettingsPreset;
+  strList : TStringList;
 begin
-  case TWrapModeType(cmbMode.ItemIndex) of
-       wmtAdd : PerformAddMode;
-    wmtRemove : PerformRemoveMode;
+  presetTmp:= TSettingsPreset.Create;
+  strList := TStringList.Create;
+
+  try
+    GetSettingsValues(presetTmp);
+    strList.Assign(redtIn.Lines);
+    TWrapManager.ConvertText(presetTmp, strList);
+    redtOut.Lines.Assign(strList);
+  finally
+    strList.Free;
+    presetTmp.Free;
   end;
 end;
 
@@ -141,7 +137,7 @@ var
 begin
   btn := (Sender as TAction).ActionComponent as TButton;
   idTmp := btn.Tag;
-  SetControls(FConfigManager.PresetList[idTmp]);
+  SetSettingsValues(FConfigManager.PresetList[idTmp]);
 end;
 
 procedure TFormTextWrapper.actMoveUpExecute(Sender: TObject);
@@ -164,86 +160,6 @@ procedure TFormTextWrapper.btnAboutClick(Sender: TObject);
 begin
   if FormAbout = nil then FormAbout := TFormAbout.Create(Self);
   FormAbout.ShowModal;
-end;
-
-procedure TFormTextWrapper.PerformAddMode;
-var
-  strList : TStringList;
-  lineLength, x : Integer;
-  S : string;
-begin
-  if redtIn.Lines.Count = 0 then Exit;
-
-  lineLength := 0;
-  for S in redtIn.Lines do if Length(S) > lineLength then lineLength := Length(S);
-
-  strList := TStringList.Create;
-  try
-    strList.Assign(redtIn.Lines);
-
-    for var I := 0 to strList.Count - 1 do begin
-      S := strList[I];
-//      S := StringReplace(S, '''', '''''', [rfReplaceAll]);  //doubled single quotas  //TODO: add cmb option
-
-      if chbCodeAlign.Checked then  begin  //fill with spaces
-        x := lineLength - Length(S);
-        if x > 0 then S := S + StringOfChar(' ', x);
-      end;
-
-      strList[I] := GetPrefix + S + GetSuffix;
-    end;
-
-     //add starting and finishing lines
-    if chbStartLine.Checked and (edtStartLine.Text <> '') then strList.Insert(0, edtStartLine.Text);
-    if chbEndLine.Checked   and (edtEndLine.Text <> '')   then strList.Add(edtEndLine.Text);
-
-    redtOut.Lines.Assign(strList);
-  finally
-    strList.Free;
-  end;
-end;
-
-procedure TFormTextWrapper.PerformRemoveMode;
-var strList : TStringList;
-    S : string;
-begin
-  if redtIn.Lines.Count = 0 then Exit;
-
-  strList := TStringList.Create;
-  try
-    strList.Assign(redtIn.Lines);
-
-    //TODO: add option or abandon?
-//    for var I := strList.Count - 1 downto 0 do begin
-//      if (Trim(strList[I]) = '') then strList.Delete(I)
-//      else if strList[I] = edtEndLine.Text then begin   //delete ending line
-//        strList.Delete(I);
-//        Break
-//      end;
-//    end;
-//    for var I := 0 to strList.Count - 1 do begin
-//      if strList[I] = edtStartLine.Text then begin
-//        for var J := I downto 0 do strList.Delete(J);     //delete beginning line
-//        Break;
-//      end;
-//    end;
-
-    for var I := 0 to strList.Count - 1 do begin
-      S := strList[I];
-      if StartsStr(Trim(GetPrefix), Trim(S)) then S := Trim(S);
-
-      if StartsStr(Trim(GetPrefix), S) then Delete(S, 1, Length(Trim(GetPrefix)));
-      if EndsStr(GetSuffix, S) then Delete(S, Length(S) - Length(GetSuffix) + 1, Length(GetSuffix));
-//      S := StringReplace(S, '''''', '''', [rfReplaceAll]);  //un-double single quotas   //TODO: add cmb option
-
-      S := TrimRight(S);
-      strList[I] := S;
-    end;
-
-    redtOut.Lines.Assign(strList);
-  finally
-    strList.Free;
-  end;
 end;
 
 procedure TFormTextWrapper.PrepareFrames;
@@ -287,13 +203,14 @@ begin
   end;
 end;
 
-procedure TFormTextWrapper.SetControls(pPreset: TSettingsPreset);
+procedure TFormTextWrapper.SetSettingsValues(pPreset: TSettingsPreset);
 begin
   if not Assigned(FConfigManager) then Exit;
   if not Assigned(pPreset) then Exit;
 
-  FConfigManager.PresetList[0].AssignValues(pPreset);
+  FConfigManager.PresetList[0].AssignValues(pPreset); // passed preset becomes working preset
 
+  // fill controls
   with pPreset do begin
     edtPrefix.Text         := Prefix;
     edtSuffix.Text         := Suffix;
@@ -313,7 +230,7 @@ begin
   FFramePresetList := TObjectList<TFramePreset>.Create;
   PrepareFrames;
 
-  SetControls(FConfigManager.PresetList[0]);
+  SetSettingsValues(FConfigManager.PresetList[0]);
 
   PageControl1.ActivePage := tsWrapper;
 end;
