@@ -1,6 +1,7 @@
 program Wrapper;
 
 uses
+  {$ifdef DEBUG} FastMM5, {$endif}
   Vcl.Forms,
   frmTextWrapper in 'source\frmTextWrapper.pas' {FormTextWrapper},
   framPreset in 'source\views\framPreset.pas' {FramePreset: TFrame},

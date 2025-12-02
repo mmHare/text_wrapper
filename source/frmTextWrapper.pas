@@ -111,8 +111,6 @@ begin
   presetTmp:= TSettingsPreset.Create;
   strList := TStringList.Create;
 
-  SaveToLog('Pressed Convert: ');
-
   try
     GetSettingsValues(presetTmp);
     strList.Assign(redtIn.Lines);

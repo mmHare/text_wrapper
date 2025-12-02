@@ -6,3 +6,7 @@ Current settings are saved upon closing application but also can be saved and lo
 
 ## Changelog
 See the full changelog in [CHANGELOG.md](CHANGELOG.md).
+
+## Third-Party Tools
+- Release build is compressed using UPX: https://upx.github.io/
+- Debug build uses FastMM5 for memory leak detection: https://github.com/pleriche/FastMM5
