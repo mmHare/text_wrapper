@@ -111,6 +111,8 @@ begin
   presetTmp:= TSettingsPreset.Create;
   strList := TStringList.Create;
 
+  SaveToLog('Pressed Convert: ');
+
   try
     GetSettingsValues(presetTmp);
     strList.Assign(redtIn.Lines);
@@ -135,9 +137,16 @@ var
   btn: TButton;
   idTmp: Integer;
 begin
-  btn := (Sender as TAction).ActionComponent as TButton;
-  idTmp := btn.Tag;
-  SetSettingsValues(FConfigManager.PresetList[idTmp]);
+  // action should be assigned to load button on preset frame
+  try
+    btn := (Sender as TAction).ActionComponent as TButton;
+    idTmp := btn.Tag;
+    SetSettingsValues(FConfigManager.PresetList[idTmp]);
+  except
+    on E: Exception do begin
+      SaveToLog('Error while loading preset: ' + E.Message);
+    end;
+  end;
 end;
 
 procedure TFormTextWrapper.actMoveUpExecute(Sender: TObject);
@@ -151,9 +160,17 @@ var
   btn: TButton;
   idTmp: Integer;
 begin
-  btn := (Sender as TAction).ActionComponent as TButton;
-  idTmp := btn.Tag;
-  GetSettingsValues(FConfigManager.PresetList[idTmp]);
+  // action should be assigned to save button on preset frame
+  try
+    btn := (Sender as TAction).ActionComponent as TButton;
+    idTmp := btn.Tag;
+    GetSettingsValues(FConfigManager.PresetList[idTmp]);
+    FConfigManager.SaveOnePreset(FConfigManager.PresetList[idTmp]);
+  except
+    on E: Exception do begin
+      SaveToLog('Error while saving preset: ' + E.Message);
+    end;
+  end;
 end;
 
 procedure TFormTextWrapper.btnAboutClick(Sender: TObject);

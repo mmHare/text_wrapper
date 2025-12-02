@@ -7,6 +7,7 @@ const
   PROGRAM_VERSION = '0.2.0';
 
   CONFIG_FILE_NAME = 'settings.json';
+  LOG_DIRECTORY = 'logs\';
   PRESET_NUMBER = 3;
 
 implementation

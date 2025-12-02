@@ -16,6 +16,8 @@ type
       procedure SaveConfigToFile;
       procedure LoadConfigFromFile;
 
+      procedure SaveOnePreset(pPreset: TSettingsPreset);
+
       destructor Destroy; override;
       constructor Create;
   end;
@@ -122,6 +124,27 @@ begin
   finally
     RootObject.Free;
     Serializer.Free;
+  end;
+end;
+
+procedure TConfigManager.SaveOnePreset(pPreset: TSettingsPreset);
+begin
+  with TConfigManager.Create do begin
+    try
+      try
+        if (pPreset.Id < 1) or (pPreset.Id > PRESET_NUMBER) then
+          raise Exception.Create('Wrong preset id');
+
+        PresetList[pPreset.Id].AssignValues(pPreset);
+        SaveConfigToFile;
+      except
+        on E: Exception do begin
+          SaveToLog('Error while saving config file: ' + E.Message);
+        end;
+      end;
+    finally
+      Free;
+    end;
   end;
 end;
 

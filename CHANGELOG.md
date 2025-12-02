@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Saving logs to file.
 - Left panel with option to move output into input box.
+
+### Fixed
+
+- Saving preset values while program is running.
 
 ## [0.2.0] - 2025-11-30
 
