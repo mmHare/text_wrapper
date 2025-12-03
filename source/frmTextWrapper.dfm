@@ -7,8 +7,8 @@ object FormTextWrapper: TFormTextWrapper
   Margins.Bottom = 5
   Anchors = [akLeft]
   Caption = 'Text Wrapper'
-  ClientHeight = 800
-  ClientWidth = 1150
+  ClientHeight = 744
+  ClientWidth = 1128
   Color = clBtnFace
   Constraints.MinHeight = 800
   Constraints.MinWidth = 1150
@@ -27,8 +27,8 @@ object FormTextWrapper: TFormTextWrapper
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 1150
-    Height = 800
+    Width = 1128
+    Height = 744
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -36,6 +36,8 @@ object FormTextWrapper: TFormTextWrapper
     ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1150
+    ExplicitHeight = 800
     object tsWrapper: TTabSheet
       Margins.Left = 5
       Margins.Top = 5
@@ -45,8 +47,8 @@ object FormTextWrapper: TFormTextWrapper
       object gpWrapper: TGridPanel
         Left = 0
         Top = 120
-        Width = 1044
-        Height = 640
+        Width = 1022
+        Height = 584
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
@@ -84,11 +86,13 @@ object FormTextWrapper: TFormTextWrapper
             SizeStyle = ssAuto
           end>
         TabOrder = 0
+        ExplicitWidth = 1044
+        ExplicitHeight = 640
         object pnlIn: TPanel
           Left = 1
           Top = 1
-          Width = 1042
-          Height = 319
+          Width = 1020
+          Height = 291
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -97,6 +101,8 @@ object FormTextWrapper: TFormTextWrapper
           Color = clSkyBlue
           ParentBackground = False
           TabOrder = 0
+          ExplicitWidth = 1042
+          ExplicitHeight = 319
           object lblIn: TLabel
             Left = 24
             Top = 12
@@ -118,8 +124,8 @@ object FormTextWrapper: TFormTextWrapper
             AlignWithMargins = True
             Left = 61
             Top = 46
-            Width = 935
-            Height = 227
+            Width = 913
+            Height = 199
             Margins.Left = 60
             Margins.Top = 45
             Margins.Right = 45
@@ -133,13 +139,15 @@ object FormTextWrapper: TFormTextWrapper
             ParentFont = False
             TabOrder = 0
             WantTabs = True
+            ExplicitWidth = 935
+            ExplicitHeight = 227
           end
         end
         object pnlOut: TPanel
           Left = 1
-          Top = 320
-          Width = 1042
-          Height = 319
+          Top = 292
+          Width = 1020
+          Height = 291
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -148,6 +156,9 @@ object FormTextWrapper: TFormTextWrapper
           Color = clActiveCaption
           ParentBackground = False
           TabOrder = 1
+          ExplicitTop = 320
+          ExplicitWidth = 1042
+          ExplicitHeight = 319
           object lblOut: TLabel
             Left = 24
             Top = 12
@@ -169,8 +180,8 @@ object FormTextWrapper: TFormTextWrapper
             AlignWithMargins = True
             Left = 61
             Top = 46
-            Width = 935
-            Height = 227
+            Width = 913
+            Height = 199
             Margins.Left = 60
             Margins.Top = 45
             Margins.Right = 45
@@ -184,13 +195,15 @@ object FormTextWrapper: TFormTextWrapper
             ParentFont = False
             TabOrder = 0
             WantTabs = True
+            ExplicitWidth = 935
+            ExplicitHeight = 227
           end
         end
       end
       object pnlMenu: TPanel
         Left = 0
         Top = 0
-        Width = 1142
+        Width = 1120
         Height = 120
         Margins.Left = 5
         Margins.Top = 5
@@ -201,8 +214,9 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1142
         DesignSize = (
-          1142
+          1120
           120)
         object lblPrefix: TLabel
           Left = 12
@@ -216,7 +230,7 @@ object FormTextWrapper: TFormTextWrapper
           Caption = 'Prefix'
         end
         object lblSuffix: TLabel
-          Left = 599
+          Left = 577
           Top = 68
           Width = 44
           Height = 25
@@ -226,6 +240,7 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Anchors = [akTop, akRight]
           Caption = 'Suffix'
+          ExplicitLeft = 599
         end
         object btnConvert: TButton
           Left = 62
@@ -246,7 +261,7 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 0
         end
         object btnClipboard: TButton
-          Left = 653
+          Left = 631
           Top = 9
           Width = 112
           Height = 45
@@ -259,9 +274,10 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
+          ExplicitLeft = 653
         end
         object btnClear: TButton
-          Left = 809
+          Left = 787
           Top = 8
           Width = 112
           Height = 45
@@ -274,9 +290,10 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
+          ExplicitLeft = 809
         end
         object btnFullProcess: TButton
-          Left = 989
+          Left = 967
           Top = 8
           Width = 112
           Height = 45
@@ -292,6 +309,7 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
+          ExplicitLeft = 989
         end
         object edtPrefix: TEdit
           Left = 62
@@ -306,7 +324,7 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 4
         end
         object edtSuffix: TEdit
-          Left = 653
+          Left = 631
           Top = 63
           Width = 450
           Height = 33
@@ -317,6 +335,7 @@ object FormTextWrapper: TFormTextWrapper
           Anchors = [akTop, akRight]
           MaxLength = 50
           TabOrder = 5
+          ExplicitLeft = 653
         end
         object btnAbout: TButton
           Left = 3
@@ -339,10 +358,10 @@ object FormTextWrapper: TFormTextWrapper
         end
       end
       object pnlLeft: TPanel
-        Left = 1044
+        Left = 1022
         Top = 120
         Width = 98
-        Height = 640
+        Height = 584
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
@@ -352,12 +371,14 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 2
+        ExplicitLeft = 1044
+        ExplicitHeight = 640
         DesignSize = (
           98
-          640)
+          584)
         object btnMoveUp: TButton
           Left = 3
-          Top = 252
+          Top = 227
           Width = 88
           Height = 68
           Margins.Left = 5
@@ -371,6 +392,7 @@ object FormTextWrapper: TFormTextWrapper
           ImageMargins.Top = 8
           Images = ImageList1
           TabOrder = 0
+          ExplicitTop = 252
         end
       end
     end
@@ -384,20 +406,22 @@ object FormTextWrapper: TFormTextWrapper
       object pnlSettings: TPanel
         Left = 0
         Top = 0
-        Width = 1142
-        Height = 760
+        Width = 1120
+        Height = 704
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alClient
         BevelOuter = bvNone
+        BiDiMode = bdLeftToRight
         Color = clGradientActiveCaption
+        ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
         object lblMode: TLabel
-          Left = 113
-          Top = 24
+          Left = 68
+          Top = 35
           Width = 47
           Height = 25
           Margins.Left = 5
@@ -418,8 +442,8 @@ object FormTextWrapper: TFormTextWrapper
           Caption = 'Setting presets'
         end
         object lblTrim: TLabel
-          Left = 504
-          Top = 24
+          Left = 82
+          Top = 87
           Width = 33
           Height = 25
           Margins.Left = 5
@@ -428,9 +452,22 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Caption = 'Trim'
         end
+        object lblQuotation: TLabel
+          Left = 34
+          Top = 139
+          Width = 81
+          Height = 25
+          Margins.Left = 8
+          Margins.Top = 8
+          Margins.Right = 8
+          Margins.Bottom = 8
+          BiDiMode = bdRightToLeft
+          Caption = 'Quotation'
+          ParentBiDiMode = False
+        end
         object chbCodeAlign: TCheckBox
-          Left = 46
-          Top = 84
+          Left = 324
+          Top = 36
           Width = 146
           Height = 26
           Hint = 'Fill with trailing spaces before suffix'
@@ -447,8 +484,8 @@ object FormTextWrapper: TFormTextWrapper
           StyleElements = [seFont, seClient]
         end
         object edtStartLine: TEdit
-          Left = 202
-          Top = 132
+          Left = 480
+          Top = 84
           Width = 609
           Height = 33
           Hint = 'Line will be added before the converted text'
@@ -462,8 +499,8 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 1
         end
         object edtEndLine: TEdit
-          Left = 202
-          Top = 175
+          Left = 480
+          Top = 136
           Width = 609
           Height = 33
           Hint = 'Line will be added after the converted text'
@@ -477,8 +514,8 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 2
         end
         object cmbMode: TComboBox
-          Left = 171
-          Top = 21
+          Left = 125
+          Top = 32
           Width = 175
           Height = 33
           Hint = 'Add/Remove prefix & suffix'
@@ -496,8 +533,8 @@ object FormTextWrapper: TFormTextWrapper
         end
         object scrlbxPresets: TScrollBox
           Left = 0
-          Top = 480
-          Width = 1142
+          Top = 424
+          Width = 1120
           Height = 280
           Margins.Left = 5
           Margins.Top = 5
@@ -510,8 +547,8 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 4
         end
         object chbStartLine: TCheckBox
-          Left = 64
-          Top = 136
+          Left = 342
+          Top = 88
           Width = 128
           Height = 26
           Hint = 'Enable starting line'
@@ -527,8 +564,8 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 5
         end
         object chbEndLine: TCheckBox
-          Left = 46
-          Top = 179
+          Left = 324
+          Top = 140
           Width = 146
           Height = 26
           Hint = 'Enable ending line'
@@ -544,9 +581,9 @@ object FormTextWrapper: TFormTextWrapper
           TabOrder = 6
         end
         object cmbTrim: TComboBox
-          Left = 547
-          Top = 21
-          Width = 218
+          Left = 125
+          Top = 84
+          Width = 175
           Height = 33
           Hint = 'Removes whitespaces'
           Margins.Left = 5
@@ -563,6 +600,25 @@ object FormTextWrapper: TFormTextWrapper
             'RIGHT'
             'BOTH')
         end
+        object cmbQuotation: TComboBox
+          Left = 125
+          Top = 136
+          Width = 175
+          Height = 33
+          Hint = 'Converts between single and doubled quotation marks'
+          Margins.Left = 8
+          Margins.Top = 8
+          Margins.Right = 8
+          Margins.Bottom = 8
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 8
+          Text = 'OFF'
+          Items.Strings = (
+            'OFF'
+            #39' -> '#39#39
+            #39' <- '#39#39)
+        end
       end
     end
   end
@@ -573,7 +629,7 @@ object FormTextWrapper: TFormTextWrapper
       item
       end>
     Images = ImageList1
-    Left = 1074
+    Left = 1050
     Top = 144
     StyleName = 'Platform Default'
     object actClear: TAction
@@ -618,7 +674,7 @@ object FormTextWrapper: TFormTextWrapper
   object ImageList1: TImageList
     Height = 24
     Width = 24
-    Left = 1072
+    Left = 1048
     Top = 228
     Bitmap = {
       494C010101000800040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600

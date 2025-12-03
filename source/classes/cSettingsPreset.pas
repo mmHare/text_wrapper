@@ -20,6 +20,7 @@ type
       end_line          : string;
       enable_end_line   : Boolean;
       trim_mode         : TTrimModeType;
+      quotation_type    : TQuotationType;
     public
       property Id                 : Integer          read preset_id         write preset_id;
       property PresetName         : string           read preset_name       write preset_name;
@@ -32,6 +33,7 @@ type
       property EndLine            : string           read end_line          write end_line;
       property IsEndLineEnabled   : Boolean          read enable_end_line   write enable_end_line;
       property TrimMode           : TTrimModeType    read trim_mode         write trim_mode;
+      property QuotationType      : TQuotationType   read quotation_type    write quotation_type;
 
       procedure SetDefault;
       procedure AssignValues(pSource : TSettingsPreset);
@@ -56,6 +58,7 @@ begin
   end_line          := pSource.EndLine;
   enable_end_line   := pSource.IsEndLineEnabled;
   trim_mode         := pSource.TrimMode;
+  quotation_type    := pSource.QuotationType;
 end;
 
 constructor TSettingsPreset.Create;
@@ -78,6 +81,7 @@ begin
   end_line          := '';
   enable_end_line   := True;
   trim_mode         := tmtNone;
+  quotation_type    := qtOff;
 end;
 
 end.

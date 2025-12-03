@@ -55,6 +55,8 @@ type
     btnMoveUp: TButton;
     lblTrim: TLabel;
     cmbTrim: TComboBox;
+    lblQuotation: TLabel;
+    cmbQuotation: TComboBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -215,6 +217,7 @@ begin
     EndLine            := edtEndLine.Text;
     IsEndLineEnabled   := chbEndLine.Checked;
     TrimMode           := TTrimModeType(cmbTrim.ItemIndex);
+    QuotationType      := TQuotationType(cmbQuotation.ItemIndex);
   end;
 end;
 
@@ -236,6 +239,7 @@ begin
     edtEndLine.Text        := EndLine;
     chbEndLine.Checked     := IsEndLineEnabled;
     cmbTrim.ItemIndex      := Ord(TrimMode);
+    cmbQuotation.ItemIndex := Ord(QuotationType);
   end;
 end;
 
