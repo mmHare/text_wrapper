@@ -488,8 +488,6 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Style = csDropDownList
           ItemIndex = 0
-          ParentShowHint = False
-          ShowHint = True
           TabOrder = 3
           Text = 'ADD'
           Items.Strings = (
@@ -555,6 +553,7 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
+          Style = csDropDownList
           ItemIndex = 0
           TabOrder = 7
           Text = 'NONE'

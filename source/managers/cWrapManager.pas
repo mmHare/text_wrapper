@@ -44,7 +44,11 @@ begin
   try
     for var I := 0 to pLines.Count - 1 do begin
       S := pLines[I];
-//      S := StringReplace(S, '''', '''''', [rfReplaceAll]);  //doubled single quotas  //TODO: add cmb option
+
+      if pPreset.TrimMode in [tmtLeft, tmtBoth] then S := TrimLeft(S);
+      if pPreset.TrimMode in [tmtRight, tmtBoth] then S := TrimRight(S);
+
+//      S := StringReplace(S, '''', '''''', [rfReplaceAll]);  //doubled single quotas  //TODO:
 
       if pPreset.IsCodeAlign then  begin  //fill with spaces
         x := lineLength - Length(S);
@@ -89,13 +93,17 @@ begin
 
     for var I := 0 to pLines.Count - 1 do begin
       S := pLines[I];
-      if StartsStr(Trim(pPreset.Prefix), Trim(S)) then S := Trim(S);
+      if StartsStr(Trim(pPreset.Prefix), TrimLeft(S)) then S := TrimLeft(S);    //remove whitespace before preset
+      if EndsStr(Trim(pPreset.Suffix), TrimRight(S)) then S := TrimRight(S);    //remove whitespaces after suffix
+
 
       if StartsStr(Trim(pPreset.Prefix), S) then Delete(S, 1, Length(Trim(pPreset.Prefix)));
       if EndsStr(pPreset.Suffix, S) then Delete(S, Length(S) - Length(pPreset.Suffix) + 1, Length(pPreset.Suffix));
-//      S := StringReplace(S, '''''', '''', [rfReplaceAll]);  //un-double single quotas   //TODO: add cmb option
+//      S := StringReplace(S, '''''', '''', [rfReplaceAll]);  //un-double single quotas   //TODO:
 
-      S := TrimRight(S);
+      if pPreset.TrimMode in [tmtLeft, tmtBoth] then S := TrimLeft(S);
+      if pPreset.TrimMode in [tmtRight, tmtBoth] then S := TrimRight(S);
+
       pLines[I] := S;
     end;
   except
