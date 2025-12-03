@@ -4,7 +4,7 @@ interface
 
 const
   PROGRAM_NAME = 'Text Wrapper';
-  PROGRAM_VERSION = '0.3.1';
+  PROGRAM_VERSION = '0.4.0';
 
   CONFIG_FILE_NAME = 'settings.json';
   LOG_DIRECTORY = 'logs\';

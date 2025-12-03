@@ -6,3 +6,4 @@
 *.identcache
 Wrapper.res
 /bin
+settings.json
