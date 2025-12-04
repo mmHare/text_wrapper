@@ -33,11 +33,9 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsSettings
+    ActivePage = tsWrapper
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1150
-    ExplicitHeight = 800
     object tsWrapper: TTabSheet
       Margins.Left = 5
       Margins.Top = 5
@@ -86,8 +84,6 @@ object FormTextWrapper: TFormTextWrapper
             SizeStyle = ssAuto
           end>
         TabOrder = 0
-        ExplicitWidth = 1044
-        ExplicitHeight = 640
         object pnlIn: TPanel
           Left = 1
           Top = 1
@@ -101,8 +97,6 @@ object FormTextWrapper: TFormTextWrapper
           Color = clSkyBlue
           ParentBackground = False
           TabOrder = 0
-          ExplicitWidth = 1042
-          ExplicitHeight = 319
           object lblIn: TLabel
             Left = 24
             Top = 12
@@ -137,10 +131,9 @@ object FormTextWrapper: TFormTextWrapper
             Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
+            ScrollBars = ssVertical
             TabOrder = 0
             WantTabs = True
-            ExplicitWidth = 935
-            ExplicitHeight = 227
           end
         end
         object pnlOut: TPanel
@@ -156,9 +149,6 @@ object FormTextWrapper: TFormTextWrapper
           Color = clActiveCaption
           ParentBackground = False
           TabOrder = 1
-          ExplicitTop = 320
-          ExplicitWidth = 1042
-          ExplicitHeight = 319
           object lblOut: TLabel
             Left = 24
             Top = 12
@@ -193,10 +183,9 @@ object FormTextWrapper: TFormTextWrapper
             Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
+            ScrollBars = ssVertical
             TabOrder = 0
             WantTabs = True
-            ExplicitWidth = 935
-            ExplicitHeight = 227
           end
         end
       end
@@ -214,7 +203,6 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 1142
         DesignSize = (
           1120
           120)
@@ -274,7 +262,6 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
-          ExplicitLeft = 653
         end
         object btnClear: TButton
           Left = 787
@@ -290,7 +277,6 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 2
-          ExplicitLeft = 809
         end
         object btnFullProcess: TButton
           Left = 967
@@ -309,7 +295,6 @@ object FormTextWrapper: TFormTextWrapper
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
-          ExplicitLeft = 989
         end
         object edtPrefix: TEdit
           Left = 62
@@ -335,7 +320,6 @@ object FormTextWrapper: TFormTextWrapper
           Anchors = [akTop, akRight]
           MaxLength = 50
           TabOrder = 5
-          ExplicitLeft = 653
         end
         object btnAbout: TButton
           Left = 3
@@ -371,8 +355,6 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 2
-        ExplicitLeft = 1044
-        ExplicitHeight = 640
         DesignSize = (
           98
           584)
@@ -392,7 +374,6 @@ object FormTextWrapper: TFormTextWrapper
           ImageMargins.Top = 8
           Images = ImageList1
           TabOrder = 0
-          ExplicitTop = 252
         end
       end
     end

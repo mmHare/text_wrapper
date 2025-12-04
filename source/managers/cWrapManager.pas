@@ -127,11 +127,11 @@ begin
       S := pLines[I];
 
       // OUTER TRIM
-      if StartsStr(Trim(pPreset.Prefix), TrimLeft(S)) then S := TrimLeft(S);    //remove whitespaces before preset
-      if EndsStr(Trim(pPreset.Suffix), TrimRight(S)) then S := TrimRight(S);    //remove whitespaces after suffix
+      if StartsStr(TrimLeft(pPreset.Prefix), TrimLeft(S)) then S := TrimLeft(S);    //remove whitespaces before preset
+      if EndsStr(TrimRight(pPreset.Suffix), TrimRight(S)) then S := TrimRight(S);    //remove whitespaces after suffix
 
       // PREFIX/SUFFIX
-      if StartsStr(Trim(pPreset.Prefix), S) then Delete(S, 1, Length(Trim(pPreset.Prefix)));
+      if StartsStr(Trim(pPreset.Prefix), S) then Delete(S, 1, Length(pPreset.Prefix));
       if EndsStr(pPreset.Suffix, S) then Delete(S, Length(S) - Length(pPreset.Suffix) + 1, Length(pPreset.Suffix));
 
       // QUOTATION MARKS
