@@ -57,6 +57,10 @@ type
     cmbTrim: TComboBox;
     lblQuotation: TLabel;
     cmbQuotation: TComboBox;
+    lblTabStop: TLabel;
+    cmbTabStop: TComboBox;
+    Button1: TButton;
+    actClearSettings: TAction;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -68,6 +72,7 @@ type
     procedure actSavePresetExecute(Sender: TObject);
     procedure actLoadPresetExecute(Sender: TObject);
     procedure actMoveUpExecute(Sender: TObject);
+    procedure actClearSettingsExecute(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
@@ -89,7 +94,7 @@ var
 implementation
 
 uses
-  StrUtils, cUtils, cTypes, frmAbout, cWrapManager;
+  StrUtils, cUtils, cTypes, frmAbout, cWrapManager, UITypes;
 
 {$R *.dfm}
 
@@ -173,6 +178,14 @@ begin
   end;
 end;
 
+procedure TFormTextWrapper.actClearSettingsExecute(Sender: TObject);
+begin
+  if MessageDlg('Do you really want to clear settings?', mtConfirmation, mbYesNo, 0) = mrYes then begin
+    FConfigManager.PresetList[0].SetDefault;
+    SetSettingsValues(FConfigManager.PresetList[0]);
+  end;
+end;
+
 procedure TFormTextWrapper.btnAboutClick(Sender: TObject);
 begin
   if FormAbout = nil then FormAbout := TFormAbout.Create(Self);
@@ -218,6 +231,7 @@ begin
     IsEndLineEnabled   := chbEndLine.Checked;
     TrimMode           := TTrimModeType(cmbTrim.ItemIndex);
     QuotationType      := TQuotationType(cmbQuotation.ItemIndex);
+    TabStopConvert     := TTabStopConvertType(cmbTabStop.ItemIndex);     // TODO: change to imgcombo; function converting enum to tabsize
   end;
 end;
 
@@ -240,6 +254,7 @@ begin
     chbEndLine.Checked     := IsEndLineEnabled;
     cmbTrim.ItemIndex      := Ord(TrimMode);
     cmbQuotation.ItemIndex := Ord(QuotationType);
+    cmbTabStop.ItemIndex   := Ord(TabStopConvert);
   end;
 end;
 

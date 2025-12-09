@@ -33,7 +33,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsWrapper
+    ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -446,6 +446,19 @@ object FormTextWrapper: TFormTextWrapper
           Caption = 'Quotation'
           ParentBiDiMode = False
         end
+        object lblTabStop: TLabel
+          Left = 22
+          Top = 189
+          Width = 88
+          Height = 25
+          Margins.Left = 12
+          Margins.Top = 12
+          Margins.Right = 12
+          Margins.Bottom = 12
+          BiDiMode = bdRightToLeft
+          Caption = 'Tab replace'
+          ParentBiDiMode = False
+        end
         object chbCodeAlign: TCheckBox
           Left = 324
           Top = 36
@@ -600,6 +613,41 @@ object FormTextWrapper: TFormTextWrapper
             #39' -> '#39#39
             #39' <- '#39#39)
         end
+        object cmbTabStop: TComboBox
+          Left = 125
+          Top = 184
+          Width = 175
+          Height = 33
+          Hint = 
+            'Replaces tab character with fixed number of spaces'#13#10'AUTO - inden' +
+            't-wise (up to 4 spaces)'
+          Margins.Left = 12
+          Margins.Top = 12
+          Margins.Right = 12
+          Margins.Bottom = 12
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 9
+          Text = 'OFF'
+          Items.Strings = (
+            'OFF'
+            'AUTO'
+            '2 sp'
+            '3 sp'
+            '4 sp')
+        end
+        object Button1: TButton
+          Left = 976
+          Top = 22
+          Width = 113
+          Height = 38
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Action = actClearSettings
+          TabOrder = 10
+        end
       end
     end
   end
@@ -650,6 +698,10 @@ object FormTextWrapper: TFormTextWrapper
       Hint = 'Move result into input box and clear output'
       ImageIndex = 0
       OnExecute = actMoveUpExecute
+    end
+    object actClearSettings: TAction
+      Caption = 'Clear'
+      OnExecute = actClearSettingsExecute
     end
   end
   object ImageList1: TImageList

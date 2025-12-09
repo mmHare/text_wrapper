@@ -21,19 +21,21 @@ type
       enable_end_line   : Boolean;
       trim_mode         : TTrimModeType;
       quotation_type    : TQuotationType;
+      tab_convert       : TTabStopConvertType;
     public
-      property Id                 : Integer          read preset_id         write preset_id;
-      property PresetName         : string           read preset_name       write preset_name;
-      property Prefix             : string           read text_prefix       write text_prefix;
-      property Suffix             : string           read text_suffix       write text_suffix;
-      property Mode               : TWrapModeType    read wrap_mode         write wrap_mode;
-      property IsCodeAlign        : Boolean          read code_align        write code_align;
-      property StartLine          : string           read start_line        write start_line;
-      property IsStartLineEnabled : Boolean          read enable_start_line write enable_start_line;
-      property EndLine            : string           read end_line          write end_line;
-      property IsEndLineEnabled   : Boolean          read enable_end_line   write enable_end_line;
-      property TrimMode           : TTrimModeType    read trim_mode         write trim_mode;
-      property QuotationType      : TQuotationType   read quotation_type    write quotation_type;
+      property Id                 : Integer             read preset_id         write preset_id;
+      property PresetName         : string              read preset_name       write preset_name;
+      property Prefix             : string              read text_prefix       write text_prefix;
+      property Suffix             : string              read text_suffix       write text_suffix;
+      property Mode               : TWrapModeType       read wrap_mode         write wrap_mode;
+      property IsCodeAlign        : Boolean             read code_align        write code_align;
+      property StartLine          : string              read start_line        write start_line;
+      property IsStartLineEnabled : Boolean             read enable_start_line write enable_start_line;
+      property EndLine            : string              read end_line          write end_line;
+      property IsEndLineEnabled   : Boolean             read enable_end_line   write enable_end_line;
+      property TrimMode           : TTrimModeType       read trim_mode         write trim_mode;
+      property QuotationType      : TQuotationType      read quotation_type    write quotation_type;
+      property TabStopConvert     : TTabStopConvertType read tab_convert       write tab_convert;
 
       procedure SetDefault;
       procedure AssignValues(pSource : TSettingsPreset);
@@ -59,6 +61,7 @@ begin
   enable_end_line   := pSource.IsEndLineEnabled;
   trim_mode         := pSource.TrimMode;
   quotation_type    := pSource.QuotationType;
+  tab_convert       := pSource.TabStopConvert;
 end;
 
 constructor TSettingsPreset.Create;
@@ -82,6 +85,7 @@ begin
   enable_end_line   := True;
   trim_mode         := tmtNone;
   quotation_type    := qtOff;
+  tab_convert       := tsctOff;
 end;
 
 end.

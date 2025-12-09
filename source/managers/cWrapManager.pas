@@ -3,22 +3,25 @@
 interface
 
 uses
-  Classes, cSettingsPreset;
+  Classes, cSettingsPreset, cTypes;
 
 type
   TWrapManager = class
     public
+      class function TabStopReplace(pStr : string; pMode : TTabStopConvertType) : string;
 
-    class procedure PerformWrapAdd(pPreset: TSettingsPreset; pLines: TStringList);
-    class procedure PerformWrapRemove(pPreset: TSettingsPreset; pLines: TStringList);
+      class function NormalizeTab(S: string; TabSize: Integer; Mode: TTabMode) : string;
 
-    class procedure ConvertText(pPreset: TSettingsPreset; pLines: TStringList);
+      class procedure PerformWrapAdd(pPreset: TSettingsPreset; pLines: TStringList);
+      class procedure PerformWrapRemove(pPreset: TSettingsPreset; pLines: TStringList);
+
+      class procedure ConvertText(pPreset: TSettingsPreset; pLines: TStringList);
   end;
 
 implementation
 
 uses
-  SysUtils, StrUtils, cTypes, cUtils;
+  SysUtils, StrUtils, cUtils;
 
 { TWrapManager }
 
@@ -27,6 +30,78 @@ begin
   case pPreset.Mode of
        wmtAdd : PerformWrapAdd(pPreset, pLines);
     wmtRemove : PerformWrapRemove(pPreset, pLines);
+  end;
+end;
+
+class function TWrapManager.NormalizeTab(S: string; TabSize: Integer; Mode: TTabMode): string;
+var
+  i, col, nextStop, spaces, countSpaces: Integer;
+  sb: TStringBuilder;
+  ch: Char;
+begin
+  sb := TStringBuilder.Create(Length(S)*2);
+  try
+    col := 0;
+    i := 1;
+
+    while i <= Length(S) do
+    begin
+      ch := S[i];
+
+      case Mode of
+        tmExpand:
+          begin
+            if ch = #9 then
+            begin
+              nextStop := ((col div TabSize) + 1) * TabSize;
+              spaces := nextStop - col;
+              sb.Append(StringOfChar(' ', spaces));
+              col := nextStop;
+            end
+            else
+            begin
+              sb.Append(ch);
+              Inc(col);
+            end;
+            Inc(i);
+          end;
+
+        tmCompress:
+          begin
+            // Convert only LEADING spaces → tabs+spaces
+            if (col = 0) and (ch = ' ') then
+            begin
+              countSpaces := 0;
+              while (i <= Length(S)) and (S[i] = ' ') do
+              begin
+                Inc(countSpaces);
+                Inc(i);
+              end;
+
+              sb.Append(StringOfChar(#9, countSpaces div TabSize));
+              sb.Append(StringOfChar(' ', countSpaces mod TabSize));
+              col := sb.Length;  // update indent column
+            end
+            else if ch = #9 then
+            begin
+              sb.Append(#9);
+              nextStop := ((col div TabSize) + 1) * TabSize;
+              col := nextStop;
+              Inc(i);
+            end
+            else
+            begin
+              sb.Append(ch);
+              Inc(col);
+              Inc(i);
+            end;
+          end;
+      end;
+    end;
+
+    Result := sb.ToString;
+  finally
+    sb.Free;
   end;
 end;
 
@@ -55,6 +130,10 @@ begin
   try
     for var I := 0 to pLines.Count - 1 do begin
       S := pLines[I];
+
+      // REPLACE TAB CHAR
+      S := TabStopReplace(S, pPreset.TabStopConvert);
+
 
       // QUOTATION MARKS
       case pPreset.QuotationType of
@@ -126,6 +205,9 @@ begin
     for var I := 0 to pLines.Count - 1 do begin
       S := pLines[I];
 
+      // REPLACE TAB CHAR
+      S := TabStopReplace(S, pPreset.TabStopConvert);
+
       // OUTER TRIM
       if StartsStr(TrimLeft(pPreset.Prefix), TrimLeft(S)) then S := TrimLeft(S);    //remove whitespaces before preset
       if EndsStr(TrimRight(pPreset.Suffix), TrimRight(S)) then S := TrimRight(S);    //remove whitespaces after suffix
@@ -150,6 +232,24 @@ begin
     on E: Exception do begin
       SaveToLog('Error while converting text: ' + E.Message);
     end
+  end;
+end;
+
+class function TWrapManager.TabStopReplace(pStr: string; pMode: TTabStopConvertType): string;
+begin
+  case pMode of
+//    tsctOff: Result := pStr;
+//    tsctAuto:
+//      begin
+//        Result := pStr;
+//      end;
+    tsct2sp, tsct3sp, tsct4sp:
+      begin
+        Result := NormalizeTab(pStr, Ord(pMode), tmExpand);
+
+//      Result := StringReplace(pStr, '\t', StringOfChar(' ', Ord(pMode)), [rfReplaceAll]);
+      end
+  else Result := pStr;
   end;
 end;
 
