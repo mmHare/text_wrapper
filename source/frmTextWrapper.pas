@@ -58,9 +58,9 @@ type
     lblQuotation: TLabel;
     cmbQuotation: TComboBox;
     lblTabStop: TLabel;
-    cmbTabStop: TComboBox;
     Button1: TButton;
     actClearSettings: TAction;
+    cmbTabStop: TComboBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -231,7 +231,7 @@ begin
     IsEndLineEnabled   := chbEndLine.Checked;
     TrimMode           := TTrimModeType(cmbTrim.ItemIndex);
     QuotationType      := TQuotationType(cmbQuotation.ItemIndex);
-    TabStopConvert     := TTabStopConvertType(cmbTabStop.ItemIndex);     // TODO: change to imgcombo; function converting enum to tabsize
+    TabStopConvert     := TabSizeFromIndex(cmbTabStop.ItemIndex);     // TODO: change to imgcombo; function converting enum to tabsize
   end;
 end;
 
@@ -254,7 +254,7 @@ begin
     chbEndLine.Checked     := IsEndLineEnabled;
     cmbTrim.ItemIndex      := Ord(TrimMode);
     cmbQuotation.ItemIndex := Ord(QuotationType);
-    cmbTabStop.ItemIndex   := Ord(TabStopConvert);
+    cmbTabStop.ItemIndex   := TabSizeToIndex(TabStopConvert);
   end;
 end;
 

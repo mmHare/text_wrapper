@@ -8,9 +8,7 @@ uses
 type
   TWrapManager = class
     public
-      class function TabStopReplace(pStr : string; pMode : TTabStopConvertType) : string;
-
-      class function NormalizeTab(S: string; TabSize: Integer; Mode: TTabMode) : string;
+      class function NormalizeTab(pStr: string; pTabSize: Integer; pMode: TTabMode = tmExpand) : string;
 
       class procedure PerformWrapAdd(pPreset: TSettingsPreset; pLines: TStringList);
       class procedure PerformWrapRemove(pPreset: TSettingsPreset; pLines: TStringList);
@@ -33,27 +31,33 @@ begin
   end;
 end;
 
-class function TWrapManager.NormalizeTab(S: string; TabSize: Integer; Mode: TTabMode): string;
+class function TWrapManager.NormalizeTab(pStr: string; pTabSize: Integer; pMode: TTabMode = tmExpand): string;
 var
-  i, col, nextStop, spaces, countSpaces: Integer;
+  I, col, nextStop, spaces, countSpaces: Integer;
   sb: TStringBuilder;
   ch: Char;
 begin
-  sb := TStringBuilder.Create(Length(S)*2);
+  if pTabSize <= 0 then
+  begin
+    Result := pStr;
+    Exit;
+  end;
+
+  sb := TStringBuilder.Create(Length(pStr)*2);
   try
     col := 0;
-    i := 1;
+    I := 1;
 
-    while i <= Length(S) do
+    while I <= Length(pStr) do
     begin
-      ch := S[i];
+      ch := pStr[I];
 
-      case Mode of
+      case pMode of
         tmExpand:
           begin
             if ch = #9 then
             begin
-              nextStop := ((col div TabSize) + 1) * TabSize;
+              nextStop := ((col div pTabSize) + 1) * pTabSize;
               spaces := nextStop - col;
               sb.Append(StringOfChar(' ', spaces));
               col := nextStop;
@@ -63,37 +67,36 @@ begin
               sb.Append(ch);
               Inc(col);
             end;
-            Inc(i);
+            Inc(I);
           end;
 
-        tmCompress:
+        tmCompress:  // leading spaces -> tab; not yet implemented
           begin
-            // Convert only LEADING spaces → tabs+spaces
             if (col = 0) and (ch = ' ') then
             begin
               countSpaces := 0;
-              while (i <= Length(S)) and (S[i] = ' ') do
+              while (I <= Length(pStr)) and (pStr[I] = ' ') do
               begin
                 Inc(countSpaces);
-                Inc(i);
+                Inc(I);
               end;
 
-              sb.Append(StringOfChar(#9, countSpaces div TabSize));
-              sb.Append(StringOfChar(' ', countSpaces mod TabSize));
+              sb.Append(StringOfChar(#9, countSpaces div pTabSize));
+              sb.Append(StringOfChar(' ', countSpaces mod pTabSize));
               col := sb.Length;  // update indent column
             end
             else if ch = #9 then
             begin
               sb.Append(#9);
-              nextStop := ((col div TabSize) + 1) * TabSize;
+              nextStop := ((col div pTabSize) + 1) * pTabSize;
               col := nextStop;
-              Inc(i);
+              Inc(I);
             end
             else
             begin
               sb.Append(ch);
               Inc(col);
-              Inc(i);
+              Inc(I);
             end;
           end;
       end;
@@ -111,6 +114,10 @@ var
   S, strTmp : string;
 begin
   if pLines.Count = 0 then Exit;
+
+  // REPLACE TAB CHAR
+  for var I := 0 to pLines.Count - 1 do
+    pLines[I] := NormalizeTab(pLines[I], Ord(pPreset.TabStopConvert));
 
   // calculate max line length
   lineLength := 0;
@@ -130,10 +137,6 @@ begin
   try
     for var I := 0 to pLines.Count - 1 do begin
       S := pLines[I];
-
-      // REPLACE TAB CHAR
-      S := TabStopReplace(S, pPreset.TabStopConvert);
-
 
       // QUOTATION MARKS
       case pPreset.QuotationType of
@@ -201,12 +204,14 @@ begin
         for var I := pLines.Count - 1 downto lineIndex do pLines.Delete(I);
     end;
 
-    // TEXT CONVERSION
-    for var I := 0 to pLines.Count - 1 do begin
-      S := pLines[I];
+    // REPLACE TAB CHAR
+    for var I := 0 to pLines.Count - 1 do
+      pLines[I] := NormalizeTab(pLines[I], Ord(pPreset.TabStopConvert));
 
-      // REPLACE TAB CHAR
-      S := TabStopReplace(S, pPreset.TabStopConvert);
+    // TEXT CONVERSION
+    for var I := 0 to pLines.Count - 1 do
+    begin
+      S := pLines[I];
 
       // OUTER TRIM
       if StartsStr(TrimLeft(pPreset.Prefix), TrimLeft(S)) then S := TrimLeft(S);    //remove whitespaces before preset
@@ -232,24 +237,6 @@ begin
     on E: Exception do begin
       SaveToLog('Error while converting text: ' + E.Message);
     end
-  end;
-end;
-
-class function TWrapManager.TabStopReplace(pStr: string; pMode: TTabStopConvertType): string;
-begin
-  case pMode of
-//    tsctOff: Result := pStr;
-//    tsctAuto:
-//      begin
-//        Result := pStr;
-//      end;
-    tsct2sp, tsct3sp, tsct4sp:
-      begin
-        Result := NormalizeTab(pStr, Ord(pMode), tmExpand);
-
-//      Result := StringReplace(pStr, '\t', StringOfChar(' ', Ord(pMode)), [rfReplaceAll]);
-      end
-  else Result := pStr;
   end;
 end;
 

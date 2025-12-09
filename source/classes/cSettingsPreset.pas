@@ -21,7 +21,7 @@ type
       enable_end_line   : Boolean;
       trim_mode         : TTrimModeType;
       quotation_type    : TQuotationType;
-      tab_convert       : TTabStopConvertType;
+      tab_convert       : TTabSizeType;
     public
       property Id                 : Integer             read preset_id         write preset_id;
       property PresetName         : string              read preset_name       write preset_name;
@@ -35,7 +35,7 @@ type
       property IsEndLineEnabled   : Boolean             read enable_end_line   write enable_end_line;
       property TrimMode           : TTrimModeType       read trim_mode         write trim_mode;
       property QuotationType      : TQuotationType      read quotation_type    write quotation_type;
-      property TabStopConvert     : TTabStopConvertType read tab_convert       write tab_convert;
+      property TabStopConvert     : TTabSizeType        read tab_convert       write tab_convert;
 
       procedure SetDefault;
       procedure AssignValues(pSource : TSettingsPreset);

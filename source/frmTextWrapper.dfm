@@ -613,6 +613,18 @@ object FormTextWrapper: TFormTextWrapper
             #39' -> '#39#39
             #39' <- '#39#39)
         end
+        object Button1: TButton
+          Left = 976
+          Top = 22
+          Width = 113
+          Height = 38
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Action = actClearSettings
+          TabOrder = 9
+        end
         object cmbTabStop: TComboBox
           Left = 125
           Top = 184
@@ -627,26 +639,14 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 12
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 9
+          TabOrder = 10
           Text = 'OFF'
           Items.Strings = (
             'OFF'
-            'AUTO'
             '2 sp'
             '3 sp'
-            '4 sp')
-        end
-        object Button1: TButton
-          Left = 976
-          Top = 22
-          Width = 113
-          Height = 38
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Action = actClearSettings
-          TabOrder = 10
+            '4 sp'
+            '8 sp')
         end
       end
     end
