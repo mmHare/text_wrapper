@@ -3,6 +3,7 @@ Windows desktop application written in Delphi 12. It is meant to be a helper app
 Additional option to insert preset lines at the start and end of the converted text.
 Current settings are saved upon closing application but also can be saved and loaded as presets so they can be switched easily and accessed when needed.
 There is an option to 'align' output by filling endline with spaces so that suffix is added on the same position for all lines. It is also possible to set quotation mark conversion from single (') to doubled ('').
+Tab replace option - replaces tab character (\t) with spaces of chosen tab size..
 
 ## Changelog
 See the full changelog in [CHANGELOG.md](CHANGELOG.md).

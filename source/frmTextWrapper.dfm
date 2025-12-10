@@ -630,9 +630,7 @@ object FormTextWrapper: TFormTextWrapper
           Top = 184
           Width = 175
           Height = 33
-          Hint = 
-            'Replaces tab character with fixed number of spaces'#13#10'AUTO - inden' +
-            't-wise (up to 4 spaces)'
+          Hint = 'Tab stop size used to replace tab character with spaces'
           Margins.Left = 12
           Margins.Top = 12
           Margins.Right = 12
