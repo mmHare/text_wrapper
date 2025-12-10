@@ -121,8 +121,10 @@ begin
 
   // calculate max line length
   lineLength := 0;
-  if pPreset.IsCodeAlign then begin
-    for S in pLines do begin
+  if pPreset.IsCodeAlign then
+  begin
+    for S in pLines do
+    begin
       case pPreset.QuotationType of
         qtSingled: strTmp := StringReplace(S, '''''', '''', [rfReplaceAll]);
         qtDoubled: strTmp := StringReplace(S, '''', '''''', [rfReplaceAll]);
@@ -135,7 +137,8 @@ begin
 
   // TEXT CONVERSION
   try
-    for var I := 0 to pLines.Count - 1 do begin
+    for var I := 0 to pLines.Count - 1 do
+    begin
       S := pLines[I];
 
       // QUOTATION MARKS
@@ -149,7 +152,8 @@ begin
       if pPreset.TrimMode in [tmtRight, tmtBoth] then S := TrimRight(S);
 
       // CODE ALIGN
-      if pPreset.IsCodeAlign then begin  //fill with spaces
+      if pPreset.IsCodeAlign then //fill with spaces
+      begin
         x := lineLength - Length(S);
         if x > 0 then S := S + StringOfChar(' ', x);
       end;
@@ -162,7 +166,8 @@ begin
     if pPreset.IsEndLineEnabled   and (pPreset.EndLine <> '')   then pLines.Add(pPreset.EndLine);
 
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while converting text: ' + E.Message);
     end
   end;
@@ -177,10 +182,12 @@ begin
 
   try
     // START LINE
-    if pPreset.IsStartLineEnabled then begin
+    if pPreset.IsStartLineEnabled then
+    begin
       // check if start line exists in lines and get its index
       lineIndex := -1;
-      for var I := 0 to pLines.Count - 1 do begin
+      for var I := 0 to pLines.Count - 1 do
+      begin
         if Trim(pLines[I]) = '' then Continue;
         if pLines[I] = pPreset.StartLine then lineIndex := I;
         Break;
@@ -234,7 +241,8 @@ begin
       pLines[I] := S;
     end;
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while converting text: ' + E.Message);
     end
   end;

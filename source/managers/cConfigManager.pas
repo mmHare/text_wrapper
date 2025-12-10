@@ -56,7 +56,8 @@ begin
   Serializer := TJsonSerializer.Create;
 
   try
-    if not FileExists(CONFIG_FILE_NAME) then begin
+    if not FileExists(CONFIG_FILE_NAME) then
+    begin
       SaveConfigToFile;
       Exit;
     end;
@@ -70,7 +71,8 @@ begin
       presetListTmp := RootObject.GetValue<TJSONArray>('presets');
 
       FPresetList.Clear;
-      for var I := 0 to presetListTmp.Count - 1 do begin
+      for var I := 0 to presetListTmp.Count - 1 do
+      begin
         if I > PRESET_NUMBER then Break;
 
         tmpObject := presetListTmp.Items[I] as TJSONObject;
@@ -83,7 +85,8 @@ begin
       Serializer.Free;
     end;
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while reading config file: ' + E.Message);
     end;
   end;
@@ -103,7 +106,8 @@ begin
       tmpArray := TJSONArray.Create;
 
       FPresetList[0].PresetName := ''; //working settings have no name
-      for var I := 0 to FPresetList.Count - 1 do begin
+      for var I := 0 to FPresetList.Count - 1 do
+      begin
         FPresetList[I].Id := I;
 
         strTmp := Serializer.Serialize(FPresetList[I]);
@@ -117,7 +121,8 @@ begin
 
       TFile.WriteAllText(CONFIG_FILE_NAME, RootObject.Format(), TEncoding.UTF8);
     except
-      on E: Exception do begin
+      on E: Exception do
+      begin
         SaveToLog('Error while saving config file: ' + E.Message);
       end;
     end;
@@ -129,7 +134,8 @@ end;
 
 procedure TConfigManager.SaveOnePreset(pPreset: TSettingsPreset);
 begin
-  with TConfigManager.Create do begin
+  with TConfigManager.Create do
+  begin
     try
       try
         if (pPreset.Id < 1) or (pPreset.Id > PRESET_NUMBER) then
@@ -138,7 +144,8 @@ begin
         PresetList[pPreset.Id].AssignValues(pPreset);
         SaveConfigToFile;
       except
-        on E: Exception do begin
+        on E: Exception do
+        begin
           SaveToLog('Error while saving config file: ' + E.Message);
         end;
       end;
@@ -152,11 +159,13 @@ procedure TConfigManager.SetDefault;
 begin
   try
     FPresetList.Clear;
-    for var I := 0 to PRESET_NUMBER do begin //includes current, working settings
+    for var I := 0 to PRESET_NUMBER do //includes current, working settings
+    begin
       FPresetList.Add(TSettingsPreset.Create);
     end;
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while setting default values: ' + E.Message);
     end;
   end;

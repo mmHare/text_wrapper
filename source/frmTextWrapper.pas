@@ -148,7 +148,8 @@ begin
     idTmp := btn.Tag;
     SetSettingsValues(FConfigManager.PresetList[idTmp]);
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while loading preset: ' + E.Message);
     end;
   end;
@@ -172,7 +173,8 @@ begin
     GetSettingsValues(FConfigManager.PresetList[idTmp]);
     FConfigManager.SaveOnePreset(FConfigManager.PresetList[idTmp]);
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while saving preset: ' + E.Message);
     end;
   end;
@@ -180,7 +182,8 @@ end;
 
 procedure TFormTextWrapper.actClearSettingsExecute(Sender: TObject);
 begin
-  if MessageDlg('Do you really want to clear settings?', mtConfirmation, mbYesNo, 0) = mrYes then begin
+  if MessageDlg('Do you really want to clear settings?', mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
     FConfigManager.PresetList[0].SetDefault;
     SetSettingsValues(FConfigManager.PresetList[0]);
   end;
@@ -200,7 +203,8 @@ begin
 
   FFramePresetList.Clear;
   try
-    for var I := 1 to FConfigManager.PresetList.Count - 1 do begin
+    for var I := 1 to FConfigManager.PresetList.Count - 1 do
+    begin
       frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
       frameTmp.Name := 'FramePreset_' + IntToStr(I);
       frameTmp.Parent := scrlbxPresets;
@@ -210,7 +214,8 @@ begin
       FFramePresetList.Add(frameTmp);
     end;
   except
-    on E: Exception do begin
+    on E: Exception do
+    begin
       SaveToLog('Error while loading preset forms: ' + E.Message);
     end;
   end;
@@ -220,7 +225,8 @@ procedure TFormTextWrapper.GetSettingsValues(pPreset: TSettingsPreset);
 begin
   if not Assigned(pPreset) then Exit;
 
-  with pPreset do begin
+  with pPreset do
+  begin
     Prefix             := edtPrefix.Text;
     Suffix             := edtSuffix.Text;
     Mode               := TWrapModeType(cmbMode.ItemIndex);
@@ -243,7 +249,8 @@ begin
   FConfigManager.PresetList[0].AssignValues(pPreset); // passed preset becomes working preset
 
   // fill controls
-  with pPreset do begin
+  with pPreset do
+  begin
     edtPrefix.Text         := Prefix;
     edtSuffix.Text         := Suffix;
     cmbMode.ItemIndex      := Ord(Mode);
