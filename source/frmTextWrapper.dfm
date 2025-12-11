@@ -411,17 +411,6 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Caption = 'Mode'
         end
-        object lblPresets: TLabel
-          Left = 12
-          Top = 445
-          Width = 118
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Setting presets'
-        end
         object lblTrim: TLabel
           Left = 82
           Top = 87
@@ -525,21 +514,6 @@ object FormTextWrapper: TFormTextWrapper
             'ADD'
             'REMOVE')
         end
-        object scrlbxPresets: TScrollBox
-          Left = 0
-          Top = 424
-          Width = 1120
-          Height = 280
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Align = alBottom
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          TabOrder = 4
-        end
         object chbStartLine: TCheckBox
           Left = 342
           Top = 88
@@ -555,7 +529,7 @@ object FormTextWrapper: TFormTextWrapper
           ParentBiDiMode = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 5
+          TabOrder = 4
         end
         object chbEndLine: TCheckBox
           Left = 324
@@ -572,7 +546,7 @@ object FormTextWrapper: TFormTextWrapper
           ParentBiDiMode = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 6
+          TabOrder = 5
         end
         object cmbTrim: TComboBox
           Left = 125
@@ -586,7 +560,7 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 5
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 7
+          TabOrder = 6
           Text = 'NONE'
           Items.Strings = (
             'NONE'
@@ -606,24 +580,24 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 8
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 8
+          TabOrder = 7
           Text = 'OFF'
           Items.Strings = (
             'OFF'
             #39' -> '#39#39
             #39' <- '#39#39)
         end
-        object Button1: TButton
-          Left = 976
-          Top = 22
-          Width = 113
-          Height = 38
+        object btnClearSettings: TButton
+          Left = 964
+          Top = 20
+          Width = 125
+          Height = 40
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
           Action = actClearSettings
-          TabOrder = 9
+          TabOrder = 8
         end
         object cmbTabStop: TComboBox
           Left = 125
@@ -637,7 +611,7 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 12
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 10
+          TabOrder = 9
           Text = 'OFF'
           Items.Strings = (
             'OFF'
@@ -645,6 +619,42 @@ object FormTextWrapper: TFormTextWrapper
             '3 sp'
             '4 sp'
             '8 sp')
+        end
+        object grpbxPresets: TGroupBox
+          AlignWithMargins = True
+          Left = 20
+          Top = 388
+          Width = 1080
+          Height = 296
+          Margins.Left = 20
+          Margins.Top = 5
+          Margins.Right = 20
+          Margins.Bottom = 20
+          Align = alBottom
+          Caption = 'Setting presets'
+          TabOrder = 10
+          ExplicitLeft = 0
+          ExplicitTop = 408
+          ExplicitWidth = 1120
+          object scrlbxPresets: TScrollBox
+            Left = 2
+            Top = 27
+            Width = 1076
+            Height = 267
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Align = alClient
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BorderStyle = bsNone
+            TabOrder = 0
+            ExplicitLeft = 0
+            ExplicitTop = 424
+            ExplicitWidth = 1120
+            ExplicitHeight = 280
+          end
         end
       end
     end
@@ -698,7 +708,7 @@ object FormTextWrapper: TFormTextWrapper
       OnExecute = actMoveUpExecute
     end
     object actClearSettings: TAction
-      Caption = 'Clear'
+      Caption = 'Clear settings'
       OnExecute = actClearSettingsExecute
     end
   end

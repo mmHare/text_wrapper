@@ -46,7 +46,6 @@ type
     scrlbxPresets: TScrollBox;
     actSavePreset: TAction;
     actLoadPreset: TAction;
-    lblPresets: TLabel;
     chbStartLine: TCheckBox;
     chbEndLine: TCheckBox;
     pnlLeft: TPanel;
@@ -58,9 +57,10 @@ type
     lblQuotation: TLabel;
     cmbQuotation: TComboBox;
     lblTabStop: TLabel;
-    Button1: TButton;
+    btnClearSettings: TButton;
     actClearSettings: TAction;
     cmbTabStop: TComboBox;
+    grpbxPresets: TGroupBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);

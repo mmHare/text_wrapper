@@ -54,34 +54,42 @@ object FramePreset: TFramePreset
       OnChange = edtNameChange
     end
     object btnSave: TButton
-      Left = 660
-      Top = 23
+      AlignWithMargins = True
+      Left = 664
+      Top = 20
       Width = 113
-      Height = 38
+      Height = 44
       Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Anchors = [akTop, akRight]
+      Margins.Top = 20
+      Margins.Right = 20
+      Margins.Bottom = 15
+      Align = alRight
       Caption = 'Save'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
+      ExplicitLeft = 660
+      ExplicitTop = 23
+      ExplicitHeight = 38
     end
     object btnLoad: TButton
-      Left = 792
-      Top = 23
+      AlignWithMargins = True
+      Left = 802
+      Top = 20
       Width = 113
-      Height = 38
+      Height = 44
       Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Anchors = [akTop, akRight]
+      Margins.Top = 20
+      Margins.Right = 20
+      Margins.Bottom = 15
+      Align = alRight
       Caption = 'Load'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      ExplicitLeft = 792
+      ExplicitTop = 23
+      ExplicitHeight = 38
     end
   end
 end

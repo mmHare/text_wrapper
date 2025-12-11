@@ -189,7 +189,7 @@ begin
       for var I := 0 to pLines.Count - 1 do
       begin
         if Trim(pLines[I]) = '' then Continue;
-        if pLines[I] = pPreset.StartLine then lineIndex := I;
+        if Trim(pLines[I]) = pPreset.StartLine then lineIndex := I;
         Break;
       end;
       // delete start line and empty lines before
@@ -203,7 +203,7 @@ begin
       lineIndex := -1;
       for var I := pLines.Count - 1 downto 0 do begin
         if Trim(pLines[I]) = '' then Continue;
-        if pLines[I] = pPreset.EndLine then lineIndex := I;
+        if Trim(pLines[I]) = pPreset.EndLine then lineIndex := I;
         Break;
       end;
       // delete end line and empty lines after
