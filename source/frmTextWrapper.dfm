@@ -33,7 +33,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsSettings
+    ActivePage = tsWrapper
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -131,9 +131,10 @@ object FormTextWrapper: TFormTextWrapper
             Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
-            ScrollBars = ssVertical
+            ScrollBars = ssBoth
             TabOrder = 0
             WantTabs = True
+            WordWrap = False
           end
         end
         object pnlOut: TPanel
@@ -183,9 +184,10 @@ object FormTextWrapper: TFormTextWrapper
             Font.Name = 'Courier New'
             Font.Style = []
             ParentFont = False
-            ScrollBars = ssVertical
+            ScrollBars = ssBoth
             TabOrder = 0
             WantTabs = True
+            WordWrap = False
           end
         end
       end
@@ -633,9 +635,6 @@ object FormTextWrapper: TFormTextWrapper
           Align = alBottom
           Caption = 'Setting presets'
           TabOrder = 10
-          ExplicitLeft = 0
-          ExplicitTop = 408
-          ExplicitWidth = 1120
           object scrlbxPresets: TScrollBox
             Left = 2
             Top = 27
@@ -650,10 +649,6 @@ object FormTextWrapper: TFormTextWrapper
             BevelOuter = bvNone
             BorderStyle = bsNone
             TabOrder = 0
-            ExplicitLeft = 0
-            ExplicitTop = 424
-            ExplicitWidth = 1120
-            ExplicitHeight = 280
           end
         end
       end
