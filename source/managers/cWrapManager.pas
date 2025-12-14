@@ -37,11 +37,7 @@ var
   sb: TStringBuilder;
   ch: Char;
 begin
-  if pTabSize <= 0 then
-  begin
-    Result := pStr;
-    Exit;
-  end;
+  if pTabSize <= 0 then Exit(pStr);
 
   sb := TStringBuilder.Create(Length(pStr)*2);
   try
