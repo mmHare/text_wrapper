@@ -4,6 +4,7 @@ Additional option to insert preset lines at the start and end of the converted t
 Current settings are saved upon closing application but also can be saved and loaded as presets so they can be switched easily and accessed when needed.
 There is an option to 'align' output by filling endline with spaces so that suffix is added on the same position for all lines. It is also possible to set quotation mark conversion from single (') to doubled ('').
 Tab replace option - replaces tab character (\t) with spaces of chosen tab size.
+Convert file - load selected file, convert text content with set parameters and save it to output file - same dir, name with appened '_out'. Can be used for longer texts.
 
 ## Changelog
 See the full changelog in [CHANGELOG.md](CHANGELOG.md).

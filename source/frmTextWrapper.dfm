@@ -33,7 +33,7 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = tsWrapper
+    ActivePage = tsSettings
     Align = alClient
     TabOrder = 0
     object tsWrapper: TTabSheet
@@ -82,8 +82,14 @@ object FormTextWrapper: TFormTextWrapper
           end
           item
             SizeStyle = ssAuto
+          end
+          item
+            SizeStyle = ssAuto
           end>
         TabOrder = 0
+        ExplicitLeft = -10
+        ExplicitTop = 63
+        ExplicitWidth = 1019
         object pnlIn: TPanel
           Left = 1
           Top = 1
@@ -97,6 +103,7 @@ object FormTextWrapper: TFormTextWrapper
           Color = clSkyBlue
           ParentBackground = False
           TabOrder = 0
+          ExplicitHeight = 258
           object lblIn: TLabel
             Left = 24
             Top = 12
@@ -135,6 +142,7 @@ object FormTextWrapper: TFormTextWrapper
             TabOrder = 0
             WantTabs = True
             WordWrap = False
+            ExplicitHeight = 166
           end
         end
         object pnlOut: TPanel
@@ -150,6 +158,8 @@ object FormTextWrapper: TFormTextWrapper
           Color = clActiveCaption
           ParentBackground = False
           TabOrder = 1
+          ExplicitTop = 259
+          ExplicitHeight = 258
           object lblOut: TLabel
             Left = 24
             Top = 12
@@ -188,6 +198,7 @@ object FormTextWrapper: TFormTextWrapper
             TabOrder = 0
             WantTabs = True
             WordWrap = False
+            ExplicitHeight = 166
           end
         end
       end
@@ -357,6 +368,7 @@ object FormTextWrapper: TFormTextWrapper
         Color = clGradientActiveCaption
         ParentBackground = False
         TabOrder = 2
+        ExplicitHeight = 522
         DesignSize = (
           98
           584)
@@ -376,6 +388,7 @@ object FormTextWrapper: TFormTextWrapper
           ImageMargins.Top = 8
           Images = ImageList1
           TabOrder = 0
+          ExplicitTop = 199
         end
       end
     end
@@ -402,226 +415,8 @@ object FormTextWrapper: TFormTextWrapper
         ParentBiDiMode = False
         ParentBackground = False
         TabOrder = 0
-        object lblMode: TLabel
-          Left = 68
-          Top = 35
-          Width = 47
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Mode'
-        end
-        object lblTrim: TLabel
-          Left = 82
-          Top = 87
-          Width = 33
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Trim'
-        end
-        object lblQuotation: TLabel
-          Left = 34
-          Top = 139
-          Width = 81
-          Height = 25
-          Margins.Left = 8
-          Margins.Top = 8
-          Margins.Right = 8
-          Margins.Bottom = 8
-          BiDiMode = bdRightToLeft
-          Caption = 'Quotation'
-          ParentBiDiMode = False
-        end
-        object lblTabStop: TLabel
-          Left = 22
-          Top = 189
-          Width = 88
-          Height = 25
-          Margins.Left = 12
-          Margins.Top = 12
-          Margins.Right = 12
-          Margins.Bottom = 12
-          BiDiMode = bdRightToLeft
-          Caption = 'Tab replace'
-          ParentBiDiMode = False
-        end
-        object chbCodeAlign: TCheckBox
-          Left = 324
-          Top = 36
-          Width = 146
-          Height = 26
-          Hint = 'Fill with trailing spaces before suffix'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          BiDiMode = bdRightToLeft
-          Caption = 'Align code'
-          ParentBiDiMode = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          StyleElements = [seFont, seClient]
-        end
-        object edtStartLine: TEdit
-          Left = 480
-          Top = 84
-          Width = 609
-          Height = 33
-          Hint = 'Line will be added before the converted text'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          MaxLength = 255
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-        end
-        object edtEndLine: TEdit
-          Left = 480
-          Top = 136
-          Width = 609
-          Height = 33
-          Hint = 'Line will be added after the converted text'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          MaxLength = 255
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-        end
-        object cmbMode: TComboBox
-          Left = 125
-          Top = 32
-          Width = 175
-          Height = 33
-          Hint = 'Add/Remove prefix & suffix'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 3
-          Text = 'ADD'
-          Items.Strings = (
-            'ADD'
-            'REMOVE')
-        end
-        object chbStartLine: TCheckBox
-          Left = 342
-          Top = 88
-          Width = 128
-          Height = 26
-          Hint = 'Enable starting line'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          BiDiMode = bdRightToLeft
-          Caption = 'Starting line'
-          ParentBiDiMode = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 4
-        end
-        object chbEndLine: TCheckBox
-          Left = 324
-          Top = 140
-          Width = 146
-          Height = 26
-          Hint = 'Enable ending line'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          BiDiMode = bdRightToLeft
-          Caption = 'Ending line'
-          ParentBiDiMode = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 5
-        end
-        object cmbTrim: TComboBox
-          Left = 125
-          Top = 84
-          Width = 175
-          Height = 33
-          Hint = 'Removes whitespaces'
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 6
-          Text = 'NONE'
-          Items.Strings = (
-            'NONE'
-            'LEFT'
-            'RIGHT'
-            'BOTH')
-        end
-        object cmbQuotation: TComboBox
-          Left = 125
-          Top = 136
-          Width = 175
-          Height = 33
-          Hint = 'Converts between single and doubled quotation marks'
-          Margins.Left = 8
-          Margins.Top = 8
-          Margins.Right = 8
-          Margins.Bottom = 8
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 7
-          Text = 'OFF'
-          Items.Strings = (
-            'OFF'
-            #39' -> '#39#39
-            #39' <- '#39#39)
-        end
-        object btnClearSettings: TButton
-          Left = 964
-          Top = 20
-          Width = 125
-          Height = 40
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Action = actClearSettings
-          TabOrder = 8
-        end
-        object cmbTabStop: TComboBox
-          Left = 125
-          Top = 184
-          Width = 175
-          Height = 33
-          Hint = 'Tab stop size used to replace tab character with spaces'
-          Margins.Left = 12
-          Margins.Top = 12
-          Margins.Right = 12
-          Margins.Bottom = 12
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 9
-          Text = 'OFF'
-          Items.Strings = (
-            'OFF'
-            '2 sp'
-            '3 sp'
-            '4 sp'
-            '8 sp')
-        end
+        ExplicitLeft = 6
+        ExplicitWidth = 1117
         object grpbxPresets: TGroupBox
           AlignWithMargins = True
           Left = 20
@@ -634,7 +429,7 @@ object FormTextWrapper: TFormTextWrapper
           Margins.Bottom = 20
           Align = alBottom
           Caption = 'Setting presets'
-          TabOrder = 10
+          TabOrder = 0
           object scrlbxPresets: TScrollBox
             Left = 2
             Top = 27
@@ -649,6 +444,310 @@ object FormTextWrapper: TFormTextWrapper
             BevelOuter = bvNone
             BorderStyle = bsNone
             TabOrder = 0
+          end
+        end
+        object grpbxConvertFile: TGroupBox
+          AlignWithMargins = True
+          Left = 20
+          Top = 293
+          Width = 1080
+          Height = 80
+          Margins.Left = 20
+          Margins.Top = 10
+          Margins.Right = 20
+          Margins.Bottom = 10
+          Align = alBottom
+          Caption = 'File conversion'
+          TabOrder = 1
+          ExplicitLeft = 252
+          ExplicitTop = 234
+          ExplicitWidth = 673
+          object lblFilePath: TLabel
+            Left = 152
+            Top = 33
+            Width = 67
+            Height = 25
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Caption = 'File path'
+          end
+          object edtFilePath: TEdit
+            Left = 229
+            Top = 30
+            Width = 432
+            Height = 33
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            TabOrder = 0
+            OnChange = edtFilePathChange
+          end
+          object btnFilePath: TButton
+            Left = 671
+            Top = 30
+            Width = 49
+            Height = 33
+            Hint = 'Select path to file'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Caption = '. . .'
+            TabOrder = 1
+            OnClick = btnFilePathClick
+          end
+          object btnConvertFile: TButton
+            Left = 16
+            Top = 30
+            Width = 113
+            Height = 33
+            Hint = 'Convert selected file and save to output file'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Action = actConvertFile
+            TabOrder = 2
+          end
+        end
+        object grpbxOptions: TGroupBox
+          AlignWithMargins = True
+          Left = 20
+          Top = 20
+          Width = 1080
+          Height = 268
+          Margins.Left = 20
+          Margins.Top = 20
+          Margins.Right = 20
+          Margins.Bottom = 5
+          Align = alTop
+          Caption = 'Options'
+          TabOrder = 2
+          ExplicitLeft = 6
+          ExplicitTop = 9
+          ExplicitWidth = 1083
+          object lblMode: TLabel
+            Left = 68
+            Top = 35
+            Width = 47
+            Height = 25
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Caption = 'Mode'
+          end
+          object lblQuotation: TLabel
+            Left = 34
+            Top = 139
+            Width = 81
+            Height = 25
+            Margins.Left = 8
+            Margins.Top = 8
+            Margins.Right = 8
+            Margins.Bottom = 8
+            BiDiMode = bdRightToLeft
+            Caption = 'Quotation'
+            ParentBiDiMode = False
+          end
+          object lblTabStop: TLabel
+            Left = 27
+            Top = 189
+            Width = 88
+            Height = 25
+            Margins.Left = 12
+            Margins.Top = 12
+            Margins.Right = 12
+            Margins.Bottom = 12
+            BiDiMode = bdRightToLeft
+            Caption = 'Tab replace'
+            ParentBiDiMode = False
+          end
+          object lblTrim: TLabel
+            Left = 82
+            Top = 87
+            Width = 33
+            Height = 25
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Caption = 'Trim'
+          end
+          object btnClearSettings: TButton
+            Left = 930
+            Top = 20
+            Width = 125
+            Height = 40
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Action = actClearSettings
+            TabOrder = 0
+          end
+          object chbCodeAlign: TCheckBox
+            Left = 324
+            Top = 36
+            Width = 146
+            Height = 26
+            Hint = 'Fill with trailing spaces before suffix'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            BiDiMode = bdRightToLeft
+            Caption = 'Align code'
+            ParentBiDiMode = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            StyleElements = [seFont, seClient]
+          end
+          object chbEndLine: TCheckBox
+            Left = 324
+            Top = 140
+            Width = 146
+            Height = 26
+            Hint = 'Enable ending line'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            BiDiMode = bdRightToLeft
+            Caption = 'Ending line'
+            ParentBiDiMode = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+          end
+          object chbStartLine: TCheckBox
+            Left = 342
+            Top = 88
+            Width = 128
+            Height = 26
+            Hint = 'Enable starting line'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            BiDiMode = bdRightToLeft
+            Caption = 'Starting line'
+            ParentBiDiMode = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+          end
+          object cmbMode: TComboBox
+            Left = 125
+            Top = 32
+            Width = 175
+            Height = 33
+            Hint = 'Add/Remove prefix & suffix'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 4
+            Text = 'ADD'
+            Items.Strings = (
+              'ADD'
+              'REMOVE')
+          end
+          object cmbQuotation: TComboBox
+            Left = 125
+            Top = 136
+            Width = 175
+            Height = 33
+            Hint = 'Converts between single and doubled quotation marks'
+            Margins.Left = 8
+            Margins.Top = 8
+            Margins.Right = 8
+            Margins.Bottom = 8
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 5
+            Text = 'OFF'
+            Items.Strings = (
+              'OFF'
+              #39' -> '#39#39
+              #39' <- '#39#39)
+          end
+          object cmbTabStop: TComboBox
+            Left = 125
+            Top = 184
+            Width = 175
+            Height = 33
+            Hint = 'Tab stop size used to replace tab character with spaces'
+            Margins.Left = 12
+            Margins.Top = 12
+            Margins.Right = 12
+            Margins.Bottom = 12
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 6
+            Text = 'OFF'
+            Items.Strings = (
+              'OFF'
+              '2 sp'
+              '3 sp'
+              '4 sp'
+              '8 sp')
+          end
+          object cmbTrim: TComboBox
+            Left = 125
+            Top = 84
+            Width = 175
+            Height = 33
+            Hint = 'Removes whitespaces'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 7
+            Text = 'NONE'
+            Items.Strings = (
+              'NONE'
+              'LEFT'
+              'RIGHT'
+              'BOTH')
+          end
+          object edtEndLine: TEdit
+            Left = 474
+            Top = 136
+            Width = 590
+            Height = 33
+            Hint = 'Line will be added after the converted text'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            MaxLength = 255
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 8
+          end
+          object edtStartLine: TEdit
+            Left = 474
+            Top = 84
+            Width = 590
+            Height = 33
+            Hint = 'Line will be added before the converted text'
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            MaxLength = 255
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 9
           end
         end
       end
@@ -705,6 +804,10 @@ object FormTextWrapper: TFormTextWrapper
     object actClearSettings: TAction
       Caption = 'Clear settings'
       OnExecute = actClearSettingsExecute
+    end
+    object actConvertFile: TAction
+      Caption = 'Convert file'
+      OnExecute = actConvertFileExecute
     end
   end
   object ImageList1: TImageList

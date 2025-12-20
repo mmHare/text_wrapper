@@ -61,6 +61,13 @@ type
     actClearSettings: TAction;
     cmbTabStop: TComboBox;
     grpbxPresets: TGroupBox;
+    edtFilePath: TEdit;
+    lblFilePath: TLabel;
+    btnFilePath: TButton;
+    actConvertFile: TAction;
+    btnConvertFile: TButton;
+    grpbxConvertFile: TGroupBox;
+    grpbxOptions: TGroupBox;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -73,6 +80,9 @@ type
     procedure actLoadPresetExecute(Sender: TObject);
     procedure actMoveUpExecute(Sender: TObject);
     procedure actClearSettingsExecute(Sender: TObject);
+    procedure btnFilePathClick(Sender: TObject);
+    procedure actConvertFileExecute(Sender: TObject);
+    procedure edtFilePathChange(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
@@ -125,6 +135,28 @@ begin
     redtOut.Lines.Assign(strList);
   finally
     strList.Free;
+    presetTmp.Free;
+  end;
+end;
+
+procedure TFormTextWrapper.actConvertFileExecute(Sender: TObject);
+var
+  presetTmp : TSettingsPreset;
+begin
+  if edtFilePath.Text = '' then Exit;
+
+  if not FileExists(edtFilePath.Text) then
+  begin
+    ShowMessage('File not found.');
+    Exit;
+  end;
+
+  presetTmp:= TSettingsPreset.Create;
+  try
+    GetSettingsValues(presetTmp);
+    if TWrapManager.ConvertFile(presetTmp, edtFilePath.Text) then
+      ShowMessage('File converted.');
+  finally
     presetTmp.Free;
   end;
 end;
@@ -195,6 +227,25 @@ begin
   FormAbout.ShowModal;
 end;
 
+procedure TFormTextWrapper.btnFilePathClick(Sender: TObject);
+var
+  openDialogTmp: TOpenDialog;
+begin
+  openDialogTmp := TOpenDialog.Create(nil);
+  try
+    if openDialogTmp.Execute then
+      edtFilePath.Text := openDialogTmp.FileName;
+  finally
+    openDialogTmp.Free;
+  end;
+end;
+
+procedure TFormTextWrapper.edtFilePathChange(Sender: TObject);
+begin
+  edtFilePath.Hint := edtFilePath.Text;
+  FConfigManager.FileConvertPath := edtFilePath.Text;
+end;
+
 procedure TFormTextWrapper.PrepareFrames;
 var
   frameTmp : TFramePreset;
@@ -263,6 +314,8 @@ begin
     cmbQuotation.ItemIndex := Ord(QuotationType);
     cmbTabStop.ItemIndex   := TabSizeToIndex(TabStopConvert);
   end;
+
+  edtFilePath.Text := FConfigManager.FileConvertPath;
 end;
 
 procedure TFormTextWrapper.FormCreate(Sender: TObject);

@@ -9,8 +9,10 @@ type
   TConfigManager = class
     private
       FPresetList : TObjectList<TSettingsPreset>;
+      FFileConvertPath : string;
     public
       property PresetList : TObjectList<TSettingsPreset> read FPresetList write FPresetList;
+      property FileConvertPath : string read FFileConvertPath write FFileConvertPath;
 
       procedure SetDefault;
       procedure SaveConfigToFile;
@@ -48,47 +50,52 @@ end;
 procedure TConfigManager.LoadConfigFromFile;
 var
   RootObject, tmpObject : TJSONObject;
+  valTmp: TJSONValue;
   presetListTmp : TJSONArray;
   jsonStr : string;
   Serializer: TJsonSerializer;
 begin
+  if not FileExists(CONFIG_FILE_NAME) then
+  begin
+    SaveConfigToFile;
+    Exit;
+  end;
 
   Serializer := TJsonSerializer.Create;
-
   try
-    if not FileExists(CONFIG_FILE_NAME) then
-    begin
-      SaveConfigToFile;
-      Exit;
-    end;
-
-    jsonStr := TFile.ReadAllText(CONFIG_FILE_NAME, TEncoding.UTF8);
-    RootObject := TJSONObject.ParseJSONValue(jsonStr) as TJSONObject;
-
-    //TODO: file data validation
-
     try
+      jsonStr := TFile.ReadAllText(CONFIG_FILE_NAME, TEncoding.UTF8);
+      RootObject := TJSONObject.ParseJSONValue(jsonStr) as TJSONObject;
+
+      //TODO: additional file data validation?
+
+      valTmp := RootObject.GetValue('file_convert_path');
+      if Assigned(valTmp) then
+        FFileConvertPath := valTmp.Value;
+
       presetListTmp := RootObject.GetValue<TJSONArray>('presets');
-
-      FPresetList.Clear;
-      for var I := 0 to presetListTmp.Count - 1 do
+      if Assigned(presetListTmp) then
       begin
-        if I > PRESET_NUMBER then Break;
+        FPresetList.Clear;
+        for var I := 0 to presetListTmp.Count - 1 do
+        begin
+          if I > PRESET_NUMBER then Break;
 
-        tmpObject := presetListTmp.Items[I] as TJSONObject;
+          tmpObject := presetListTmp.Items[I] as TJSONObject;
 
-        FPresetList.Add(Serializer.Deserialize<TSettingsPreset>(tmpObject.ToJSON));
-        FPresetList[I].Id := I;
+          FPresetList.Add(Serializer.Deserialize<TSettingsPreset>(tmpObject.ToJSON));
+          FPresetList[I].Id := I;
+        end;
       end;
-    finally
-      RootObject.Free;
-      Serializer.Free;
+    except
+      on E: Exception do
+      begin
+        SaveToLog('Error while reading config file: ' + E.Message);
+      end;
     end;
-  except
-    on E: Exception do
-    begin
-      SaveToLog('Error while reading config file: ' + E.Message);
-    end;
+  finally
+    FreeAndNil(RootObject);
+    Serializer.Free;
   end;
 end;
 
@@ -103,6 +110,8 @@ begin
   RootObject := TJSONObject.Create;
   try
     try
+      RootObject.AddPair('file_convert_path', FFileConvertPath);
+
       tmpArray := TJSONArray.Create;
 
       FPresetList[0].PresetName := ''; //working settings have no name
@@ -158,6 +167,8 @@ end;
 procedure TConfigManager.SetDefault;
 begin
   try
+    FFileConvertPath := '';
+
     FPresetList.Clear;
     for var I := 0 to PRESET_NUMBER do //includes current, working settings
     begin

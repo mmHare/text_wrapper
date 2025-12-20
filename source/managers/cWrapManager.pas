@@ -14,14 +14,50 @@ type
       class procedure PerformWrapRemove(pPreset: TSettingsPreset; pLines: TStringList);
 
       class procedure ConvertText(pPreset: TSettingsPreset; pLines: TStringList);
+      class function ConvertFile(pPreset: TSettingsPreset; pFilePath: string): Boolean;
   end;
 
 implementation
 
 uses
-  SysUtils, StrUtils, cUtils;
+  SysUtils, StrUtils, cUtils, IOUtils;
 
 { TWrapManager }
+
+class function TWrapManager.ConvertFile(pPreset: TSettingsPreset; pFilePath: string): Boolean;
+var
+  pathOut: string;
+  strList: TStringList;
+begin
+  Result := False;
+  if not FileExists(pFilePath) then Exit;
+
+  strList := TStringList.Create;
+  try
+    try
+      strList.LoadFromFile(pFilePath);
+      ConvertText(pPreset, strList);
+
+      //  get path for output - file name with added '_out'
+      pathOut := TPath.Combine(
+           TPath.GetDirectoryName(pFilePath),
+           TPath.GetFileNameWithoutExtension(pFilePath) + '_out' +
+           TPath.GetExtension(pFilePath)
+         );
+
+      strList.SaveToFile(pathOut);
+      Result := FileExists(pathOut);
+    except
+      on E: Exception do
+      begin
+        SaveToLog('Error while converting text: ' + E.Message);
+        Result := False;
+      end
+    end;
+  finally
+    strList.Free;
+  end;
+end;
 
 class procedure TWrapManager.ConvertText(pPreset: TSettingsPreset; pLines: TStringList);
 begin
