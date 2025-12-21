@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Option to convert file, for larger texts.
 
+## Changed
+
+- Options layout - options now available on right side overlay panel.
+
 ## [1.0.2] - 2025-12-14
 
 ### Added

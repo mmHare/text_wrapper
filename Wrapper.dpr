@@ -1,7 +1,9 @@
 program Wrapper;
 
 uses
-  {$ifdef DEBUG} FastMM5, {$endif}
+  {$ifdef DEBUG}
+  FastMM5,
+  {$endif }
   Vcl.Forms,
   frmTextWrapper in 'source\frmTextWrapper.pas' {FormTextWrapper},
   framPreset in 'source\views\framPreset.pas' {FramePreset: TFrame},
@@ -11,7 +13,8 @@ uses
   cUtils in 'source\units\cUtils.pas',
   cConst in 'source\units\cConst.pas',
   cTypes in 'source\units\cTypes.pas',
-  cWrapManager in 'source\managers\cWrapManager.pas';
+  cWrapManager in 'source\managers\cWrapManager.pas',
+  FramOptions in 'source\views\FramOptions.pas' {FrameOptions: TFrame};
 
 {$R *.res}
 

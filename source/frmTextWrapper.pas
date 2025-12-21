@@ -7,16 +7,16 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
-  cConfigManager, cSettingsPreset, framPreset,
-  Vcl.ImgList, System.ImageList;
+  cConfigManager, cSettingsPreset, framPreset, framOptions,
+  Vcl.ImgList, System.ImageList, Vcl.WinXCtrls;
 
 type
   TFormTextWrapper = class(TForm)
     ActionManager1: TActionManager;
     PageControl1: TPageControl;
     tsWrapper: TTabSheet;
-    tsSettings: TTabSheet;
-    pnlSettings: TPanel;
+    tsOther: TTabSheet;
+    pnlOther: TPanel;
     gpWrapper: TGridPanel;
     pnlIn: TPanel;
     redtIn: TRichEdit;
@@ -28,11 +28,6 @@ type
     actClipboard: TAction;
     actConvert: TAction;
     actFullProcess: TAction;
-    chbCodeAlign: TCheckBox;
-    edtStartLine: TEdit;
-    edtEndLine: TEdit;
-    lblMode: TLabel;
-    cmbMode: TComboBox;
     pnlMenu: TPanel;
     btnConvert: TButton;
     btnClipboard: TButton;
@@ -46,20 +41,11 @@ type
     scrlbxPresets: TScrollBox;
     actSavePreset: TAction;
     actLoadPreset: TAction;
-    chbStartLine: TCheckBox;
-    chbEndLine: TCheckBox;
     pnlLeft: TPanel;
     ImageList1: TImageList;
     actMoveUp: TAction;
     btnMoveUp: TButton;
-    lblTrim: TLabel;
-    cmbTrim: TComboBox;
-    lblQuotation: TLabel;
-    cmbQuotation: TComboBox;
-    lblTabStop: TLabel;
-    btnClearSettings: TButton;
     actClearSettings: TAction;
-    cmbTabStop: TComboBox;
     grpbxPresets: TGroupBox;
     edtFilePath: TEdit;
     lblFilePath: TLabel;
@@ -67,7 +53,14 @@ type
     actConvertFile: TAction;
     btnConvertFile: TButton;
     grpbxConvertFile: TGroupBox;
-    grpbxOptions: TGroupBox;
+    svOptions: TSplitView;
+    btnOptions: TButton;
+    actShowOptions: TAction;
+    actHideOptions: TAction;
+    pnlOtherActions: TPanel;
+    btnClearSettings: TButton;
+    pnlToggleOptions: TPanel;
+    pnlPages: TPanel;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -83,10 +76,13 @@ type
     procedure btnFilePathClick(Sender: TObject);
     procedure actConvertFileExecute(Sender: TObject);
     procedure edtFilePathChange(Sender: TObject);
+    procedure actShowOptionsExecute(Sender: TObject);
+    procedure actHideOptionsExecute(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
     FFramePresetList : TObjectList<TFramePreset>;
+    FFrameOptions : TFrameOptions;
 
     procedure PrepareFrames;
 
@@ -169,6 +165,12 @@ begin
   actClipboard.Execute;
 end;
 
+procedure TFormTextWrapper.actHideOptionsExecute(Sender: TObject);
+begin
+  svOptions.Opened := False;
+  btnOptions.Action := actShowOptions;
+end;
+
 procedure TFormTextWrapper.actLoadPresetExecute(Sender: TObject);
 var
   btn: TButton;
@@ -212,6 +214,12 @@ begin
   end;
 end;
 
+procedure TFormTextWrapper.actShowOptionsExecute(Sender: TObject);
+begin
+  svOptions.Opened := True;
+  btnOptions.Action := actHideOptions;
+end;
+
 procedure TFormTextWrapper.actClearSettingsExecute(Sender: TObject);
 begin
   if MessageDlg('Do you really want to clear settings?', mtConfirmation, mbYesNo, 0) = mrYes then
@@ -250,6 +258,14 @@ procedure TFormTextWrapper.PrepareFrames;
 var
   frameTmp : TFramePreset;
 begin
+  // Frame options
+  FFrameOptions := TFrameOptions.Create(svOptions);
+  FFrameOptions.Parent := svOptions;
+  FFrameOptions.Align := alClient;
+  svOptions.OpenedWidth := FFrameOptions.Width;
+
+
+  // Preset frames
   if FConfigManager.PresetList.Count < 1 then Exit;
 
   FFramePresetList.Clear;
@@ -276,7 +292,7 @@ procedure TFormTextWrapper.GetSettingsValues(pPreset: TSettingsPreset);
 begin
   if not Assigned(pPreset) then Exit;
 
-  with pPreset do
+  with FFrameOptions, pPreset do
   begin
     Prefix             := edtPrefix.Text;
     Suffix             := edtSuffix.Text;
@@ -300,7 +316,7 @@ begin
   FConfigManager.PresetList[0].AssignValues(pPreset); // passed preset becomes working preset
 
   // fill controls
-  with pPreset do
+  with FFrameOptions, pPreset do
   begin
     edtPrefix.Text         := Prefix;
     edtSuffix.Text         := Suffix;
@@ -327,6 +343,8 @@ begin
   SetSettingsValues(FConfigManager.PresetList[0]);
 
   PageControl1.ActivePage := tsWrapper;
+
+  actHideOptions.Execute;
 end;
 
 procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
