@@ -8,7 +8,7 @@ uses
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnMenus, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
   cConfigManager, cSettingsPreset, framPreset, framOptions,
-  Vcl.ImgList, System.ImageList, Vcl.WinXCtrls;
+  Vcl.ImgList, System.ImageList, Vcl.WinXCtrls, Vcl.Samples.Spin;
 
 type
   TFormTextWrapper = class(TForm)
@@ -41,7 +41,6 @@ type
     scrlbxPresets: TScrollBox;
     actSavePreset: TAction;
     actLoadPreset: TAction;
-    pnlLeft: TPanel;
     ImageList1: TImageList;
     actMoveUp: TAction;
     btnMoveUp: TButton;
@@ -61,6 +60,11 @@ type
     btnClearSettings: TButton;
     pnlToggleOptions: TPanel;
     pnlPages: TPanel;
+    pnlPresetsOptions: TPanel;
+    lblPresetNumber: TLabel;
+    sePresetNumber: TSpinEdit;
+    btnApplyPresetNumber: TButton;
+    actApplyPresetNumber: TAction;
     procedure actClearExecute(Sender: TObject);
     procedure actClipboardExecute(Sender: TObject);
     procedure actConvertExecute(Sender: TObject);
@@ -78,13 +82,16 @@ type
     procedure edtFilePathChange(Sender: TObject);
     procedure actShowOptionsExecute(Sender: TObject);
     procedure actHideOptionsExecute(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
+    procedure actApplyPresetNumberExecute(Sender: TObject);
 
   private
     FConfigManager : TConfigManager;
     FFramePresetList : TObjectList<TFramePreset>;
     FFrameOptions : TFrameOptions;
 
-    procedure PrepareFrames;
+    procedure PrepareFrames(pIsStartup: Boolean);
+    function GetFrameByTag(pTag: Integer) : TFramePreset;
 
     procedure SetSettingsValues(pPreset: TSettingsPreset);
     procedure GetSettingsValues(pPreset: TSettingsPreset);
@@ -103,6 +110,12 @@ uses
   StrUtils, cUtils, cTypes, frmAbout, cWrapManager, UITypes;
 
 {$R *.dfm}
+
+procedure TFormTextWrapper.actApplyPresetNumberExecute(Sender: TObject);
+begin
+  FConfigManager.RefreshPresetNumber(sePresetNumber.Value + 1);
+  PrepareFrames(False);
+end;
 
 procedure TFormTextWrapper.actClearExecute(Sender: TObject);
 begin
@@ -205,6 +218,7 @@ begin
     btn := (Sender as TAction).ActionComponent as TButton;
     idTmp := btn.Tag;
     GetSettingsValues(FConfigManager.PresetList[idTmp]);
+    FConfigManager.PresetList[idTmp].PresetName := GetFrameByTag(idTmp).edtName.Text;
     FConfigManager.SaveOnePreset(FConfigManager.PresetList[idTmp]);
   except
     on E: Exception do
@@ -224,8 +238,15 @@ procedure TFormTextWrapper.actClearSettingsExecute(Sender: TObject);
 begin
   if MessageDlg('Do you really want to clear settings?', mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    FConfigManager.PresetList[0].SetDefault;
-    SetSettingsValues(FConfigManager.PresetList[0]);
+    if MessageDlg('Do you also want to delete presets?', mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      FConfigManager.SetDefault;
+    end
+    else
+    begin
+      FConfigManager.PresetList[0].SetDefault;
+      SetSettingsValues(FConfigManager.PresetList[0]);
+    end;
   end;
 end;
 
@@ -254,36 +275,72 @@ begin
   FConfigManager.FileConvertPath := edtFilePath.Text;
 end;
 
-procedure TFormTextWrapper.PrepareFrames;
+procedure TFormTextWrapper.PageControl1Change(Sender: TObject);
+begin
+  actMoveUp.Visible := PageControl1.ActivePage = tsWrapper;
+end;
+
+procedure TFormTextWrapper.PrepareFrames(pIsStartup: Boolean);
 var
   frameTmp : TFramePreset;
 begin
-  // Frame options
-  FFrameOptions := TFrameOptions.Create(svOptions);
-  FFrameOptions.Parent := svOptions;
-  FFrameOptions.Align := alClient;
-  svOptions.OpenedWidth := FFrameOptions.Width;
-
+  if pIsStartup then
+  begin
+    // Frame options
+    FFrameOptions := TFrameOptions.Create(svOptions);
+    FFrameOptions.Parent := svOptions;
+    FFrameOptions.Align := alClient;
+    svOptions.OpenedWidth := FFrameOptions.Width;
+  end;
 
   // Preset frames
   if FConfigManager.PresetList.Count < 1 then Exit;
 
   FFramePresetList.Clear;
   try
-    for var I := 1 to FConfigManager.PresetList.Count - 1 do
+    if pIsStartup then
+    begin
+      for var I := 1 to FConfigManager.PresetList.Count - 1 do
+      begin
+        frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
+        frameTmp.Name := 'FramePreset_' + IntToStr(I);
+        frameTmp.Parent := scrlbxPresets;
+        frameTmp.SetFrameIndex(I);
+        frameTmp.btnSave.Action := actSavePreset;
+        frameTmp.btnLoad.Action := actLoadPreset;
+        FFramePresetList.Add(frameTmp);
+      end;
+    end
+    else
+    for var I := FConfigManager.PresetList.Count - 1 downto 1 do
     begin
       frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
       frameTmp.Name := 'FramePreset_' + IntToStr(I);
       frameTmp.Parent := scrlbxPresets;
+      frameTmp.SetFrameIndex(I);
       frameTmp.btnSave.Action := actSavePreset;
       frameTmp.btnLoad.Action := actLoadPreset;
-
       FFramePresetList.Add(frameTmp);
     end;
+
+    grpbxPresets.Constraints.MaxHeight := (2 * pnlPresetsOptions.Height) + (FFramePresetList.Count * FFramePresetList[0].Height);
   except
     on E: Exception do
     begin
       SaveToLog('Error while loading preset forms: ' + E.Message);
+    end;
+  end;
+end;
+
+function TFormTextWrapper.GetFrameByTag(pTag: Integer): TFramePreset;
+begin
+  Result := nil;
+  for var I := 0 to FFramePresetList.Count - 1 do
+  begin
+    if FFramePresetList[I].Tag = pTag then
+    begin
+      Result := FFramePresetList[I];
+      Exit;
     end;
   end;
 end;
@@ -332,13 +389,14 @@ begin
   end;
 
   edtFilePath.Text := FConfigManager.FileConvertPath;
+  sePresetNumber.Value := FConfigManager.PresetNumber - 1; // ignore working preset
 end;
 
 procedure TFormTextWrapper.FormCreate(Sender: TObject);
 begin
   FConfigManager := TConfigManager.Create;
   FFramePresetList := TObjectList<TFramePreset>.Create;
-  PrepareFrames;
+  PrepareFrames(True);
 
   SetSettingsValues(FConfigManager.PresetList[0]);
 

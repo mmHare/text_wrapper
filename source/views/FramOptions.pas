@@ -1,4 +1,4 @@
-﻿unit FramOptions;
+﻿unit framOptions;
 
 interface
 

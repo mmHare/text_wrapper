@@ -17,7 +17,10 @@ type
     procedure edtNameChange(Sender: TObject);
   private
     FPreset: TSettingsPreset;
+    FFrameIndex: Integer;
   public
+    procedure SetFrameIndex(AIndex: Integer);
+
     constructor Create(AOwner: TComponent; APreset: TSettingsPreset); reintroduce;
   end;
 
@@ -32,6 +35,7 @@ begin
   inherited Create(AOwner);
 
   FPreset := APreset;
+  Self.Tag := FPreset.Id;
   edtName.Text := FPreset.PresetName;
   btnSave.Tag := FPreset.Id;
   btnLoad.Tag := FPreset.Id;
@@ -39,7 +43,13 @@ end;
 
 procedure TFramePreset.edtNameChange(Sender: TObject);
 begin
-  FPreset.PresetName := edtName.Text;
+  edtName.Hint := edtName.Text;
+end;
+
+procedure TFramePreset.SetFrameIndex(AIndex: Integer);
+begin
+  FFrameIndex := AIndex;
+  lblName.Caption := 'Preset ' + IntToStr(FPreset.Id);
 end;
 
 end.

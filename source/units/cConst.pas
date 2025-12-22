@@ -8,7 +8,6 @@ const
 
   CONFIG_FILE_NAME = 'settings.json';
   LOG_DIRECTORY = 'logs\';
-  PRESET_NUMBER = 3;
 
 implementation
 

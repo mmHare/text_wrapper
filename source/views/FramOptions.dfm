@@ -23,10 +23,6 @@ object FrameOptions: TFrameOptions
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 552
-    ExplicitTop = 300
-    ExplicitWidth = 278
-    ExplicitHeight = 62
     object grpbxOptions: TGroupBox
       AlignWithMargins = True
       Left = 20
@@ -40,7 +36,6 @@ object FrameOptions: TFrameOptions
       Align = alClient
       Caption = 'Options'
       TabOrder = 0
-      ExplicitTop = 25
       object lblMode: TLabel
         Left = 68
         Top = 47

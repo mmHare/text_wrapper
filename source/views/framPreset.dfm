@@ -4,9 +4,9 @@ object FramePreset: TFramePreset
   Width = 935
   Height = 79
   Margins.Left = 5
-  Margins.Top = 5
-  Margins.Right = 5
-  Margins.Bottom = 5
+  Margins.Top = 0
+  Margins.Right = 25
+  Margins.Bottom = 0
   Align = alTop
   TabOrder = 0
   PixelsPerInch = 144
@@ -22,9 +22,6 @@ object FramePreset: TFramePreset
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      935
-      79)
     object lblName: TLabel
       Left = 24
       Top = 28
@@ -46,7 +43,6 @@ object FramePreset: TFramePreset
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      Anchors = [akLeft, akTop, akRight]
       MaxLength = 150
       ParentShowHint = False
       ShowHint = True
@@ -63,14 +59,10 @@ object FramePreset: TFramePreset
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 15
-      Align = alRight
       Caption = 'Save'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
-      ExplicitLeft = 660
-      ExplicitTop = 23
-      ExplicitHeight = 38
     end
     object btnLoad: TButton
       AlignWithMargins = True
@@ -82,14 +74,10 @@ object FramePreset: TFramePreset
       Margins.Top = 20
       Margins.Right = 20
       Margins.Bottom = 15
-      Align = alRight
       Caption = 'Load'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
-      ExplicitLeft = 792
-      ExplicitTop = 23
-      ExplicitHeight = 38
     end
   end
 end
