@@ -33,10 +33,6 @@ type
     btnClipboard: TButton;
     btnClear: TButton;
     btnFullProcess: TButton;
-    lblPrefix: TLabel;
-    lblSuffix: TLabel;
-    edtPrefix: TEdit;
-    edtSuffix: TEdit;
     btnAbout: TButton;
     scrlbxPresets: TScrollBox;
     actSavePreset: TAction;
@@ -90,11 +86,11 @@ type
     FFramePresetList : TObjectList<TFramePreset>;
     FFrameOptions : TFrameOptions;
 
-    procedure PrepareFrames(pIsStartup: Boolean);
+    procedure PrepareFrames;
+    procedure RefreshFrames;
     function GetFrameByTag(pTag: Integer) : TFramePreset;
 
     procedure SetSettingsValues(pPreset: TSettingsPreset);
-    procedure GetSettingsValues(pPreset: TSettingsPreset);
 
   public
     { Public declarations }
@@ -114,7 +110,7 @@ uses
 procedure TFormTextWrapper.actApplyPresetNumberExecute(Sender: TObject);
 begin
   FConfigManager.RefreshPresetNumber(sePresetNumber.Value + 1);
-  PrepareFrames(False);
+  RefreshFrames;
 end;
 
 procedure TFormTextWrapper.actClearExecute(Sender: TObject);
@@ -138,7 +134,7 @@ begin
   strList := TStringList.Create;
 
   try
-    GetSettingsValues(presetTmp);
+    FFrameOptions.GetOptions(presetTmp);
     strList.Assign(redtIn.Lines);
     TWrapManager.ConvertText(presetTmp, strList);
     redtOut.Lines.Assign(strList);
@@ -162,7 +158,7 @@ begin
 
   presetTmp:= TSettingsPreset.Create;
   try
-    GetSettingsValues(presetTmp);
+    FFrameOptions.GetOptions(presetTmp);
     if TWrapManager.ConvertFile(presetTmp, edtFilePath.Text) then
       ShowMessage('File converted.');
   finally
@@ -217,7 +213,7 @@ begin
   try
     btn := (Sender as TAction).ActionComponent as TButton;
     idTmp := btn.Tag;
-    GetSettingsValues(FConfigManager.PresetList[idTmp]);
+    FFrameOptions.GetOptions(FConfigManager.PresetList[idTmp]);
     FConfigManager.PresetList[idTmp].PresetName := GetFrameByTag(idTmp).edtName.Text;
     FConfigManager.SaveOnePreset(FConfigManager.PresetList[idTmp]);
   except
@@ -280,38 +276,52 @@ begin
   actMoveUp.Visible := PageControl1.ActivePage = tsWrapper;
 end;
 
-procedure TFormTextWrapper.PrepareFrames(pIsStartup: Boolean);
+procedure TFormTextWrapper.PrepareFrames;
 var
   frameTmp : TFramePreset;
 begin
-  if pIsStartup then
-  begin
-    // Frame options
-    FFrameOptions := TFrameOptions.Create(svOptions);
-    FFrameOptions.Parent := svOptions;
-    FFrameOptions.Align := alClient;
-    svOptions.OpenedWidth := FFrameOptions.Width;
-  end;
+  // Frame options
+  FFrameOptions := TFrameOptions.Create(svOptions);
+  FFrameOptions.Parent := svOptions;
+  FFrameOptions.Align := alClient;
+  svOptions.OpenedWidth := FFrameOptions.Width;
 
   // Preset frames
-  if FConfigManager.PresetList.Count < 1 then Exit;
-
   FFramePresetList.Clear;
+  FFrameOptions.cmbOptLoadPreset.Items.Clear;
+  if FConfigManager.PresetList.Count <= 1 then Exit;
+
   try
-    if pIsStartup then
+    for var I := 1 to FConfigManager.PresetList.Count - 1 do
     begin
-      for var I := 1 to FConfigManager.PresetList.Count - 1 do
-      begin
-        frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
-        frameTmp.Name := 'FramePreset_' + IntToStr(I);
-        frameTmp.Parent := scrlbxPresets;
-        frameTmp.SetFrameIndex(I);
-        frameTmp.btnSave.Action := actSavePreset;
-        frameTmp.btnLoad.Action := actLoadPreset;
-        FFramePresetList.Add(frameTmp);
-      end;
-    end
-    else
+      frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
+      frameTmp.Name := 'FramePreset_' + IntToStr(I);
+      frameTmp.Parent := scrlbxPresets;
+      frameTmp.SetFrameIndex(I);
+      frameTmp.btnSave.Action := actSavePreset;
+      frameTmp.btnLoad.Action := actLoadPreset;
+      FFramePresetList.Add(frameTmp);
+    end;
+
+    for var I := 1 to FConfigManager.PresetList.Count - 1 do
+      FFrameOptions.cmbOptLoadPreset.AddItem(FConfigManager.PresetList[I].PresetName, FConfigManager.PresetList[I]);
+  except
+    on E: Exception do
+    begin
+      SaveToLog('Error while loading preset forms: ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TFormTextWrapper.RefreshFrames;
+var
+  frameTmp : TFramePreset;
+begin
+  FFramePresetList.Clear;
+  FFrameOptions.cmbOptLoadPreset.Items.Clear;
+  if FConfigManager.PresetList.Count <= 1 then Exit;
+
+  try
     for var I := FConfigManager.PresetList.Count - 1 downto 1 do
     begin
       frameTmp := TFramePreset.Create(scrlbxPresets, FConfigManager.PresetList[I]);
@@ -323,7 +333,8 @@ begin
       FFramePresetList.Add(frameTmp);
     end;
 
-    grpbxPresets.Constraints.MaxHeight := (2 * pnlPresetsOptions.Height) + (FFramePresetList.Count * FFramePresetList[0].Height);
+    for var I := 1 to FConfigManager.PresetList.Count - 1 do
+      FFrameOptions.cmbOptLoadPreset.AddItem(FConfigManager.PresetList[I].PresetName, FConfigManager.PresetList[I]);
   except
     on E: Exception do
     begin
@@ -345,26 +356,6 @@ begin
   end;
 end;
 
-procedure TFormTextWrapper.GetSettingsValues(pPreset: TSettingsPreset);
-begin
-  if not Assigned(pPreset) then Exit;
-
-  with FFrameOptions, pPreset do
-  begin
-    Prefix             := edtPrefix.Text;
-    Suffix             := edtSuffix.Text;
-    Mode               := TWrapModeType(cmbMode.ItemIndex);
-    IsCodeAlign        := chbCodeAlign.Checked;
-    StartLine          := edtStartLine.Text;
-    IsStartLineEnabled := chbStartLine.Checked;
-    EndLine            := edtEndLine.Text;
-    IsEndLineEnabled   := chbEndLine.Checked;
-    TrimMode           := TTrimModeType(cmbTrim.ItemIndex);
-    QuotationType      := TQuotationType(cmbQuotation.ItemIndex);
-    TabStopConvert     := TabSizeFromIndex(cmbTabStop.ItemIndex);     // TODO: change to imgcombo; function converting enum to tabsize
-  end;
-end;
-
 procedure TFormTextWrapper.SetSettingsValues(pPreset: TSettingsPreset);
 begin
   if not Assigned(FConfigManager) then Exit;
@@ -373,20 +364,7 @@ begin
   FConfigManager.PresetList[0].AssignValues(pPreset); // passed preset becomes working preset
 
   // fill controls
-  with FFrameOptions, pPreset do
-  begin
-    edtPrefix.Text         := Prefix;
-    edtSuffix.Text         := Suffix;
-    cmbMode.ItemIndex      := Ord(Mode);
-    chbCodeAlign.Checked   := IsCodeAlign;
-    edtStartLine.Text      := StartLine;
-    chbStartLine.Checked   := IsStartLineEnabled;
-    edtEndLine.Text        := EndLine;
-    chbEndLine.Checked     := IsEndLineEnabled;
-    cmbTrim.ItemIndex      := Ord(TrimMode);
-    cmbQuotation.ItemIndex := Ord(QuotationType);
-    cmbTabStop.ItemIndex   := TabSizeToIndex(TabStopConvert);
-  end;
+  FFrameOptions.SetOptions(pPreset);
 
   edtFilePath.Text := FConfigManager.FileConvertPath;
   sePresetNumber.Value := FConfigManager.PresetNumber - 1; // ignore working preset
@@ -396,7 +374,7 @@ procedure TFormTextWrapper.FormCreate(Sender: TObject);
 begin
   FConfigManager := TConfigManager.Create;
   FFramePresetList := TObjectList<TFramePreset>.Create;
-  PrepareFrames(True);
+  PrepareFrames;
 
   SetSettingsValues(FConfigManager.PresetList[0]);
 
@@ -407,7 +385,7 @@ end;
 
 procedure TFormTextWrapper.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  GetSettingsValues(FConfigManager.PresetList[0]);
+  FFrameOptions.GetOptions(FConfigManager.PresetList[0]);
   FConfigManager.SaveConfigToFile;
 end;
 

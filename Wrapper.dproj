@@ -4,7 +4,7 @@
         <ProjectVersion>20.1</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">Wrapper</ProjectName>
         <TargetedPlatforms>3</TargetedPlatforms>
@@ -164,7 +164,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <DCCReference Include="source\units\cConst.pas"/>
         <DCCReference Include="source\units\cTypes.pas"/>
         <DCCReference Include="source\managers\cWrapManager.pas"/>
-        <DCCReference Include="source\views\FramOptions.pas">
+        <DCCReference Include="source\views\framOptions.pas">
             <Form>FrameOptions</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>

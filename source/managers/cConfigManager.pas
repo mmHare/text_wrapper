@@ -118,6 +118,7 @@ begin
       begin
         FPresetList.Add(TSettingsPreset.Create);
         FPresetList[I].Id := I;
+        FPresetList[I].PresetName := 'Preset ' + IntToStr(I);
       end;
     end
     else

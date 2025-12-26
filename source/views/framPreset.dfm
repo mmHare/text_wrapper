@@ -2,7 +2,7 @@ object FramePreset: TFramePreset
   Left = 0
   Top = 0
   Width = 935
-  Height = 79
+  Height = 64
   Margins.Left = 5
   Margins.Top = 0
   Margins.Right = 25
@@ -14,7 +14,7 @@ object FramePreset: TFramePreset
     Left = 0
     Top = 0
     Width = 935
-    Height = 79
+    Height = 64
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -22,9 +22,10 @@ object FramePreset: TFramePreset
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 61
     object lblName: TLabel
       Left = 24
-      Top = 28
+      Top = 16
       Width = 48
       Height = 25
       Margins.Left = 5
@@ -35,7 +36,7 @@ object FramePreset: TFramePreset
     end
     object edtName: TEdit
       Left = 96
-      Top = 25
+      Top = 13
       Width = 529
       Height = 33
       Hint = 'Preset name'
@@ -52,7 +53,7 @@ object FramePreset: TFramePreset
     object btnSave: TButton
       AlignWithMargins = True
       Left = 664
-      Top = 20
+      Top = 8
       Width = 113
       Height = 44
       Margins.Left = 5
@@ -67,7 +68,7 @@ object FramePreset: TFramePreset
     object btnLoad: TButton
       AlignWithMargins = True
       Left = 802
-      Top = 20
+      Top = 8
       Width = 113
       Height = 44
       Margins.Left = 5

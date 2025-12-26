@@ -36,9 +36,11 @@ object FrameOptions: TFrameOptions
       Align = alClient
       Caption = 'Options'
       TabOrder = 0
+      ExplicitLeft = -232
+      ExplicitTop = 25
       object lblMode: TLabel
         Left = 68
-        Top = 47
+        Top = 129
         Width = 47
         Height = 25
         Margins.Left = 5
@@ -49,7 +51,7 @@ object FrameOptions: TFrameOptions
       end
       object lblQuotation: TLabel
         Left = 34
-        Top = 103
+        Top = 180
         Width = 81
         Height = 25
         Margins.Left = 8
@@ -62,7 +64,7 @@ object FrameOptions: TFrameOptions
       end
       object lblTabStop: TLabel
         Left = 27
-        Top = 153
+        Top = 230
         Width = 88
         Height = 25
         Margins.Left = 12
@@ -75,7 +77,7 @@ object FrameOptions: TFrameOptions
       end
       object lblTrim: TLabel
         Left = 82
-        Top = 201
+        Top = 278
         Width = 33
         Height = 25
         Margins.Left = 5
@@ -84,9 +86,42 @@ object FrameOptions: TFrameOptions
         Margins.Bottom = 5
         Caption = 'Trim'
       end
+      object lblPrefix: TLabel
+        Left = 72
+        Top = 38
+        Width = 43
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Prefix'
+      end
+      object lblSuffix: TLabel
+        Left = 71
+        Top = 81
+        Width = 44
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Suffix'
+      end
+      object lblOptLoadPreset: TLabel
+        Left = 27
+        Top = 492
+        Width = 93
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Load preset'
+      end
       object chbCodeAlign: TCheckBox
         Left = -6
-        Top = 241
+        Top = 318
         Width = 146
         Height = 26
         Hint = 'Fill with trailing spaces before suffix'
@@ -104,7 +139,7 @@ object FrameOptions: TFrameOptions
       end
       object chbEndLine: TCheckBox
         Left = -6
-        Top = 344
+        Top = 421
         Width = 146
         Height = 26
         Hint = 'Enable ending line'
@@ -121,7 +156,7 @@ object FrameOptions: TFrameOptions
       end
       object chbStartLine: TCheckBox
         Left = 12
-        Top = 292
+        Top = 369
         Width = 128
         Height = 26
         Hint = 'Enable starting line'
@@ -138,7 +173,7 @@ object FrameOptions: TFrameOptions
       end
       object cmbMode: TComboBox
         Left = 125
-        Top = 44
+        Top = 126
         Width = 175
         Height = 33
         Hint = 'Add/Remove prefix & suffix'
@@ -156,7 +191,7 @@ object FrameOptions: TFrameOptions
       end
       object cmbQuotation: TComboBox
         Left = 125
-        Top = 100
+        Top = 177
         Width = 175
         Height = 33
         Hint = 'Converts between single and doubled quotation marks'
@@ -175,7 +210,7 @@ object FrameOptions: TFrameOptions
       end
       object cmbTabStop: TComboBox
         Left = 125
-        Top = 148
+        Top = 225
         Width = 175
         Height = 33
         Hint = 'Tab stop size used to replace tab character with spaces'
@@ -196,7 +231,7 @@ object FrameOptions: TFrameOptions
       end
       object cmbTrim: TComboBox
         Left = 125
-        Top = 198
+        Top = 275
         Width = 175
         Height = 33
         Hint = 'Removes whitespaces'
@@ -216,7 +251,7 @@ object FrameOptions: TFrameOptions
       end
       object edtEndLine: TEdit
         Left = 150
-        Top = 340
+        Top = 417
         Width = 590
         Height = 33
         Hint = 'Line will be added after the converted text'
@@ -231,7 +266,7 @@ object FrameOptions: TFrameOptions
       end
       object edtStartLine: TEdit
         Left = 150
-        Top = 288
+        Top = 365
         Width = 590
         Height = 33
         Hint = 'Line will be added before the converted text'
@@ -243,6 +278,57 @@ object FrameOptions: TFrameOptions
         ParentShowHint = False
         ShowHint = True
         TabOrder = 8
+      end
+      object edtPrefix: TEdit
+        Left = 125
+        Top = 35
+        Width = 420
+        Height = 33
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        MaxLength = 50
+        TabOrder = 9
+      end
+      object edtSuffix: TEdit
+        Left = 125
+        Top = 78
+        Width = 420
+        Height = 33
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        MaxLength = 50
+        TabOrder = 10
+      end
+      object cmbOptLoadPreset: TComboBox
+        Left = 130
+        Top = 489
+        Width = 218
+        Height = 33
+        Hint = 'Select to load from saved presets'
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Style = csDropDownList
+        TabOrder = 11
+      end
+      object btnOptLoadPreset: TButton
+        Left = 372
+        Top = 487
+        Width = 113
+        Height = 38
+        Hint = 'Load preset'
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Load'
+        TabOrder = 12
+        OnClick = btnOptLoadPresetClick
       end
     end
   end

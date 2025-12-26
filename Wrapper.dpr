@@ -14,7 +14,7 @@ uses
   cConst in 'source\units\cConst.pas',
   cTypes in 'source\units\cTypes.pas',
   cWrapManager in 'source\managers\cWrapManager.pas',
-  FramOptions in 'source\views\FramOptions.pas' {FrameOptions: TFrame};
+  framOptions in 'source\views\framOptions.pas' {FrameOptions: TFrame};
 
 {$R *.res}
 

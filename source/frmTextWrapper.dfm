@@ -41,7 +41,6 @@ object FormTextWrapper: TFormTextWrapper
     Color = clGradientActiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 1020
     DesignSize = (
       108
       744)
@@ -91,7 +90,6 @@ object FormTextWrapper: TFormTextWrapper
     Margins.Bottom = 5
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 1044
     object PageControl1: TPageControl
       Left = 1
       Top = 1
@@ -105,7 +103,6 @@ object FormTextWrapper: TFormTextWrapper
       Align = alClient
       TabOrder = 0
       OnChange = PageControl1Change
-      ExplicitWidth = 1042
       object tsWrapper: TTabSheet
         Margins.Left = 5
         Margins.Top = 5
@@ -116,7 +113,7 @@ object FormTextWrapper: TFormTextWrapper
           Left = 0
           Top = 0
           Width = 1060
-          Height = 120
+          Height = 77
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -126,29 +123,6 @@ object FormTextWrapper: TFormTextWrapper
           Color = clGradientActiveCaption
           ParentBackground = False
           TabOrder = 0
-          ExplicitWidth = 1034
-          object lblPrefix: TLabel
-            Left = 12
-            Top = 68
-            Width = 43
-            Height = 25
-            Margins.Left = 5
-            Margins.Top = 5
-            Margins.Right = 5
-            Margins.Bottom = 5
-            Caption = 'Prefix'
-          end
-          object lblSuffix: TLabel
-            Left = 490
-            Top = 68
-            Width = 44
-            Height = 25
-            Margins.Left = 5
-            Margins.Top = 5
-            Margins.Right = 5
-            Margins.Bottom = 5
-            Caption = 'Suffix'
-          end
           object btnConvert: TButton
             Left = 62
             Top = 8
@@ -212,30 +186,6 @@ object FormTextWrapper: TFormTextWrapper
             ShowHint = True
             TabOrder = 3
           end
-          object edtPrefix: TEdit
-            Left = 62
-            Top = 63
-            Width = 420
-            Height = 33
-            Margins.Left = 5
-            Margins.Top = 5
-            Margins.Right = 5
-            Margins.Bottom = 5
-            MaxLength = 50
-            TabOrder = 4
-          end
-          object edtSuffix: TEdit
-            Left = 545
-            Top = 63
-            Width = 420
-            Height = 33
-            Margins.Left = 5
-            Margins.Top = 5
-            Margins.Right = 5
-            Margins.Bottom = 5
-            MaxLength = 50
-            TabOrder = 5
-          end
           object btnAbout: TButton
             Left = 3
             Top = 8
@@ -252,15 +202,15 @@ object FormTextWrapper: TFormTextWrapper
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
             ParentFont = False
-            TabOrder = 6
+            TabOrder = 4
             OnClick = btnAboutClick
           end
         end
         object gpWrapper: TGridPanel
           Left = 0
-          Top = 120
+          Top = 77
           Width = 1060
-          Height = 582
+          Height = 625
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -301,12 +251,13 @@ object FormTextWrapper: TFormTextWrapper
               SizeStyle = ssAuto
             end>
           TabOrder = 1
-          ExplicitWidth = 934
+          ExplicitTop = 120
+          ExplicitHeight = 582
           object pnlIn: TPanel
             Left = 1
             Top = 1
             Width = 1058
-            Height = 290
+            Height = 312
             Margins.Left = 5
             Margins.Top = 5
             Margins.Right = 5
@@ -315,7 +266,7 @@ object FormTextWrapper: TFormTextWrapper
             Color = clSkyBlue
             ParentBackground = False
             TabOrder = 0
-            ExplicitWidth = 932
+            ExplicitHeight = 290
             object lblIn: TLabel
               Left = 24
               Top = 12
@@ -338,7 +289,7 @@ object FormTextWrapper: TFormTextWrapper
               Left = 61
               Top = 46
               Width = 951
-              Height = 198
+              Height = 220
               Margins.Left = 60
               Margins.Top = 45
               Margins.Right = 45
@@ -354,14 +305,14 @@ object FormTextWrapper: TFormTextWrapper
               TabOrder = 0
               WantTabs = True
               WordWrap = False
-              ExplicitWidth = 825
+              ExplicitHeight = 198
             end
           end
           object pnlOut: TPanel
             Left = 1
-            Top = 291
+            Top = 313
             Width = 1058
-            Height = 290
+            Height = 311
             Margins.Left = 5
             Margins.Top = 5
             Margins.Right = 5
@@ -370,7 +321,8 @@ object FormTextWrapper: TFormTextWrapper
             Color = clActiveCaption
             ParentBackground = False
             TabOrder = 1
-            ExplicitWidth = 932
+            ExplicitTop = 291
+            ExplicitHeight = 290
             object lblOut: TLabel
               Left = 24
               Top = 12
@@ -393,7 +345,7 @@ object FormTextWrapper: TFormTextWrapper
               Left = 61
               Top = 46
               Width = 951
-              Height = 198
+              Height = 219
               Margins.Left = 60
               Margins.Top = 45
               Margins.Right = 45
@@ -409,7 +361,7 @@ object FormTextWrapper: TFormTextWrapper
               TabOrder = 0
               WantTabs = True
               WordWrap = False
-              ExplicitWidth = 825
+              ExplicitHeight = 198
             end
           end
         end
@@ -437,39 +389,34 @@ object FormTextWrapper: TFormTextWrapper
           ParentBiDiMode = False
           ParentBackground = False
           TabOrder = 0
-          ExplicitWidth = 1034
-          DesignSize = (
-            1060
-            640)
           object grpbxPresets: TGroupBox
             AlignWithMargins = True
             Left = 20
             Top = 105
             Width = 994
-            Height = 328
+            Height = 352
             Margins.Left = 20
             Margins.Top = 5
             Margins.Right = 20
             Margins.Bottom = 20
-            Anchors = [akLeft, akTop, akBottom]
             Caption = 'Setting presets'
             TabOrder = 0
             object scrlbxPresets: TScrollBox
-              Left = 2
-              Top = 77
-              Width = 990
+              Left = 14
+              Top = 89
+              Width = 961
               Height = 249
               Margins.Left = 5
               Margins.Top = 5
               Margins.Right = 5
               Margins.Bottom = 5
+              VertScrollBar.Increment = 25
               VertScrollBar.Margin = 5
-              VertScrollBar.Smooth = True
-              Align = alClient
               BevelInner = bvNone
               BevelOuter = bvNone
               BorderStyle = bsNone
               TabOrder = 0
+              UseWheelForScrolling = True
             end
             object pnlPresetsOptions: TPanel
               Left = 2
@@ -485,6 +432,7 @@ object FormTextWrapper: TFormTextWrapper
               Color = clGradientActiveCaption
               ParentBackground = False
               TabOrder = 1
+              ExplicitLeft = 0
               object lblPresetNumber: TLabel
                 Left = 14
                 Top = 7
@@ -508,7 +456,7 @@ object FormTextWrapper: TFormTextWrapper
                 MaxValue = 10
                 MinValue = 3
                 TabOrder = 0
-                Value = 0
+                Value = 3
               end
               object btnApplyPresetNumber: TButton
                 Left = 288
@@ -602,7 +550,6 @@ object FormTextWrapper: TFormTextWrapper
           Color = clGradientActiveCaption
           ParentBackground = False
           TabOrder = 1
-          ExplicitWidth = 1034
           object btnClearSettings: TButton
             Left = 36
             Top = 17
@@ -637,7 +584,6 @@ object FormTextWrapper: TFormTextWrapper
     Placement = svpRight
     TabOrder = 2
     UseAnimation = False
-    ExplicitLeft = 1020
   end
   object ActionManager1: TActionManager
     ActionBars = <
